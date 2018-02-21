@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head th:include="fragments/header :: head('Sign Up')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<div class="container-fluid" id="signup-container">
+    <div class="row hor-sep-60"></div>
+    <ul th:replace="fragments/nav :: leftNav"></ul>
+    <div class="row">
+        <div class="col-md-5 col-xl-4 offset-md-2">
+            <div class="signForm">
+                <h1>Sign Up</h1>
+                <a href="/users/signin">Or Sign In</a>
+                <label for="email"><b>Email</b></label>
+                <input v-model="email" type="email" placeholder="Enter Email" id="email"/>
+
+                <label for="password"><b>Password</b></label>
+                <input v-model="password" type="password" placeholder="Enter Password" id="password"/>
+
+                <label for="passwordConfirm"><b>Confirm password</b></label>
+                <input v-model="passwordConfirm" type="password" placeholder="Confirm Password" id="passwordConfirm"/>
+
+                <label for="username"><b>Username</b></label>
+                <input v-model="username" type="text" placeholder="Enter Username" id="username"/>
+
+                <button type="button" v-on:click="signup">SUBMIT</button>
+            </div>
+            <div v-if="signUpErrors" class="alert alert-warning" role="alert">
+                {{signUpAlertMessage}}
+            </div>
+            <div v-if="successfulSignUp" class="alert alert-success" role="alert">
+                <span v-html="signUpAlertMessage"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: scripts"></div>
+<script>
+    var app = new Vue({
+        el: '#signup-container',
+        props: ['message'],
+        data: {
+            signUpAlertMessage : '',
+            signUpErrors : false,
+            email: '',
+            username: '',
+            password: '',
+            passwordConfirm: '',
+            successfulSignUp: false,
+        },
+        mounted() {
+            Event.$on('signed-in',function(){
+                window.location.replace("/");
+            })
+        },
+        methods: {
+            signup() {
+                var params = {
+                    "email" : this.email,
+                    "username" : this.username,
+                    "password" : this.password,
+                    "passwordConfirm" : this.passwordConfirm};
+                axios({
+                    method: 'post',
+                    url: '/users/signup',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: params
+                }).then((resultAxios) => {
+                    this.signUpAlertMessage =  'Account created. Please ' +  '<a href="/users/signin" style="color: #1E1E24;" class="alert-link">sign in</a>';
+                    this.signUpErrors = false;
+                    this.successfulSignUp = true;
+                }).catch(function (error) {
+                    this.signUpAlertMessage = error.response.data;
+                    this.signUpErrors = true;
+                    this.successfulSignUp = false;
+                }.bind(this))
+            }
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

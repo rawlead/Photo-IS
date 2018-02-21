@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <title th:text="${title}"></title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" href="/css/helpers.css" th:href="@{/css/helpers.css}" media="screen"/>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" media="screen"/>
+    <link rel="stylesheet" href="/css/profile.css" th:href="@{/css/profile.css}"/>
+    <link rel="stylesheet" href="/css/forms.css" th:href="@{/css/forms.css}"/>
+</head>
+<body>
+<header th:fragment="header" id="loggedUser">
+    <div id="top-nav">
+
+        <a href="javascript:void(0);" class="icon" onclick="openMobileMenu()">&#9776;</a>
+
+        <div class="main-logo  float-left">
+            <a href="/"><img src="/img/photo-is-logo.png" alt=""/></a>
+        </div>
+
+
+        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/users/signin" >Sign In</a>
+        <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right" >Sign Out</a>
+
+        <a vs-show="isSignedIn()" onclick="openMyProfile()" class="float-right top-nav-link">{{logged_message}}</a>
+
+        <form  class="search-field">
+            <input type="text" name="search" id="search-input" />
+        </form>
+    </div>
+</header>
+
+</body>
+</html>

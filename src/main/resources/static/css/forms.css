@@ -1,0 +1,173 @@
+.signForm {
+    opacity: 0.8;
+    margin: 25px 0 15px 0;
+    display: block;
+}
+
+.alert {
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    border-radius: 10px;
+    opacity: 0.9;
+    color: #F7EBE8;
+
+}
+
+
+.alert-warning {
+    background-color: #5E0B15;
+}
+
+.alert-success {
+    background-color: #297045;
+}
+
+.signForm h1 {
+    text-align: center;
+    /*margin-bottom: 10px;*/
+    font-size: 2.9em;
+
+}
+
+.signForm label {
+    margin-left: 30px;
+    color: #5E0B15;
+    opacity: 0.8;
+}
+
+.signForm a {
+    float: right;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #1E1E24;
+    margin-right: 30px;
+}
+
+.signForm input {
+    display: inherit;
+    margin-bottom: 5px;
+    width: 100%;
+    outline: none;
+    padding: 3px 30px;
+    border-radius: 20px;
+    border: none;
+    font-size: 0.98em;
+    height: 50px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+    background-color: #9A9C9F;
+    color: #F7EBE8;
+}
+
+.signForm button {
+    display: inherit;
+    width: 100%;
+    border: none;
+    height: 50px;
+    border-radius: 15px;
+    background-color: #1E1E24;
+    color: #F7EBE8;
+    cursor: pointer;
+    margin-top: 25px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+.signForm input:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.signForm button:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#signin-container {
+    height: 100%;
+    background: url("/img/signin-background.png") no-repeat center;
+    background-size: cover;
+}
+
+#signup-container {
+    height: 100%;
+    background: url("/img/signup-background.JPG") no-repeat center;
+    background-size: cover;
+}
+
+
+
+/*!* Display a Dialog if registration is successful *!*/
+/*#dialogoverlay {*/
+    /*!*display: none;*!*/
+    /*display: block;*/
+    /*height: 100%;*/
+
+    /*position: fixed;*/
+    /*z-index: 10;*/
+    /*opacity: 0.8;*/
+    /*width: 100%;*/
+    /*background-color: #fff;*/
+    /*top: 0;*/
+    /*left: 0;*/
+/*}*/
+
+
+/*#dialogbox{*/
+    /*!*display: none;;*!*/
+
+
+   /*z-index: 120;*/
+    /*display: block;*/
+    /*position: fixed;*/
+    /*!*position: absolute;*!*/
+    /*!*margin: 0 auto;*!*/
+    /*width: 100%;*/
+    /*!*max-width: 500px;*!*/
+
+
+    /*!*position: absolute;*!*/
+    /*!*margin: auto;*!*/
+    /*!*top: 20%;*!*/
+    /*!*right: 0;*!*/
+    /*!*bottom: 0;*!*/
+    /*!*left: 0;*!*/
+    /*!*width:auto;*!*/
+    /*!*height: auto;*!*/
+
+
+    /*!*display: inherit;*!*/
+    /*!*!*left: 10%;*!*!*/
+    /*!*!*top: 100px;*!*!*/
+    /*!*!*left: 20%;*!*!*/
+    /*!*!*right: 20%;*!*!*/
+    /*!*margin: 0 auto;*!*/
+    /*!*!*width:100%;*!*!*/
+    /*!*position: fixed;*!*/
+    /*!*z-index: 10;*!*/
+    /*!*background: #000;*!*/
+    /*!*width: 100%;*!*/
+    /*!*!*width: auto;*!*!*/
+    /*!*border-radius: 7px;*!*/
+/*}*/
+/*#dialogbox > div >{*/
+    /*background: #fff;*/
+    /*!*margin: 8px*!*/
+/*}*/
+/*#dialogbox > div > #dialogboxhead {*/
+    /*background: #666;*/
+    /*font-size: 19px;*/
+    /*padding: 10px;*/
+    /*color: #ccc;*/
+/*}*/
+/*#dialogbox > div > #dialogboxbody {*/
+    /*background: #333;*/
+    /*padding: 20px;*/
+    /*color: #fff;*/
+/*}*/
+/*#dialogbox > div > #dialogboxfoot {*/
+    /*background: #666;*/
+    /*padding: 10px;*/
+    /*text-align:right;*/
+/*}*/
+
+
+
+

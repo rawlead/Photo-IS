@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: head('News')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<div class="container-fluid" id="content">
+	<div class="row hor-sep-60"></div>
+
+	<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+
+	<div class="row" v-for="photoObject in posts">
+		<div class="col-md-7 offset-md-2">
+			<div style="background-color: grey">
+				<h2><a :href="getLink(photoObject)">{{photoObject.title}}</a></h2>
+				<p>{{photoObject.body}}</p>
+				<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:replace="fragments/footer :: scripts"></div>
+<script>
+    var printAllPosts = new Vue({
+        el: '#content',
+        data: {posts: []},
+        mounted() {
+            this.fetchPosts();
+        },
+        methods: {
+            fetchPosts() {
+                axios.get("/posts").then(function(response) {
+                    this.posts = response.data;
+                }.bind(this));
+            },
+            getLink(photoObject) {
+                return '/posts/' + photoObject.id;
+            }
+        }
+    });
+</script>
+</body>
+</html>

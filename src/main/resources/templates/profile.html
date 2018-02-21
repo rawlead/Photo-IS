@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: head('My Profile')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+
+<div class="container-fluid" id="myProfileRoot">
+	<div class="row hor-sep-60"></div>
+
+	<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+	<div class="profile-tab">
+		<button class="profileTabBtn" onclick="openProfileTab(event, 'Uploads')">My Uploads</button>
+		<button class="profileTabBtn" onclick="openProfileTab(event, 'Favorites')">Favorites</button>
+		<button class="profileTabBtn" onclick="openProfileTab(event, 'Settings')">Settings</button>
+	</div>
+
+	<!-- Tab content -->
+	<div class="container-fluid">
+		<div class="row hor-sep-50"></div>
+		<div id="Uploads" class="profileTabContent">
+
+			<h3>My Uploads</h3>
+			<p>London is the capital city of England.</p>
+		</div>
+		<div id="Favorites" class="profileTabContent">
+			<h3>Favorites</h3>
+			<p>London is the capital city of England.</p>
+		</div>
+
+		<div id="Settings" class="profileTabContent">
+			<h3>Settings</h3>
+			<p>Settings is the capital city of England.</p>
+		</div>
+	</div>
+</div>
+
+<div th:replace="fragments/footer :: scripts"></div>
+
+<script th:src="@{scripts/profile.js}"
+		src="../static/scripts/profile.js"
+		type="text/javascript">
+</script>
+
+<script>
+
+</script>
+</body>
+
+
+</html>

@@ -1,0 +1,75 @@
+/* Style the tab */
+.profile-tab {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    width: 85%;
+    right: 0;
+    position: fixed;
+      font-size: 0.95em;
+    
+}
+
+/* Style the buttons inside the tab */
+.profileTabBtn {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: 0.3s;
+    color: inherit;
+}
+
+/* Change background color of buttons on hover */
+.profile-tab .profileTabBtn:hover {
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+    background-color: #E5E6E4;
+}
+
+/* Create an active/current tablink class */
+.profile-tab .profileTabBtn.active {
+    background-color: #CDD3CE;
+}
+
+/* Style the tab content */
+.profileTabContent {
+    display: none;
+    padding: 6px 12px;
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s;
+    width: 85%;
+    float: right;
+
+}
+
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@media screen and (min-width: 1200px) {
+    .profile-tab {
+        width: 87%;
+    }
+    .profileTabContent {
+        width: 87%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .profile-tab {
+        width: 100%;
+    }
+    .profileTabContent {
+        width: 100%;
+    }
+}
+
+
