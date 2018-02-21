@@ -36,7 +36,7 @@ html {
 	display: block;
 	color: #F7EBE8;
 	text-decoration: none;
-	font-size: 0.9375em;    /* 15px */  				/* nav 61px high. 61 - 15 = 46 / 2 = 23(top/botm margins) */
+	font-size: 0.875em;    /* 15px */  				/* nav 61px high. 61 - 15 = 46 / 2 = 23(top/botm margins) */
 	padding: 19px 10px;
 }
 
@@ -49,18 +49,21 @@ html {
 	padding: 0;
 	width: 40%;
 	float: left;
+
 }
 
 #top-nav input {
 	font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
-	width: 200px;
+	width: 150px;
 	float: left;
-	border: 2px solid #F7EBE8;
-	border-radius: 4px;
-	font-size: 0.98em;
+	border: none;
+	border-bottom: 2px solid #1E1E24;
+
+	/*border-radius: 4px;*/
+	font-size: 0.875em;
 	padding: 3px 15px;
-	margin: 5px 15px;
-	height: 50px;
+	margin: 10px 15px;
+	height: 40px;
 	-webkit-transition: width 0.2s ease-in-out;
 	transition: width 0.2s ease-in-out;
 	background-color: #1E1E24;
@@ -72,6 +75,8 @@ html {
 	width: 100%;
 	color: #F7EBE8;
 	outline: none;
+	border-bottom: 2px solid #F7EBE8;
+
 	/*background-color: #444140;*/
 }
 
@@ -142,7 +147,7 @@ html {
 	left: 0;
 	opacity: 0.75;
 	font-size: 0.95em;
-	border-right: #1E1E24 5px solid ;
+	border-right: #1E1E24 1px solid ;
 	/*border-left: #1E1E24 5px solid;*/
 
 }
@@ -212,7 +217,7 @@ html {
 	}
 
 	#left-nav li a {
-		font-size: 1em;
+		/*font-size: 1em;*/
 	}
 }
 
