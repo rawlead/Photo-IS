@@ -1,0 +1,6 @@
+amazonProperties:
+    endpointUrl: https://s3.eu-central-1.amazonaws.com
+    accessKey: AKIAIHK6MI3PHVMRYDBQ
+    secretKey: 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
+    bucketName: photois-uploads-bucket
+

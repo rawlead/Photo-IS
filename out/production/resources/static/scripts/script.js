@@ -10,14 +10,6 @@ function openMobileMenu() {
     }
 }
 
-
-
-
-
-
-
-
-
 window.Event = new Vue({
     data: {isSignedIn: false}
 });
@@ -46,26 +38,25 @@ function deleteCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
-function getLoggedInUsername() {
-    if (getCookie("access_token")) {
-        axios.get("/getUsername?access_token=" + getCookie("access_token"))
-            .then(function (response) {
-                return response.data
-            });
-    }
-}
 
 var vueLoggedUser = new Vue({
     el:'#loggedUser',
-    data: {logged_message : "", },
-        // isSignedIn : false},
+    data: {
+        // default avatar image
+        avatar_link : '/img/user-icon-white.png',
+        signedInUsername : '',
+        signedIdInUserId : '',
+    },
     mounted() {
         if (getCookie("access_token")) {
-            axios.get("/getUsername?access_token=" + getCookie("access_token"))
+            axios.get("/users/loggedUser?access_token=" + getCookie("access_token"))
                 .then(function (response) {
-                    this.logged_message = "Hello, " + response.data;
+                    this.signedInUsername = response.data.username;
+                    this.signedInUserId = response.data.id;
+                    // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
+                    if (response.data.avatarUrl)
+                        this.avatar_link = response.data.avatarUrl;
                     Event.$emit('signed-in');
-                    // this.isSignedIn = true;
                     window.Event.isSignedIn = true;
                 }.bind(this))
                 .catch(function (error) {
@@ -78,11 +69,9 @@ var vueLoggedUser = new Vue({
         signout() {
             axios.get("/users/signout?access_token=" + getCookie("access_token"))
                 .then(function (response) {
-                    // this.isSignedIn = false;
                     window.Event.isSignedIn = false;
                     deleteCookie("access_token");
                     window.location.replace("/");
-                    // this.logged_message = "Good logged out";
                 }.bind(this));
         },
         isSignedIn(){
@@ -90,21 +79,3 @@ var vueLoggedUser = new Vue({
         }
     }
 });
-
-var store = {
-    state: {
-        message: 'WORKS',
-    },
-
-    // state: {
-    //     message: 'Hello!'
-    // },
-    setMessage (newValue) {
-        this.state.message = newValue;
-
-    },
-    // clearMessageAction () {
-    //     if (this.debug) console.log('clearMessageAction triggered')
-    //     this.state.message = ''
-    // }
-};

@@ -1,7 +1,6 @@
 package com.rawlead.github.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,19 +13,30 @@ public class User {
     private String email;
     private String username;
 
-    @JsonIgnore
+//    @JsonIgnore
     private String password;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Role> roles;
 
+    private String avatarUrl;
+
     public User() {
     }
 
-    public User(String email, String username, String password, List<Role> roles) {
+    public User(String email, String username, String password, List<Role> roles, String avatarUrl) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.roles = roles;
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getUsername() {

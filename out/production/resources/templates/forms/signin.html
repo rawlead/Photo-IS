@@ -8,7 +8,7 @@
     <div class="row hor-sep-60"></div>
     <ul th:replace="fragments/nav :: leftNav"></ul>
     <div class="row">
-        <div class="col-md-5 col-xl-4 offset-md-2">
+        <div class="col-md-5 col-xl-3 offset-md-2">
             <div class="signForm">
                 <h1>Sign In</h1>
                 <a href="/users/signup">Or Create Account</a>
@@ -45,7 +45,9 @@
                 axios({
                     method: 'post',
                     url:'/oauth/token',
-                    auth:{username:'photois-client',password:'photois-secret'},
+                    auth:{
+                        username:'photois-client',password:'photois-secret'
+                    },
                     headers: {"Content-type": "application/x-www-form-urlencoded; charset=utf-8"},
                     data:params
                 }).then(function (response) {

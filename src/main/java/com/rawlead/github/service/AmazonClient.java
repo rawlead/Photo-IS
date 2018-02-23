@@ -4,9 +4,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,11 +51,12 @@ public class AmazonClient {
         return new Date().getTime() + "-" + multipartFile.getOriginalFilename().replace(" ", "-");
     }
 
-
     private void uploadFileTOS3Bucket(String fileName, File file) {
         s3client.putObject(new PutObjectRequest(bucketName,fileName,file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
+
+
     public String deleteFileFromS3Bucket(String url) {
         String name = url.substring(url.lastIndexOf("/") + 1);
         System.out.println(name);
@@ -65,6 +64,8 @@ public class AmazonClient {
         s3client.deleteObject(new DeleteObjectRequest(bucketName,name));
         return "File deleted";
     }
+
+
 
 
     // save a file to S3 bucket and return fileUrl
@@ -82,6 +83,4 @@ public class AmazonClient {
         }
         return url;
     }
-
-
 }

@@ -19,6 +19,7 @@ public class PhotoIsApplication {
 
 	private PasswordEncoder passwordEncoder;
 
+
 	@Autowired
 	public PhotoIsApplication(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
@@ -38,9 +39,9 @@ public class PhotoIsApplication {
 	@Autowired
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository, UserService service) throws Exception {
 		if (userRepository.count() == 0) {
-			service.save(new User("user@mail.com","user", "password", Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER"))));
-			service.save(new User("usertwo@mail.co,","usertwo", "password", Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER"))));
-			service.save(new User("admin@mail.com","admin", "password", Arrays.asList(new Role("USER"), new Role("ADMIN"))));
+			service.save(new User("user@mail.com","user", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "https://s3.eu-central-1.amazonaws.com/photois-uploads-bucket/1519303180823-avatar.jpg"));
+			service.save(new User("usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), ""));
+			service.save(new User("admin@mail.com","admin", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("ADMIN")), ""));
 		}
 		builder.userDetailsService(userDetailsService(userRepository)).passwordEncoder(passwordEncoder);
 	}

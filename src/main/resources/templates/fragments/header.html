@@ -29,7 +29,10 @@
         <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/users/signin" >Sign In</a>
         <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right" >Sign Out</a>
 
-        <a vs-show="isSignedIn()" onclick="openMyProfile()" class="float-right top-nav-link">{{logged_message}}</a>
+        <a v-show="isSignedIn()" onclick="openMyProfile()" id="top-nav-avatar" class="float-right ">
+            <!--{{logged_message}}-->
+            <img v-bind:src="avatar_link" alt="Avatar"/>
+        </a>
 
         <form  class="search-field">
             <input type="text" name="search" id="search-input" />

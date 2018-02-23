@@ -2,10 +2,7 @@ package com.rawlead.github.controller;
 
 import com.rawlead.github.service.AmazonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -18,13 +15,27 @@ public class BucketController {
         this.amazonClient = amazonClient;
     }
 
-    @PostMapping("/storage/uploadFile")
-    public String uploadFile(@RequestPart(value = "file")MultipartFile file) {
+    @PostMapping("/storage/uploadPhoto")
+    public String uploadPhoto(@RequestPart(value = "file")MultipartFile file) {
         return this.amazonClient.uploadFile(file);
     }
 
-    @DeleteMapping("/storage/deleteFile")
-    public String deleteFile(@RequestPart(value = "url") String url) {
+    @DeleteMapping("/storage/deletePhoto")
+    public String deletePhoto(@RequestPart(value = "url") String url) {
         return this.amazonClient.deleteFileFromS3Bucket(url);
     }
+
+//    @GetMapping("/storage/getPhoto/{url}")
+//    public String getPhoto(@PathVariable(value = "url") String url) {
+//        return this.amazonClient.getFileFromS3Bucket(url);
+//    }
+//    @PostMapping("/storage/uploadPhoto")
+//    public String uploadPhoto(@RequestPart(value = "file")MultipartFile file) {
+//        return this.amazonClient.uploadFile(file);
+//    }
+//
+//    @DeleteMapping("/storage/deletePhoto")
+//    public String deletePhoto(@RequestPart(value = "url") String url) {
+//        return this.amazonClient.deleteFileFromS3Bucket(url);
+//    }
 }

@@ -8,7 +8,7 @@
     <div class="row hor-sep-60"></div>
     <ul th:replace="fragments/nav :: leftNav"></ul>
     <div class="row">
-        <div class="col-md-5 col-xl-4 offset-md-2">
+        <div class="col-md-5 col-xl-3 offset-md-2">
             <div class="signForm">
                 <h1>Sign Up</h1>
                 <a href="/users/signin">Or Sign In</a>
@@ -48,6 +48,7 @@
             password: '',
             passwordConfirm: '',
             successfulSignUp: false,
+
         },
         mounted() {
             Event.$on('signed-in',function(){

@@ -41,4 +41,6 @@ public class PostService {
     public PhotoObject getPost(Long id) {
         return postRepository.findOne(id);
     }
+
+
 }

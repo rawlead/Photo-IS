@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public void save(User user) {
-        user.setPassword(getPasswordEncoder().encode(user.getPassword()));
+//        user.setPassword(getPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -38,4 +38,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findOne(id);
+    }
 }

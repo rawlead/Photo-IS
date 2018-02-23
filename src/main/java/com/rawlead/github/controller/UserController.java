@@ -4,6 +4,7 @@ import com.rawlead.github.entity.ResponseError;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
+import com.rawlead.github.service.AmazonClient;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +22,13 @@ import java.util.regex.Pattern;
 public class UserController {
     private UserService userService;
     private TokenStore tokenStore;
+    private AmazonClient amazonClient;
 
     @Autowired
-    public UserController(UserService userService, TokenStore tokenStore) {
+    public UserController(UserService userService, TokenStore tokenStore, AmazonClient amazonClient) {
         this.userService = userService;
         this.tokenStore = tokenStore;
+        this.amazonClient = amazonClient;
     }
 
     @PostMapping(value = "/users/signup", produces = "application/json")
@@ -46,7 +50,14 @@ public class UserController {
         else if (!emailPattern.matcher(userRegistrationForm.getEmail()).matches())
             return new ResponseEntity<>(ResponseError.INVALID_EMAIL, HttpStatus.CONFLICT);
 
-        userService.save(new User(userRegistrationForm.getEmail(), userRegistrationForm.getUsername(), userRegistrationForm.getPassword(), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER"))));
+        User user = new User();
+        user.setEmail(userRegistrationForm.getEmail());
+        user.setPassword(userService.getPasswordEncoder().encode(userRegistrationForm.getPassword()));
+        user.setUsername(userRegistrationForm.getUsername());
+        user.setRoles(Arrays.asList(new Role("USER"),new Role("PHOTOGRAPHER")));
+        user.setAvatarUrl("");
+        userService.save(user);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -55,14 +66,28 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-
     @GetMapping(value = "/users/signout")
     public void logout(@RequestParam(value = "access_token") String token) {
         tokenStore.removeAccessToken(tokenStore.readAccessToken(token));
     }
 
-    @GetMapping(value = "/getUsername")
-    public String getUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+    @GetMapping(value = "/users/loggedUser")
+    public User getLoggedUser() {
+        return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    @PutMapping(value = "/users/{id}/updateAvatar")
+    public ResponseEntity<?> updateAvatar(
+                                          @RequestParam(value = "avatarImage") MultipartFile avatarImage,@PathVariable Long id) {
+
+        System.out.println(avatarImage.toString());
+
+        if (!id.equals(getLoggedUser().getId()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        User user = userService.getUserById(id);
+        String url = amazonClient.uploadFile(avatarImage);
+        user.setAvatarUrl(url);
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -12,8 +12,6 @@ html {
 }
 
 .errors {
-	/*color: red;*/
-	/*font-weight: bold;*/
 	background-color: #5E0B15;
 	border: none;
 	color: #CDD3CE;
@@ -30,6 +28,17 @@ html {
 	background-color: #1E1E24;
 	padding-right: 10px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#top-nav-avatar {
+	margin-right: 10px;
+	padding: 12px 0 12px 0;
+}
+
+#top-nav-avatar img {
+	border-radius: 50%;
+
+	width: 36px	;
 }
 
 #top-nav .top-nav-link {
@@ -58,8 +67,6 @@ html {
 	float: left;
 	border: none;
 	border-bottom: 2px solid #1E1E24;
-
-	/*border-radius: 4px;*/
 	font-size: 0.875em;
 	padding: 3px 15px;
 	margin: 10px 15px;
@@ -68,7 +75,6 @@ html {
 	transition: width 0.2s ease-in-out;
 	background-color: #1E1E24;
 	color: #F7EBE8;
-
 }
 
 #top-nav input:focus {
@@ -76,8 +82,6 @@ html {
 	color: #F7EBE8;
 	outline: none;
 	border-bottom: 2px solid #F7EBE8;
-
-	/*background-color: #444140;*/
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
