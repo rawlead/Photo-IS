@@ -123,13 +123,14 @@
                 var formData = new FormData();
                 formData.append("avatarImage", document.getElementById("avatar_input_file").files[0]);
                 this.updateStatus = "Uploading...";
-                axios.put('/users/' + vueLoggedUser.signedInUserId + '/updateAvatar?access_token=' + accessTokenPath(), formData).then(
+                axios.put('/users/' + this.signedInUserId + '/updateAvatar?' + accessTokenPath(), formData).then(
                     function() {
                         this.uploading = false;
                         vueLoggedUser.avatar_link = this.avatarImage;
                         this.updateStatus = "Update";
                     }.bind(this)
-                )
+                );
+                axios.delete('/users/' + this.signedInUserId + '/deleteAvatar?' + accessTokenPath());
 
             },
 

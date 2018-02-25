@@ -77,17 +77,19 @@ public class UserController {
     }
 
     @PutMapping(value = "/users/{id}/updateAvatar")
-    public ResponseEntity<?> updateAvatar(
-                                          @RequestParam(value = "avatarImage") MultipartFile avatarImage,@PathVariable Long id) {
-
-        System.out.println(avatarImage.toString());
-
+    public ResponseEntity<?> updateAvatar(@RequestParam(value = "avatarImage") MultipartFile avatarImage,@PathVariable Long id) {
         if (!id.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        User user = userService.getUserById(id);
-        String url = amazonClient.uploadFile(avatarImage);
-        user.setAvatarUrl(url);
-        userService.save(user);
+        userService.updateUserAvatar(id,avatarImage);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/users/{id}/deleteAvatar")
+    public ResponseEntity<?> deleteAvatar(@PathVariable Long id) {
+        if (!id.equals(getLoggedUser().getId()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if(userService.deleteUserAvatar(id))
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
