@@ -36,6 +36,11 @@
             username: '',
             password: '',
         },
+        mounted() {
+            Event.$on('signed-in',function(){
+                window.location.replace("/");
+            })
+        },
         methods: {
             signin() {
                 var params = new URLSearchParams();
@@ -52,7 +57,7 @@
                     data:params
                 }).then(function (response) {
                     setCookie("access_token", response.data.access_token);
-                    openMyProfile();
+                    document.location.replace("/profile");
                 }).catch(function (error) {
                     this.signInErrors = true;
                     this.signInAlertMessage = "Wrong username or password";

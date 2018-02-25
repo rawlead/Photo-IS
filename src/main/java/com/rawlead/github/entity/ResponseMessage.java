@@ -1,6 +1,6 @@
 package com.rawlead.github.entity;
 
-public interface ResponseError {
+public interface ResponseMessage {
     String DUPLICATE_USER = "User already exists";
     String PASSWORD_MISMATCH = "Passwords don't match";
     String WRONG_CREDENTIALS = "Wrong username or password";

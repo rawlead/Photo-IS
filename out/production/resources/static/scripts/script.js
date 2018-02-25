@@ -1,6 +1,5 @@
-$('#search-input').attr("placeholder", " Search");
 
-// let ACCESS_TOKEN = "access_token=" + getCookie("access_token");
+$('#search-input').attr("placeholder", " Search");
 
 function accessTokenPath() {
     return "access_token=" + getCookie("access_token")
@@ -19,16 +18,6 @@ function openMobileMenu() {
 window.Event = new Vue({
     data: {isSignedIn: false}
 });
-
-function openMyProfile() {
-    axios.get("/profile?" + accessTokenPath() )
-        .then(function (response) {
-            document.location.replace("/profile?" + accessTokenPath());
-        }.bind(this))
-        .catch(function () {
-            document.location.replace("/users/signin")
-        });
-}
 
 function getCookie(name) {
     var value = "; " + document.cookie;

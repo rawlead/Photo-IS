@@ -1,6 +1,6 @@
 package com.rawlead.github.controller;
 
-import com.rawlead.github.entity.ResponseError;
+import com.rawlead.github.entity.ResponseMessage;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
@@ -40,15 +40,15 @@ public class UserController {
                 userRegistrationForm.getUsername().trim().equals("") ||
                 userRegistrationForm.getPassword().trim().equals("") ||
                 userRegistrationForm.getPasswordConfirm().trim().equals(""))
-            return new ResponseEntity<>(ResponseError.EMPTY_FIELD, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(ResponseMessage.EMPTY_FIELD, HttpStatus.CONFLICT);
         else if (userService.getUser(userRegistrationForm.getUsername()) != null)
-            return new ResponseEntity<>(ResponseError.DUPLICATE_USER, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(ResponseMessage.DUPLICATE_USER, HttpStatus.CONFLICT);
         else if (!userRegistrationForm.getPassword().equals(userRegistrationForm.getPasswordConfirm()))
-            return new ResponseEntity<>(ResponseError.PASSWORD_MISMATCH, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(ResponseMessage.PASSWORD_MISMATCH, HttpStatus.CONFLICT);
         else if (loginPattern.matcher(userRegistrationForm.getUsername()).find())
-            return new ResponseEntity<>(ResponseError.SPECIAL_CHARACTERS, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(ResponseMessage.SPECIAL_CHARACTERS, HttpStatus.CONFLICT);
         else if (!emailPattern.matcher(userRegistrationForm.getEmail()).matches())
-            return new ResponseEntity<>(ResponseError.INVALID_EMAIL, HttpStatus.CONFLICT);
+            return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
 
         User user = new User();
         user.setEmail(userRegistrationForm.getEmail());
