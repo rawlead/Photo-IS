@@ -2,11 +2,11 @@
 .profile-tab {
     overflow: hidden;
     background-color: #f1f1f1;
+    border-bottom: 1px black solid;
     width: 85%;
     right: 0;
     position: fixed;
-      font-size: 0.95em;
-    
+    font-size: 0.875em;
 }
 
 /* Style the buttons inside the tab */
@@ -30,35 +30,97 @@
 /* Create an active/current tablink class */
 .profile-tab .profileTabBtn.active {
     background-color: #CDD3CE;
+
 }
+
+
+
 
 /* Style the tab content */
 .profileTabContent {
+    font-size: 0.875em;
     display: none;
     padding: 6px 12px;
     -webkit-animation: fadeEffect 1s;
     animation: fadeEffect 1s;
-    width: 85%;
-    float: right;
+}
+
+.profile-tab-avatar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    width: 100%;
+    transition: 0.5s ease;
+    border-radius: 4px;
+    backface-visibility: hidden;
 
 }
+
+.avatar-middle-overlay {
+    transition: 0.5s ease;
+    position: absolute;
+    opacity: 0;
+    top:50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.avatarContainer:hover .profile-tab-avatar {
+    opacity: 0.3;
+}
+.avatarContainer:hover .avatar-middle-overlay {
+    opacity: 1;
+}
+
+.inputFile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+/*.col-avatar {*/
+    /*background-color: #F9F8F8;*/
+    /*border-radius: 4px;*/
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+
+
+/*}*/
+/*.inputFileLabel {*/
+    /*background-color: black;*/
+    /*color: white;*/
+/*}*/
+
+
+
 
 /* Fade in tabs */
 @-webkit-keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @media screen and (min-width: 1200px) {
     .profile-tab {
-        width: 87%;
-    }
-    .profileTabContent {
         width: 87%;
     }
 }
@@ -67,9 +129,7 @@
     .profile-tab {
         width: 100%;
     }
-    .profileTabContent {
-        width: 100%;
-    }
+
 }
 
 

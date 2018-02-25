@@ -13,6 +13,7 @@ function openProfileTab(evt, tabName) {
     for (i = 0; i < profileTabBtn.length; i++) {
         profileTabBtn[i].className = profileTabBtn[i].className.replace(" active", "");
     }
-    document.getElementById(tabName).style.display = "block";
+    document.getElementById(tabName).style.display = "flex";
+    console.log("tab name " + tabName);
     evt.currentTarget.className += " active";
 }

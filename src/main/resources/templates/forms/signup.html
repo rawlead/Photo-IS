@@ -24,7 +24,7 @@
                 <label for="username"><b>Username</b></label>
                 <input v-model="username" type="text" placeholder="Enter Username" id="username"/>
 
-                <button type="button" v-on:click="signup">SUBMIT</button>
+                <button type="button" class="submit-btn" v-on:click="signup">SUBMIT</button>
             </div>
             <div v-if="signUpErrors" class="alert alert-warning" role="alert">
                 {{signUpAlertMessage}}

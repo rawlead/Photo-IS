@@ -1,5 +1,11 @@
 $('#search-input').attr("placeholder", " Search");
 
+// let ACCESS_TOKEN = "access_token=" + getCookie("access_token");
+
+function accessTokenPath() {
+    return "access_token=" + getCookie("access_token")
+}
+
 // responsive mobile nav menu
 function openMobileMenu() {
     var x = document.getElementById("left-nav");
@@ -15,9 +21,9 @@ window.Event = new Vue({
 });
 
 function openMyProfile() {
-    axios.get("/profile?access_token=" + getCookie("access_token"))
+    axios.get("/profile?" + accessTokenPath())
         .then(function (response) {
-            document.location.replace("/profile?access_token=" + getCookie("access_token"));
+            document.location.replace("/profile?" + accessTokenPath());
         }.bind(this))
         .catch(function () {
             document.location.replace("/users/signin")
@@ -49,7 +55,7 @@ var vueLoggedUser = new Vue({
     },
     mounted() {
         if (getCookie("access_token")) {
-            axios.get("/users/loggedUser?access_token=" + getCookie("access_token"))
+            axios.get("/users/loggedUser?" + accessTokenPath())
                 .then(function (response) {
                     this.signedInUsername = response.data.username;
                     this.signedInUserId = response.data.id;
@@ -67,7 +73,7 @@ var vueLoggedUser = new Vue({
     },
     methods: {
         signout() {
-            axios.get("/users/signout?access_token=" + getCookie("access_token"))
+            axios.get("/users/signout?" + accessTokenPath())
                 .then(function (response) {
                     window.Event.isSignedIn = false;
                     deleteCookie("access_token");
@@ -76,6 +82,9 @@ var vueLoggedUser = new Vue({
         },
         isSignedIn(){
             return window.Event.isSignedIn;
+        },
+        getAvatarLink() {
+            return this.avatar_link;
         }
     }
 });
