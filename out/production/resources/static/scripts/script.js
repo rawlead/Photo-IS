@@ -21,7 +21,7 @@ window.Event = new Vue({
 });
 
 function openMyProfile() {
-    axios.get("/profile?" + accessTokenPath())
+    axios.get("/profile?" + accessTokenPath() )
         .then(function (response) {
             document.location.replace("/profile?" + accessTokenPath());
         }.bind(this))
