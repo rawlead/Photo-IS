@@ -1,6 +1,8 @@
 package com.rawlead.github.service;
 
+import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
+import com.rawlead.github.pojo.UserRegistrationForm;
 import com.rawlead.github.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -64,4 +67,53 @@ public class UserService {
         user.setAvatarUrl(url);
         userRepository.save(user);
     }
+
+    public void createNewUser(UserRegistrationForm userRegistrationForm) {
+        User user = new User();
+        user.setEmail(userRegistrationForm.getEmail());
+        user.setPassword(getPasswordEncoder().encode(userRegistrationForm.getPassword()));
+        user.setUsername(userRegistrationForm.getUsername());
+        user.setRoles(Arrays.asList(new Role("USER"),new Role("PHOTOGRAPHER")));
+        user.setAvatarUrl("/img/user-icon-white.png");
+        userRepository.save(user);
+    }
+
+    public void updateUserEmail(Long userId, String newEmail, String newEmailConfirm) {
+        User user = userRepository.getOne(userId);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
+
+    public boolean updateUserPassword(Long userId, String oldPass, String newPass, String newPassConfirm) {
+        User user = userRepository.getOne(userId);
+        if(!getPasswordEncoder().matches(oldPass,user.getPassword()))
+            return false;
+
+        user.setPassword(getPasswordEncoder().encode(newPass));
+        userRepository.save(user);
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -21,43 +21,80 @@
 
     <div id="Uploads" class="profileTabContent row">
         <div class="col-md-3 col-xl-3 offset-md-2 col-6">
-            <h3>Welcome, {{signedInUsername}}!</h3>
+            <h3>Welcome, {{user.username}}!</h3>
             <p>On this page you can upload new photos</p>
         </div>
     </div>
     <div id="Favorites" class="profileTabContent row">
         <div class="col-md-3 col-xl-3 offset-md-2 col-6">
-            <h3>Welcome, {{signedInUsername}}!</h3>
+            <h3>Welcome, {{user.username}}!</h3>
             <p>On this page you can see your favorite authors</p>
         </div>
     </div>
 
 
     <div id="Settings" class="profileTabContent row">
-        <div class="col-md-3 col-xl-3 offset-md-2 col-6">
-            <h3>Welcome, {{signedInUsername}}!</h3>
+        <div class="col-md-5 col-xl-3 offset-md-2 col-6">
+            <h3>Welcome, {{user.username}}!</h3>
+
+            <!--<h5>Your username: {{user.username}}</h5>-->
+
+
+            <!--<p>-->
+            <!--<button class="submit-btn">Change password</button>-->
+            <!--</p>-->
             <p>On this page you can:</p>
             <ol>
                 <li>Change your profile picture.</li>
                 <li>Change your email</li>
                 <li>Change your password</li>
             </ol>
+
+            <!--change email form-->
+            <h5>Email: {{user.email}} <br/><a class="badge badge-dark" v-on:click="updateData = 'email'" href="#">Change
+                email</a>
+                <a v-on:click="updateData = 'password'" class="badge badge-dark" href="#">Change password</a></h5>
+
+            <div v-if="updateData === 'email'">
+                <input class="data-input" v-model="newEmail" type="email" placeholder="Enter new email"/>
+                <input class="data-input" v-model="newEmailConfirm" type="email" placeholder="Confirm new email"/>
+                <button v-on:click="updateEmail(newEmail,newEmailConfirm)" class="btn btn-success">Submit</button>
+                <button v-on:click="updateData = ''" class="btn btn-danger">Cancel</button>
+            </div>
+
+            <!-- change password form-->
+            <div v-if="updateData === 'password'">
+                <input class="data-input" v-model="oldPass" type="password" placeholder="Enter old password"/>
+                <input class="data-input" v-model="newPass" type="password" placeholder="Enter new password"/>
+                <input class="data-input" v-model="newPassConfirm" type="password" placeholder="Confirm new password"/>
+                <button v-on:click="updatePassword(oldPass,newPass,newPassConfirm)" class="btn btn-success">Submit
+                </button>
+                <button v-on:click="updateData = ''" class="btn btn-danger">Cancel</button>
+            </div>
+
+            <div v-if="updateDataStatus === 'errors'" class="alert alert-warning" role="alert">
+                {{updateDataMessage}}
+            </div>
+            <div v-if="updateDataStatus === 'success'" class="alert alert-success" role="alert">
+                {{updateDataMessage}}
+            </div>
+
         </div>
-        <div class="col-md-3 col-xl-4 col-1"></div>
-        <div class="col-md-3 col-xl-2 col-5 col-avatar">
+        <div class="col-md-1 col-xl-3 col-1 ">
+
+        </div>
+        <div class="col-md-3 col-xl-2 col-avatar col-5">
             <h4>Profile picture</h4>
             <div class="avatarContainer">
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
                 <div class="avatar-middle-overlay">
-                    <!--<div class="text">{{signedInUsername}}</div>-->
-                    <input type="file"  v-on:change="onFileChange" class="inputFile" id="avatar_input_file" value="Choose file"/>
-                    <label for="avatar_input_file" class="submit-btn" style="padding: 0 10px 0 10px">Update</label>
+                    <input type="file" v-on:change="onFileChange" class="inputFile" id="avatar_input_file"
+                           value="Choose file"/>
+                    <label for="avatar_input_file" class="btn btn-outline-dark">Update</label>
                 </div>
             </div>
-            <button v-if="uploading"  class="submit-btn"  v-on:click="uploadAvatar">{{updateStatus}}</button>
-
-
-
+            <button v-if="updateData === 'avatar'" class="submit-btn" v-on:click="uploadAvatar">{{updateAvatarStatus}}
+            </button>
         </div>
 
 
@@ -77,22 +114,26 @@
     var profilePage = new Vue({
         el: '#myProfileRoot',
         data: {
-            avatarImage: '/img/user-icon-white.png',
-            signedInUsername: '',
-            signedInUserId: '',
-            uploading : false,
-            updateStatus : 'Update'
+            user: {},
+            avatarImage: '',
+            oldPass: '',
+            newPass: '',
+            newPassConfirm: '',
+            newEmail: '',
+            newEmailConfirm: '',
+            updateAvatarStatus: 'Update',
+            updateData: '',
+            updateDataStatus: '',
+            updateDataMessage: ''
         },
         mounted() {
             if (getCookie("access_token")) {
                 axios.get("/users/loggedUser?" + accessTokenPath())
                     .then(function (response) {
-                        this.signedInUsername = response.data.username;
-                        this.signedInUserId = response.data.id;
+                        this.user = response.data;
                         // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
-                        if (response.data.avatarUrl)
-                            this.avatarImage = response.data.avatarUrl;
 
+                            this.avatarImage = response.data.avatarUrl;
                     }.bind(this))
                     .catch(function (error) {
                         deleteCookie("access_token");
@@ -114,26 +155,67 @@
                     this.avatarImage = e.target.result;
                 };
                 reader.readAsDataURL(file);
-                this.uploading = true;
-            },
-            removeImage: function (e) {
-                this.avatarImage = '';
+                this.updateData = 'avatar';
             },
             uploadAvatar() {
                 var formData = new FormData();
                 formData.append("avatarImage", document.getElementById("avatar_input_file").files[0]);
-                this.updateStatus = "Uploading...";
-                axios.put('/users/' + this.signedInUserId + '/updateAvatar?' + accessTokenPath(), formData).then(
-                    function() {
-                        this.uploading = false;
+                this.updateAvatarStatus = "Uploading...";
+                axios.put('/users/' + this.user.id + '/updateAvatar?' + accessTokenPath(), formData).then(
+                    function () {
                         vueLoggedUser.avatar_link = this.avatarImage;
-                        this.updateStatus = "Update";
+                        this.updateAvatarStatus = "Update";
+                        this.updateData = '';
                     }.bind(this)
                 );
-                axios.delete('/users/' + this.signedInUserId + '/deleteAvatar?' + accessTokenPath());
-
             },
 
+            updateEmail(newEmail, newEmailConfirm) {
+                axios({
+                    method: 'put',
+                    url: '/users/' + this.user.id + '/updateEmail?' + accessTokenPath(),
+                    params: {
+                        newEmail,
+                        newEmailConfirm
+                    }
+                }).then((resultAxios) => {
+                    this.updateDataMessage = resultAxios.data;
+                    this.updateDataStatus = 'success';
+                    this.updateData = '';
+                    this.user.email = newEmail;
+                }).catch(function (error) {
+                    this.updateDataMessage = error.response.data;
+                    this.updateDataStatus = 'errors';
+                }.bind(this));
+
+                this.showAndHideAlert();
+            },
+            updatePassword(oldPass, newPass, newPassConfirm) {
+                axios({
+                    method:'put',
+                    url: '/users/' + this.user.id + '/updatePassword?' + accessTokenPath(),
+                    params: {
+                        oldPass,
+                        newPass,
+                        newPassConfirm
+                    }
+                }).then((resultAxios) => {
+                    this.updateDataMessage = resultAxios.data;
+                    this.updateDataStatus = 'success';
+                    this.updateData = '';
+                }).catch(function (error) {
+                    this.updateDataMessage = error.response.data;
+                    this.updateDataStatus = 'errors';
+                }.bind(this));
+
+                this.showAndHideAlert();
+            },
+            showAndHideAlert() {
+                $(".alert").fadeIn('slow');
+                setTimeout(function () {
+                    $('.alert').fadeOut('slow');
+                }, 3000);
+            }
         }
     })
 </script>

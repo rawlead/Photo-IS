@@ -13,10 +13,10 @@
                 <h1>Sign In</h1>
                 <a href="/users/signup">Or Create Account</a>
                 <label for="username"><b>Username</b></label>
-                <input v-model="username" type="text" placeholder="Enter Username" id="username"/>
+                <input class="data-input" v-model="username" type="text" placeholder="Enter Username" id="username"/>
 
                 <label for="password"><b>Password</b></label>
-                <input v-model="password" type="password" placeholder="Enter Password" id="password"/>
+                <input class="data-input" v-model="password" type="password" placeholder="Enter Password" id="password"/>
 
                 <button class="submit-btn" type="button"  v-on:click="signin">SUBMIT</button>
             </div>

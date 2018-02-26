@@ -35,6 +35,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                 .antMatchers(HttpMethod.POST,"/posts").authenticated()
                 .antMatchers(HttpMethod.PUT,"/users/**/updateAvatar").authenticated()
                 .antMatchers(HttpMethod.DELETE,"/users/**/deleteAvatar").authenticated()
+                .antMatchers(HttpMethod.PUT,"/users/**/updatePassword").authenticated()
+                .antMatchers(HttpMethod.PUT,"/users/**/updateEmail").authenticated()
 //                .antMatchers("/profile/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());

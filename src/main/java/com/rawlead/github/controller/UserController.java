@@ -1,7 +1,6 @@
 package com.rawlead.github.controller;
 
 import com.rawlead.github.entity.ResponseMessage;
-import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
 import com.rawlead.github.service.AmazonClient;
@@ -14,7 +13,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -50,13 +48,7 @@ public class UserController {
         else if (!emailPattern.matcher(userRegistrationForm.getEmail()).matches())
             return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
 
-        User user = new User();
-        user.setEmail(userRegistrationForm.getEmail());
-        user.setPassword(userService.getPasswordEncoder().encode(userRegistrationForm.getPassword()));
-        user.setUsername(userRegistrationForm.getUsername());
-        user.setRoles(Arrays.asList(new Role("USER"),new Role("PHOTOGRAPHER")));
-        user.setAvatarUrl("");
-        userService.save(user);
+        userService.createNewUser(userRegistrationForm);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -76,20 +68,54 @@ public class UserController {
         return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    @PutMapping(value = "/users/{id}/updateAvatar")
-    public ResponseEntity<?> updateAvatar(@RequestParam(value = "avatarImage") MultipartFile avatarImage,@PathVariable Long id) {
-        if (!id.equals(getLoggedUser().getId()))
+    @PutMapping(value = "/users/{userId}/updateAvatar")
+    public ResponseEntity<?> updateAvatar(@RequestParam(value = "avatarImage") MultipartFile avatarImage, @PathVariable Long userId) {
+        if (!userId.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        userService.updateUserAvatar(id,avatarImage);
+        userService.updateUserAvatar(userId, avatarImage);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/users/{id}/deleteAvatar")
-    public ResponseEntity<?> deleteAvatar(@PathVariable Long id) {
-        if (!id.equals(getLoggedUser().getId()))
+    @DeleteMapping(value = "/users/{userId}/deleteAvatar")
+    public ResponseEntity<?> deleteAvatar(@PathVariable Long userId) {
+        if (!userId.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        if(userService.deleteUserAvatar(id))
+        if (userService.deleteUserAvatar(userId))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(value = "/users/{userId}/updateEmail")
+    public ResponseEntity<?> updateEmail(@PathVariable Long userId, @RequestParam String newEmail, @RequestParam String newEmailConfirm) {
+        if (!userId.equals(getLoggedUser().getId()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
+
+        if (!emailPattern.matcher(newEmail).matches())
+            return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
+        else if (!emailPattern.matcher(newEmailConfirm).matches())
+            return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
+        else if (!newEmail.equals(newEmailConfirm))
+            return new ResponseEntity<>(ResponseMessage.EMAIL_MISMATCH, HttpStatus.CONFLICT);
+        userService.updateUserEmail(userId, newEmail, newEmailConfirm);
+        return new ResponseEntity<>(ResponseMessage.EMAIL_UPDATED, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/users/{userId}/updatePassword")
+    public ResponseEntity<?> updatePassword(@PathVariable Long userId, @RequestParam String oldPass, @RequestParam String newPass, @RequestParam String newPassConfirm) {
+        if (!userId.equals(getLoggedUser().getId()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        if (oldPass.trim().equals("") ||
+                newPass.trim().equals("") ||
+                newPassConfirm.trim().equals(""))
+            return new ResponseEntity<>(ResponseMessage.EMPTY_FIELD, HttpStatus.CONFLICT);
+        else if (!newPass.equals(newPassConfirm))
+            return new ResponseEntity<>(ResponseMessage.NEW_PASSWORDS_MISMATCH,HttpStatus.CONFLICT);
+
+        if (!userService.updateUserPassword(userId, oldPass, newPass, newPassConfirm))
+            return new ResponseEntity<>(ResponseMessage.CURRENT_PASSWORD_MISMATCH, HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(ResponseMessage.PASSWORD_UPDATED,HttpStatus.OK);
     }
 }
