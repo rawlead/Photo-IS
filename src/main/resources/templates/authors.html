@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: head('Authors')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<div class="container-fluid" id="authors">
+    <div class="row hor-sep-60"></div>
+
+    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+
+    <div class="row hor-sep-30"></div>
+
+
+    <div v-for="author in users" class="row">
+        <div class="col-md-7 offset-md-2">
+            <p>{{author.username}}</p>
+            <p>{{author.email}}</p>
+            <p>{{author.avatarUrl}}</p>
+            <hr/>
+        </div>
+
+    </div>
+
+
+
+</div>
+<div th:replace="fragments/footer :: scripts"></div>
+<script>
+    var allUsers = new Vue({
+        el: '#authors',
+        data: {
+            users: []
+        },
+        mounted() {
+            this.fetchUsers();
+        },
+        methods: {
+            fetchUsers() {
+                axios.get("/api/users").then(function (response) {
+                    console.log(response.data)
+                    this.users = response.data;
+                }.bind(this));
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

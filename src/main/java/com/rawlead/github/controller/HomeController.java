@@ -36,7 +36,11 @@ public class HomeController {
     public String profile(@CookieValue(value = "access_token",required = false) String access_token) {
         if (access_token == null)
             return "redirect:/users/signin";
-
         return "profile";
+    }
+
+    @GetMapping(value = "/authors")
+    public String authors() {
+        return "authors";
     }
 }

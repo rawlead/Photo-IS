@@ -35,21 +35,17 @@
 
     <div id="Settings" class="profileTabContent row">
         <div class="col-md-5 col-xl-3 offset-md-2 col-6">
+
+
+
+
             <h3>Welcome, {{user.username}}!</h3>
-
-            <!--<h5>Your username: {{user.username}}</h5>-->
-
-
-            <!--<p>-->
-            <!--<button class="submit-btn">Change password</button>-->
-            <!--</p>-->
             <p>On this page you can:</p>
             <ol>
                 <li>Change your profile picture.</li>
                 <li>Change your email</li>
                 <li>Change your password</li>
             </ol>
-
             <!--change email form-->
             <h5>Email: {{user.email}} <br/><a class="badge badge-dark" v-on:click="updateData = 'email'" href="#">Change
                 email</a>
@@ -83,7 +79,7 @@
         <div class="col-md-1 col-xl-3 col-1 ">
 
         </div>
-        <div class="col-md-3 col-xl-2 col-avatar col-5">
+        <div class="col-md-4 col-xl-2 col-avatar col-5">
             <h4>Profile picture</h4>
             <div class="avatarContainer">
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
@@ -93,8 +89,8 @@
                     <label for="avatar_input_file" class="btn btn-outline-dark">Update</label>
                 </div>
             </div>
-            <button v-if="updateData === 'avatar'" class="submit-btn" v-on:click="uploadAvatar">{{updateAvatarStatus}}
-            </button>
+            <button v-if="updateData === 'avatar'" class="btn btn-success" style="width: 100%;" v-on:click="uploadAvatar">{{updateAvatarStatus}}</button>
+
         </div>
 
 
@@ -128,7 +124,7 @@
         },
         mounted() {
             if (getCookie("access_token")) {
-                axios.get("/users/loggedUser?" + accessTokenPath())
+                axios.get("/api/users/loggedUser?" + accessTokenPath())
                     .then(function (response) {
                         this.user = response.data;
                         // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
@@ -161,7 +157,7 @@
                 var formData = new FormData();
                 formData.append("avatarImage", document.getElementById("avatar_input_file").files[0]);
                 this.updateAvatarStatus = "Uploading...";
-                axios.put('/users/' + this.user.id + '/updateAvatar?' + accessTokenPath(), formData).then(
+                axios.put('/api/users/' + this.user.id + '/updateAvatar?' + accessTokenPath(), formData).then(
                     function () {
                         vueLoggedUser.avatar_link = this.avatarImage;
                         this.updateAvatarStatus = "Update";
@@ -173,7 +169,7 @@
             updateEmail(newEmail, newEmailConfirm) {
                 axios({
                     method: 'put',
-                    url: '/users/' + this.user.id + '/updateEmail?' + accessTokenPath(),
+                    url: '/api/users/' + this.user.id + '/updateEmail?' + accessTokenPath(),
                     params: {
                         newEmail,
                         newEmailConfirm
@@ -193,7 +189,7 @@
             updatePassword(oldPass, newPass, newPassConfirm) {
                 axios({
                     method:'put',
-                    url: '/users/' + this.user.id + '/updatePassword?' + accessTokenPath(),
+                    url: '/api/users/' + this.user.id + '/updatePassword?' + accessTokenPath(),
                     params: {
                         oldPass,
                         newPass,

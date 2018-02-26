@@ -20,16 +20,14 @@ import java.util.regex.Pattern;
 public class UserController {
     private UserService userService;
     private TokenStore tokenStore;
-    private AmazonClient amazonClient;
 
     @Autowired
-    public UserController(UserService userService, TokenStore tokenStore, AmazonClient amazonClient) {
+    public UserController(UserService userService, TokenStore tokenStore) {
         this.userService = userService;
         this.tokenStore = tokenStore;
-        this.amazonClient = amazonClient;
     }
 
-    @PostMapping(value = "/users/signup", produces = "application/json")
+    @PostMapping(value = "/api/users/signup", produces = "application/json")
     public ResponseEntity<?> register(@RequestBody UserRegistrationForm userRegistrationForm) {
         Pattern loginPattern = Pattern.compile("[^a-zA-Z0-9]");
         Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
@@ -53,22 +51,22 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "/api/users")
     public List<User> users() {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = "/users/signout")
+    @GetMapping(value = "/api/users/signout")
     public void logout(@RequestParam(value = "access_token") String token) {
         tokenStore.removeAccessToken(tokenStore.readAccessToken(token));
     }
 
-    @GetMapping(value = "/users/loggedUser")
+    @GetMapping(value = "/api/users/loggedUser")
     public User getLoggedUser() {
         return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    @PutMapping(value = "/users/{userId}/updateAvatar")
+    @PutMapping(value = "/api/users/{userId}/updateAvatar")
     public ResponseEntity<?> updateAvatar(@RequestParam(value = "avatarImage") MultipartFile avatarImage, @PathVariable Long userId) {
         if (!userId.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -76,7 +74,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/users/{userId}/deleteAvatar")
+    @DeleteMapping(value = "/api/users/{userId}/deleteAvatar")
     public ResponseEntity<?> deleteAvatar(@PathVariable Long userId) {
         if (!userId.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -85,7 +83,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/users/{userId}/updateEmail")
+    @PutMapping(value = "/api/users/{userId}/updateEmail")
     public ResponseEntity<?> updateEmail(@PathVariable Long userId, @RequestParam String newEmail, @RequestParam String newEmailConfirm) {
         if (!userId.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -101,7 +99,7 @@ public class UserController {
         return new ResponseEntity<>(ResponseMessage.EMAIL_UPDATED, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/users/{userId}/updatePassword")
+    @PutMapping(value = "/api/users/{userId}/updatePassword")
     public ResponseEntity<?> updatePassword(@PathVariable Long userId, @RequestParam String oldPass, @RequestParam String newPass, @RequestParam String newPassConfirm) {
         if (!userId.equals(getLoggedUser().getId()))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

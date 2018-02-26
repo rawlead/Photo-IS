@@ -29,12 +29,12 @@
         },
         methods: {
             fetchPosts() {
-                axios.get("/posts").then(function(response) {
+                axios.get("/api/posts").then(function(response) {
                     this.posts = response.data;
                 }.bind(this));
             },
             getLink(photoObject) {
-                return '/posts/' + photoObject.id;
+                return '/api/posts/' + photoObject.id;
             }
         }
     });

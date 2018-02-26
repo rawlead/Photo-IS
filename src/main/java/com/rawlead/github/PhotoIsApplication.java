@@ -42,7 +42,7 @@ public class PhotoIsApplication {
 	@Autowired
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository, UserService service) throws Exception {
 		if (userRepository.count() == 0) {
-			service.save(new User("user@mail.com","user", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "https://s3.eu-central-1.amazonaws.com/photois-uploads-bucket/1519655240511-avatar.jpg"));
+			service.save(new User("user@mail.com","user", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "/img/user-icon-white.png"));
 			service.save(new User("usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "/img/user-icon-white.png"));
 			service.save(new User("admin@mail.com","admin", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("ADMIN")), "/img/user-icon-white.png"));
 		}

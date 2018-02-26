@@ -27,12 +27,12 @@ public class PortalController {
         return "private";
     }
 
-    @GetMapping(value = "/posts")
+    @GetMapping(value = "/api/posts")
     public List<PhotoObject> posts() {
         return postService.gerAllPosts();
     }
 
-    @PostMapping(value = "/posts")
+    @PostMapping(value = "/api/posts")
     public String publishPost(@RequestBody PhotoObject photoObject) {
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (photoObject.getDateCreated() == null)
@@ -42,19 +42,19 @@ public class PortalController {
         return "Photo was published";
     }
 
-    @GetMapping(value = "/users/{username}/posts")
+    @GetMapping(value = "/api/users/{username}/posts")
     public List<PhotoObject> postsByUser(@PathVariable String username) {
         return postService.findByUser(userService.getUser(username));
     }
 
-    @DeleteMapping(value = "/posts/{id}")
+    @DeleteMapping(value = "/api/posts/{id}")
     public boolean delete(@PathVariable Long id) {
         return postService.deletePost(id);
     }
 
 
     //TODO THIS IS SHIT
-    @GetMapping(value = "/the_post/{id}")
+    @GetMapping(value = "/api/the_post/{id}")
     public PhotoObject getPostById(@PathVariable Long id) {
         return postService.getPost(id);
     }

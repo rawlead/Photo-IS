@@ -44,7 +44,7 @@ var vueLoggedUser = new Vue({
     },
     mounted() {
         if (getCookie("access_token")) {
-            axios.get("/users/loggedUser?" + accessTokenPath())
+            axios.get("/api/users/loggedUser?" + accessTokenPath())
                 .then(function (response) {
                     this.signedInUsername = response.data.username;
                     this.signedInUserId = response.data.id;
@@ -62,7 +62,7 @@ var vueLoggedUser = new Vue({
     },
     methods: {
         signout() {
-            axios.get("/users/signout?" + accessTokenPath())
+            axios.get("/api/users/signout?" + accessTokenPath())
                 .then(function (response) {
                     window.Event.isSignedIn = false;
                     deleteCookie("access_token");

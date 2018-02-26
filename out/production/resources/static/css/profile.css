@@ -7,6 +7,8 @@
     right: 0;
     position: fixed;
     font-size: 0.875em;
+    z-index: 20;
+    opacity: .75;
 }
 
 /* Style the buttons inside the tab */
@@ -34,6 +36,7 @@
 }
 
 
+
 /* Style the tab content */
 .profileTabContent {
     font-size: 0.875em;
@@ -44,11 +47,11 @@
 }
 
 .profile-tab-avatar {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
     width: 100%;
+    height: auto;
+
     transition: 0.5s ease;
-    border-radius: 4px;
+    border-radius: 50%;
     backface-visibility: hidden;
 
 }
@@ -82,19 +85,6 @@
     position: absolute;
     z-index: -1;
 }
-
-/*.col-avatar {*/
-    /*background-color: #F9F8F8;*/
-    /*border-radius: 4px;*/
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
-
-
-/*}*/
-/*.inputFileLabel {*/
-    /*background-color: black;*/
-    /*color: white;*/
-/*}*/
-
 
 
 

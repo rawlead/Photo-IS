@@ -32,23 +32,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST,"/posts").authenticated()
-                .antMatchers(HttpMethod.PUT,"/users/**/updateAvatar").authenticated()
-                .antMatchers(HttpMethod.DELETE,"/users/**/deleteAvatar").authenticated()
-                .antMatchers(HttpMethod.PUT,"/users/**/updatePassword").authenticated()
-                .antMatchers(HttpMethod.PUT,"/users/**/updateEmail").authenticated()
+                .antMatchers(HttpMethod.POST,"/api/posts").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/users/**/updateAvatar").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/api/users/**/deleteAvatar").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/users/**/updatePassword").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/users/**/updateEmail").authenticated()
 //                .antMatchers("/profile/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 
     }
-
-//    private AuthenticationEntryPoint authenticationEntryPoint() {
-//        return new AuthenticationEntryPoint() {
-//            @Override
-//            public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-//                response.sendRedirect("/oauth/token?redirect_uri=localhost:8080/profile");
-//            }
-//        };
-//    }
 }
