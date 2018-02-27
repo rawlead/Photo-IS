@@ -70,6 +70,8 @@ public class UserService {
 
     public void createNewUser(UserRegistrationForm userRegistrationForm) {
         User user = new User();
+        user.setFirstName(userRegistrationForm.getFirstName());
+        user.setLastName(userRegistrationForm.getLastName());
         user.setEmail(userRegistrationForm.getEmail());
         user.setPassword(getPasswordEncoder().encode(userRegistrationForm.getPassword()));
         user.setUsername(userRegistrationForm.getUsername());

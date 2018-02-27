@@ -16,3 +16,7 @@
 .float-left {
     float: left;
 }
+
+.w-48 {
+    width: 48%;
+}

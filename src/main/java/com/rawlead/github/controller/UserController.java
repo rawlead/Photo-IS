@@ -32,7 +32,8 @@ public class UserController {
         Pattern loginPattern = Pattern.compile("[^a-zA-Z0-9]");
         Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
 
-        if (userRegistrationForm.getEmail().trim().equals("") ||
+        if (    userRegistrationForm.getFirstName().trim().equals("") ||
+                userRegistrationForm.getEmail().trim().equals("") ||
                 userRegistrationForm.getUsername().trim().equals("") ||
                 userRegistrationForm.getPassword().trim().equals("") ||
                 userRegistrationForm.getPasswordConfirm().trim().equals(""))

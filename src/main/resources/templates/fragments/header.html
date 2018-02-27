@@ -26,7 +26,7 @@
         </div>
 
 
-        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/users/signin" >Sign In</a>
+        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin" >Sign In</a>
         <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right" >Sign Out</a>
 
         <a v-show="isSignedIn()" href="/profile" id="top-nav-avatar" class="float-right ">

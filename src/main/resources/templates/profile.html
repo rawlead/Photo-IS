@@ -16,18 +16,17 @@
     </div>
 
     <!-- Tab content -->
-
     <div class="row hor-sep-50"></div>
 
     <div id="Uploads" class="profileTabContent row">
-        <div class="col-md-3 col-xl-3 offset-md-2 col-6">
-            <h3>Welcome, {{user.username}}!</h3>
+        <div class="col-md-5 col-xl-3 offset-md-2 col-6">
+            <h3>Welcome, {{user.firstName}}!</h3>
             <p>On this page you can upload new photos</p>
         </div>
     </div>
     <div id="Favorites" class="profileTabContent row">
-        <div class="col-md-3 col-xl-3 offset-md-2 col-6">
-            <h3>Welcome, {{user.username}}!</h3>
+        <div class="col-md-5 col-xl-3 offset-md-2 col-6">
+            <h3>Welcome, {{user.firstName}}!</h3>
             <p>On this page you can see your favorite authors</p>
         </div>
     </div>
@@ -35,11 +34,7 @@
 
     <div id="Settings" class="profileTabContent row">
         <div class="col-md-5 col-xl-3 offset-md-2 col-6">
-
-
-
-
-            <h3>Welcome, {{user.username}}!</h3>
+            <h3>Welcome, {{user.firstName}}!</h3>
             <p>On this page you can:</p>
             <ol>
                 <li>Change your profile picture.</li>
@@ -75,12 +70,15 @@
                 {{updateDataMessage}}
             </div>
 
-        </div>
-        <div class="col-md-1 col-xl-3 col-1 ">
 
         </div>
+
+        <div class="col-md-1 col-xl-3 col-1 ">
+        </div>
+
         <div class="col-md-4 col-xl-2 col-avatar col-5">
-            <h4>Profile picture</h4>
+            <h4>@{{user.username}}</h4>
+
             <div class="avatarContainer">
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
                 <div class="avatar-middle-overlay">
@@ -89,7 +87,9 @@
                     <label for="avatar_input_file" class="btn btn-outline-dark">Update</label>
                 </div>
             </div>
-            <button v-if="updateData === 'avatar'" class="btn btn-success" style="width: 100%;" v-on:click="uploadAvatar">{{updateAvatarStatus}}</button>
+            <button v-if="updateData === 'avatar'" class="btn btn-success" style="width: 100%;"
+                    v-on:click="uploadAvatar">{{updateAvatarStatus}}
+            </button>
 
         </div>
 
@@ -129,7 +129,7 @@
                         this.user = response.data;
                         // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
 
-                            this.avatarImage = response.data.avatarUrl;
+                        this.avatarImage = response.data.avatarUrl;
                     }.bind(this))
                     .catch(function (error) {
                         deleteCookie("access_token");
@@ -188,7 +188,7 @@
             },
             updatePassword(oldPass, newPass, newPassConfirm) {
                 axios({
-                    method:'put',
+                    method: 'put',
                     url: '/api/users/' + this.user.id + '/updatePassword?' + accessTokenPath(),
                     params: {
                         oldPass,

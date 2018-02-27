@@ -19,12 +19,12 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping(value = "/users/signin")
+    @GetMapping(value = "/signin")
     public String signin(){
         return "forms/signin";
     }
 
-    @GetMapping(value = "/users/signup")
+    @GetMapping(value = "/signup")
     public String signup() { return "forms/signup"; }
 
     @GetMapping(value = "/posts/{id}")
@@ -35,7 +35,7 @@ public class HomeController {
     @GetMapping( value = "/profile")
     public String profile(@CookieValue(value = "access_token",required = false) String access_token) {
         if (access_token == null)
-            return "redirect:/users/signin";
+            return "redirect:/signin";
         return "profile";
     }
 

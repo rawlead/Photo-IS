@@ -1,6 +1,8 @@
 package com.rawlead.github.pojo;
 
 public class UserRegistrationForm {
+    private String firstName;
+    private String lastName;
     private String email;
     private String username;
     private String password;
@@ -9,7 +11,9 @@ public class UserRegistrationForm {
     public UserRegistrationForm() {
     }
 
-    public UserRegistrationForm(String email, String username, String password, String passwordConfirm) {
+    public UserRegistrationForm(String firstName, String lastName, String email, String username, String password, String passwordConfirm) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.passwordConfirm = passwordConfirm;
@@ -46,5 +50,21 @@ public class UserRegistrationForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

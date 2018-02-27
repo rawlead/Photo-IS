@@ -11,18 +11,36 @@
         <div class="col-md-5 col-xl-3 offset-md-2">
             <div class="signForm">
                 <h1>Sign Up</h1>
-                <a href="/users/signin">Or Sign In</a>
+                <a href="/signin">Or Sign In</a>
+                <br/>
+
+
+                <div class="input-group float-left">
+                    <label for="firstName"><b>First Name</b></label>
+                    <input class="data-input" v-model="firstName" type="text"
+                           placeholder="First Name" id="firstName"/>
+                </div>
+
+                <div class="input-group float-right">
+                    <label for="lastName"><b>Last Lame</b></label>
+                    <input class="data-input" v-model="lastName" type="text"
+                           placeholder="Last name" id="lastName"/>
+                </div>
+
                 <label for="email"><b>Email</b></label>
-                <input class="data-input" v-model="email" type="email" placeholder="Enter Email" id="email"/>
-
-                <label for="password"><b>Password</b></label>
-                <input class="data-input" v-model="password" type="password" placeholder="Enter Password" id="password"/>
-
-                <label for="passwordConfirm"><b>Confirm password</b></label>
-                <input class="data-input" v-model="passwordConfirm" type="password" placeholder="Confirm Password" id="passwordConfirm"/>
+                <input class="data-input w-100" v-model="email" type="email" placeholder="Enter Email" id="email"/>
 
                 <label for="username"><b>Username</b></label>
-                <input class="data-input" v-model="username" type="text" placeholder="Enter Username" id="username"/>
+                <input class="data-input w-100" v-model="username" type="text" placeholder="Enter Username"
+                       id="username"/>
+
+                <label for="password"><b>Password</b></label>
+                <input class="data-input w-100" v-model="password" type="password" placeholder="Enter Password"
+                       id="password"/>
+
+                <label for="passwordConfirm"><b>Confirm password</b></label>
+                <input class="data-input w-100" v-model="passwordConfirm" type="password" placeholder="Confirm Password"
+                       id="passwordConfirm"/>
 
                 <button type="button" class="submit-btn" v-on:click="signup">SUBMIT</button>
             </div>
@@ -41,25 +59,30 @@
         el: '#signup-container',
         props: ['message'],
         data: {
-            signUpStatusMessage : '',
-            signUpStatus : '',
+            signUpStatusMessage: '',
+            signUpStatus: '',
+            firstName: '',
+            lastName: '',
             email: '',
             username: '',
             password: '',
             passwordConfirm: '',
         },
         mounted() {
-            Event.$on('signed-in',function(){
+            Event.$on('signed-in', function () {
                 window.location.replace("/");
             })
         },
         methods: {
             signup() {
                 var params = {
-                    "email" : this.email,
-                    "username" : this.username,
-                    "password" : this.password,
-                    "passwordConfirm" : this.passwordConfirm};
+                    "firstName": this.firstName,
+                    "lastName": this.lastName,
+                    "email": this.email,
+                    "username": this.username,
+                    "password": this.password,
+                    "passwordConfirm": this.passwordConfirm
+                };
                 axios({
                     method: 'post',
                     url: '/api/users/signup',
@@ -68,7 +91,7 @@
                     },
                     data: params
                 }).then((resultAxios) => {
-                    this.signUpStatusMessage =  'Account created. Please ' +  '<a href="/users/signin" style="color: #1E1E24;" class="alert-link">sign in</a>';
+                    this.signUpStatusMessage = 'Account created. Please ' + '<a href="/signin" style="color: #1E1E24;" class="alert-link">sign in</a>';
                     this.signUpStatus = 'success';
                 }).catch(function (error) {
                     this.signUpStatusMessage = error.response.data;
