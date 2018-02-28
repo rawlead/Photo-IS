@@ -1,3 +1,5 @@
+
+
 /* Style the tab */
 .profile-tab {
     overflow: hidden;
@@ -46,9 +48,21 @@
     animation: fadeEffect 1s;
 }
 
+
+.avatarContainer {
+    /*width: 30vw;*/
+    max-width: 140px;
+}
 .profile-tab-avatar {
-    width: 100%;
-    height: auto;
+
+    width:30vw;
+    height: 30vw;
+
+    max-width: 140px;
+    max-height:140px;
+    overflow: hidden;
+
+    object-fit: cover;
 
     transition: 0.5s ease;
     border-radius: 50%;
@@ -56,12 +70,15 @@
 
 }
 
+
+
 .avatar-middle-overlay {
     transition: 0.5s ease;
     position: absolute;
     opacity: 0;
-    top:50%;
-    left: 50%;
+    top:110px;
+    left: 90px;
+    /*left: auto;*/
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);

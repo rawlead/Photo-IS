@@ -11,19 +11,23 @@
 
     <div class="row hor-sep-30"></div>
 
+    <!--v-for="author in users"-->
+    <div class="row">
+        <div class="col-md-10 offset-md-2">
 
-    <div v-for="author in users" class="row">
-        <div class="col-md-7 offset-md-2">
-            <p>{{author.firstName}}</p>
-            <p>{{author.lastName}}</p>
-            <p>{{author.username}}</p>
-            <p>{{author.email}}</p>
-            <p>{{author.avatarUrl}}</p>
-            <hr/>
+            <div class="authors-container">
+                <div v-for="author in users" class="grid-item">
+                    <a :href="getLink(author)">
+                        <p><img v-bind:src="author.avatarUrl" alt=""/></p>
+                        <p>@{{author.username}}</p>
+                        <p>{{author.firstName}} {{author.lastName}}</p>
+                    </a>
+                </div>
+            </div>
+
+
         </div>
-
     </div>
-
 
 
 </div>
@@ -43,6 +47,9 @@
                     console.log(response.data)
                     this.users = response.data;
                 }.bind(this));
+            },
+            getLink(author){
+                return '/profile/' + author.username;
             }
         }
     });

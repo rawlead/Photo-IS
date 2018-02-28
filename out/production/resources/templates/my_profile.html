@@ -73,23 +73,27 @@
 
         </div>
 
-        <div class="col-md-1 col-xl-3 col-1 ">
+        <div class="col-md-1  col-1 ">
         </div>
 
-        <div class="col-md-4 col-xl-2 col-avatar col-5">
+        <div class="col-md-3 col-avatar col-5">
             <h4>@{{user.username}}</h4>
 
             <div class="avatarContainer">
-                <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
+
+                    <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
+
                 <div class="avatar-middle-overlay">
                     <input type="file" v-on:change="onFileChange" class="inputFile" id="avatar_input_file"
                            value="Choose file"/>
                     <label for="avatar_input_file" class="btn btn-outline-dark">Update</label>
                 </div>
+                <button v-if="updateData === 'avatar'" class="btn btn-success" style="width: 100%;"
+                        v-on:click="uploadAvatar">{{updateAvatarStatus}}
+                </button>
             </div>
-            <button v-if="updateData === 'avatar'" class="btn btn-success" style="width: 100%;"
-                    v-on:click="uploadAvatar">{{updateAvatarStatus}}
-            </button>
+
+
 
         </div>
 

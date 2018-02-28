@@ -1,15 +1,9 @@
 package com.rawlead.github.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -36,11 +30,16 @@ public class HomeController {
     public String profile(@CookieValue(value = "access_token",required = false) String access_token) {
         if (access_token == null)
             return "redirect:/signin";
-        return "profile";
+        return "my_profile";
     }
 
     @GetMapping(value = "/authors")
     public String authors() {
         return "authors";
+    }
+
+    @GetMapping(value = "/profile/{username}")
+    public String authorProfile() {
+        return "author_profile";
     }
 }

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: head('Profile')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<div class="container-fluid" id="profileRoot">
+    <div class="row hor-sep-60"></div>
+
+    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+
+    <div class="row hor-sep-30"></div>
+
+    <div  class="row">
+        <div class="col-md-10 offset-md-2">
+            <p>{{username}}</p>
+        </div>
+
+    </div>
+
+
+
+</div>
+<div th:replace="fragments/footer :: scripts"></div>
+<script>
+
+    var app = new Vue({
+        el: '#profileRoot',
+        data: {
+            username:'',
+        },
+        mounted() {
+            this.username = this.getAuthorUsername();
+        },
+        methods: {
+
+
+            getAuthorUsername() {
+                var splitted = window.location.href.split('/');
+                return splitted[splitted.length - 1];
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
