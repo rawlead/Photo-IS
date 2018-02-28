@@ -21,7 +21,7 @@ public class HomeController {
     @GetMapping(value = "/signup")
     public String signup() { return "forms/signup"; }
 
-    @GetMapping(value = "/posts/{id}")
+    @GetMapping(value = "/photos/{id}")
     public String singlePost(@PathVariable Long id) {
         return "post";
     }

@@ -11,13 +11,42 @@
 
     <div class="row hor-sep-30"></div>
 
-    <div  class="row">
-        <div class="col-md-10 offset-md-2">
-            <p>{{username}}</p>
+    <div class="row">
+        <div class="col-md-1 offset-md-2">
+            <!--<a href="/authors">Back</a>-->
+
+            <!--if /profile/{username} doesn't exist-->
+            <h4 v-show="errorMessage">{{errorMessage}}</h4>
+
+            <!--<p>{{user.username}}</p>-->
         </div>
 
-    </div>
+        <div class="col-md-9">
 
+            <div class="author-profile-avatar">
+                <img v-bind:src="user.avatarUrl" alt=""/>
+            </div>
+            <div class="author-profile-description">
+
+                <h1><b>{{user.firstName}}</b></h1>
+                <h1><b>{{user.lastName}}</b></h1>
+                <h1>@{{user.username}}</h1>
+               <!--<h4>dadawdad</h4>-->
+                <button class="btn btn-primary">Follow  <i class="far fa-star"></i></button>
+
+
+
+                <!--<i class="fas fa-camera-retro"></i>-->
+            </div>
+
+
+        </div>
+
+        <!--<div class="col-md-1">-->
+
+        <!--</div>-->
+
+    </div>
 
 
 </div>
@@ -27,17 +56,27 @@
     var app = new Vue({
         el: '#profileRoot',
         data: {
-            username:'',
+            username: '',
+            user: '',
+            errorMessage: '',
         },
         mounted() {
-            this.username = this.getAuthorUsername();
+            this.getAuthorByUsername();
         },
         methods: {
-
-
             getAuthorUsername() {
                 var splitted = window.location.href.split('/');
                 return splitted[splitted.length - 1];
+            },
+            getAuthorByUsername() {
+                axios.get("/api/users/" + this.getAuthorUsername())
+                    .then((resultAxios) => {
+                        console.log(resultAxios.data);
+                        this.user = resultAxios.data;
+                    }).catch(function (error) {
+                    console.log(error.response);
+                    this.errorMessage = error.response.data;
+                }.bind(this))
             }
         }
     });

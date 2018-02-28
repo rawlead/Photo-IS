@@ -22,7 +22,6 @@ public class PhotoIsApplication {
 
 	private PasswordEncoder passwordEncoder;
 
-
 	@Autowired
 	public PhotoIsApplication(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
@@ -31,7 +30,6 @@ public class PhotoIsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PhotoIsApplication.class, args);
 	}
-
 	/**
 	 * Password grants are switched on by injecting on AuthenticationManagaer
 	 * Here, we setup the builder so that the userDetailsService is the one we coded
@@ -48,10 +46,6 @@ public class PhotoIsApplication {
 		}
 		builder.userDetailsService(userDetailsService(userRepository)).passwordEncoder(passwordEncoder);
 	}
-
-
-
-
 	/**
 	 * We return an istance of our CustomUserDetails.
 	 * @param repository

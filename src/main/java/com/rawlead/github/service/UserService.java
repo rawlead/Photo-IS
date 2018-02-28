@@ -31,7 +31,6 @@ public class UserService {
     }
 
     public void save(User user) {
-//        user.setPassword(getPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -46,8 +45,6 @@ public class UserService {
     public User getUserById(Long id) {
         return userRepository.findOne(id);
     }
-
-
 
     public boolean deleteUserAvatar(Long userId) {
         User user = userRepository.findOne(userId);
@@ -95,27 +92,4 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

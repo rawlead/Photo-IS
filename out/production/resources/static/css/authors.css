@@ -39,16 +39,16 @@
     cursor: pointer;
     color: #F7EBE8;
     text-align: center;
-    border-radius: 100px 100px 25px 25px;
+    border-radius:  25px 25px  25px 25px;
 }
 
 
 .grid-item img {
-    width: 142px;
-    height: 142px;
+    width: 140px;
+    height: 140px;
     max-height: 142px ;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 50% 50% 50% 50%;
     /*height: auto;*/
 }
 

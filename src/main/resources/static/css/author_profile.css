@@ -1,0 +1,43 @@
+.author-profile-avatar {
+    display: inline-block;
+    margin-right: 50px;
+    /*float: right;*/
+    vertical-align: top;
+}
+
+.author-profile-avatar img {
+    /*float: left;*/
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.author-profile-description {
+    display : inline-block;
+    vertical-align: top;
+
+    /*float: right;*/
+}
+
+
+.author-profile-description h1 {
+    font-size: 1em;
+}
+
+
+@media screen and (min-width: 767px) {
+    .author-profile-avatar {
+        /*margin-right: 50px;*/
+    }
+
+    .author-profile-description h1 {
+        font-size: 1.15em;
+    }
+
+
+    .author-profile-avatar img {
+        width: 150px;
+        height: 150px;
+    }
+}

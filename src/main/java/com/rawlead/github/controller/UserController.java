@@ -57,6 +57,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping(value ="/api/users/{username}")
+    public ResponseEntity<?> userByUsername(@PathVariable String username) {
+        User user = userService.getUser(username);
+        if (user == null)
+            return new ResponseEntity<>(ResponseMessage.USER_NOT_FOUND,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
     @GetMapping(value = "/api/users/signout")
     public void logout(@RequestParam(value = "access_token") String token) {
         tokenStore.removeAccessToken(tokenStore.readAccessToken(token));

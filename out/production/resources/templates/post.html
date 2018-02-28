@@ -11,8 +11,8 @@
     <div class="row">
         <div class="col-md-7 offset-md-2">
             <div style="background-color: grey">
-                <h2>Single Page of {{photoObject.title}}</h2>
-                <p>{{photoObject.body}}</p>
+                <h2>Single Page of {{photo.title}}</h2>
+                <p>{{photo.body}}</p>
                 <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
             </div>
         </div>
@@ -24,14 +24,14 @@
 <script>
     var app = new Vue({
         el: '#content',
-        data: {photoObject: {}},
+        data: {photo: {}},
         mounted() {
             this.fetchPosts();
         },
         methods: {
             fetchPosts() {
                 axios.get("/the_post/" + this.getPostId()).then(function(response){
-                    this.photoObject = response.data;
+                    this.photo = response.data;
                 }.bind(this));
             },
 

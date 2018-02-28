@@ -9,11 +9,11 @@
 
 	<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
-	<div class="row" v-for="photoObject in posts">
+	<div class="row" v-for="photo in posts">
 		<div class="col-md-7 offset-md-2">
 			<div style="background-color: grey">
-				<h2><a :href="getLink(photoObject)">{{photoObject.title}}</a></h2>
-				<p>{{photoObject.body}}</p>
+				<h2><a :href="getLink(photo)">{{photo.title}}</a></h2>
+				<p>{{photo.body}}</p>
 				<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
 			</div>
 		</div>
@@ -33,8 +33,8 @@
                     this.posts = response.data;
                 }.bind(this));
             },
-            getLink(photoObject) {
-                return '/api/posts/' + photoObject.id;
+            getLink(photo) {
+                return '/api/posts/' + photo.id;
             }
         }
     });

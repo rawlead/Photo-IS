@@ -13,4 +13,5 @@ public interface ResponseMessage {
     String PASSWORD_UPDATED = "Password has been changed";
     String CURRENT_PASSWORD_MISMATCH = "Please enter the correct current password";
     String AVATAR_CHANGED = "Profile picture has been changed";
+    String USER_NOT_FOUND = "Author not found";
 }

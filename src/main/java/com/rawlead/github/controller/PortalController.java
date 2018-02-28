@@ -1,24 +1,25 @@
 package com.rawlead.github.controller;
 
 import com.rawlead.github.configuration.CustomUserDetails;
-import com.rawlead.github.entity.PhotoObject;
-import com.rawlead.github.service.PostService;
+import com.rawlead.github.entity.Photo;
+import com.rawlead.github.service.PhotoService;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @RestController
 public class PortalController {
-    private PostService postService;
+    private PhotoService photoService;
     private UserService userService;
 
     @Autowired
-    public PortalController(PostService postService, UserService userService) {
-        this.postService = postService;
+    public PortalController(PhotoService photoService, UserService userService) {
+        this.photoService = photoService;
         this.userService = userService;
     }
 
@@ -27,35 +28,35 @@ public class PortalController {
         return "private";
     }
 
-    @GetMapping(value = "/api/posts")
-    public List<PhotoObject> posts() {
-        return postService.gerAllPosts();
+    @GetMapping(value = "/api/photos")
+    public List<Photo> posts() {
+        return photoService.gerAllPosts();
     }
 
-    @PostMapping(value = "/api/posts")
-    public String publishPost(@RequestBody PhotoObject photoObject) {
+    @PostMapping(value = "/api/photos")
+    public String publishPost(@RequestBody Photo photo) {
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (photoObject.getDateCreated() == null)
-            photoObject.setDateCreated(new Date());
-        photoObject.setCreator(userService.getUser(userDetails.getUsername()));
-        postService.insert(photoObject);
+        if (photo.getDateCreated() == null)
+            photo.setDateCreated(LocalDateTime.now());
+        photo.setUser(userService.getUser(userDetails.getUsername()));
+        photoService.insert(photo);
         return "Photo was published";
     }
 
-    @GetMapping(value = "/api/users/{username}/posts")
-    public List<PhotoObject> postsByUser(@PathVariable String username) {
-        return postService.findByUser(userService.getUser(username));
+    @GetMapping(value = "/api/users/{username}/photos")
+    public List<Photo> postsByUser(@PathVariable String username) {
+        return photoService.findByUser(userService.getUser(username));
     }
 
-    @DeleteMapping(value = "/api/posts/{id}")
+    @DeleteMapping(value = "/api/photos/{id}")
     public boolean delete(@PathVariable Long id) {
-        return postService.deletePost(id);
+        return photoService.deletePost(id);
     }
 
 
     //TODO THIS IS SHIT
     @GetMapping(value = "/api/the_post/{id}")
-    public PhotoObject getPostById(@PathVariable Long id) {
-        return postService.getPost(id);
+    public Photo getPostById(@PathVariable Long id) {
+        return photoService.getPost(id);
     }
 }
