@@ -3,6 +3,9 @@ $(document).ready(function(){
 });
 
 
+var currentProfileTab = '';
+
+
 function openProfileTab(evt, tabName) {
     var i, profileTabContent, profileTabBtn;
     profileTabContent = document.getElementsByClassName("profileTabContent");
@@ -16,4 +19,5 @@ function openProfileTab(evt, tabName) {
     document.getElementById(tabName).style.display = "flex";
     console.log("tab name " + tabName);
     evt.currentTarget.className += " active";
+    currentProfileTab = tabName;
 }

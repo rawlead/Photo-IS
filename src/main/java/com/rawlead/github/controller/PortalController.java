@@ -34,7 +34,7 @@ public class PortalController {
     }
 
     @PostMapping(value = "/api/photos")
-    public String publishPost(@RequestBody Photo photo) {
+    public String publishPhoto(@RequestBody Photo photo) {
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (photo.getDateCreated() == null)
             photo.setDateCreated(LocalDateTime.now());

@@ -1,9 +1,8 @@
 package com.rawlead.github.controller;
 
-import com.rawlead.github.entity.ResponseMessage;
+import com.rawlead.github.ResponseMessage;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
-import com.rawlead.github.service.AmazonClient;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

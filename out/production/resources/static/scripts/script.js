@@ -51,6 +51,8 @@ var vueLoggedUser = new Vue({
                     // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
 
                         this.avatar_link = response.data.avatarUrl;
+                        if (this.avatar_link === "")
+                            this.avatar_link = "/img/user-icon-white.png";
                     Event.$emit('signed-in');
                     window.Event.isSignedIn = true;
                 }.bind(this))

@@ -4,16 +4,14 @@ import com.rawlead.github.configuration.CustomUserDetails;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.repository.UserRepository;
+import com.rawlead.github.service.PhotoCategoryService;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 
 import java.util.Arrays;
 
@@ -21,10 +19,12 @@ import java.util.Arrays;
 public class PhotoIsApplication {
 
 	private PasswordEncoder passwordEncoder;
+	private PhotoCategoryService categoryService;
 
 	@Autowired
-	public PhotoIsApplication(PasswordEncoder passwordEncoder) {
+	public PhotoIsApplication(PasswordEncoder passwordEncoder, PhotoCategoryService categoryService) {
 		this.passwordEncoder = passwordEncoder;
+		this.categoryService = categoryService;
 	}
 
 	public static void main(String[] args) {
@@ -45,6 +45,10 @@ public class PhotoIsApplication {
 			service.save(new User("NameAdmin","LastNameAdmin","admin@mail.com","admin", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("ADMIN")), "/img/user-icon-white.png"));
 		}
 		builder.userDetailsService(userDetailsService(userRepository)).passwordEncoder(passwordEncoder);
+
+		categoryService.saveCategory("Nature");
+		categoryService.saveCategory("Animals");
+		categoryService.saveCategory("Food");
 	}
 	/**
 	 * We return an istance of our CustomUserDetails.

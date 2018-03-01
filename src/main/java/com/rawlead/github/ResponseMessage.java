@@ -1,4 +1,4 @@
-package com.rawlead.github.entity;
+package com.rawlead.github;
 
 public interface ResponseMessage {
     String DUPLICATE_USER = "User already exists";

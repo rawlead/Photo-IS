@@ -59,8 +59,8 @@ public class UserService {
 
     public void updateUserAvatar(Long userId, MultipartFile avatarImage) {
         User user = userRepository.findOne(userId);
-        deleteUserAvatar(userId);
         String url = amazonClient.uploadFile(avatarImage);
+        deleteUserAvatar(userId);
         user.setAvatarUrl(url);
         userRepository.save(user);
     }
