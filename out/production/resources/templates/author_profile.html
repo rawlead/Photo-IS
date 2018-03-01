@@ -13,43 +13,41 @@
 
     <div class="row">
         <div class="col-md-1 offset-md-2">
-            <!--<a href="/authors">Back</a>-->
-
-            <!--if /profile/{username} doesn't exist-->
             <h4 v-show="errorMessage">{{errorMessage}}</h4>
-
-            <!--<p>{{user.username}}</p>-->
         </div>
 
         <div class="col-md-9">
-
             <div class="author-profile-avatar">
                 <img v-bind:src="user.avatarUrl" alt=""/>
             </div>
             <div class="author-profile-description">
-
                 <h1><b>{{user.firstName}}</b></h1>
                 <h1><b>{{user.lastName}}</b></h1>
                 <h1>@{{user.username}}</h1>
-               <!--<h4>dadawdad</h4>-->
-                <button class="btn btn-primary">Follow  <i class="far fa-star"></i></button>
-
-
-
-                <!--<i class="fas fa-camera-retro"></i>-->
+                <button class="btn btn-primary">Follow <i class="far fa-star"></i></button>
             </div>
-
-
         </div>
-
-        <!--<div class="col-md-1">-->
-
-        <!--</div>-->
-
     </div>
 
+    <br/>
+
+    <!--USER UPLOADED PHOTOS AREA-->
+    <div class="row">
+        <div class="col-md-10 offset-md-2">
+
+            <div class="photos-container">
+                <div v-for="photo in userPhotos" class="photo-grid-item">
+
+                    <img v-bind:src="photo.url" alt=""/>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
+
+
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
 
@@ -59,8 +57,11 @@
             username: '',
             user: '',
             errorMessage: '',
+            userPhotos: []
         },
         mounted() {
+
+
             this.getAuthorByUsername();
         },
         methods: {
@@ -73,10 +74,16 @@
                     .then((resultAxios) => {
                         console.log(resultAxios.data);
                         this.user = resultAxios.data;
+                        this.fetchUserPhotos();
                     }).catch(function (error) {
                     console.log(error.response);
                     this.errorMessage = error.response.data;
                 }.bind(this))
+            },
+            fetchUserPhotos() {
+                axios.get("/api/users/" + this.user.id + "/photos").then(function (response) {
+                    this.userPhotos = response.data.reverse();
+                }.bind(this));
             }
         }
     });

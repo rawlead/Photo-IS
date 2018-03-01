@@ -7,8 +7,13 @@
 
 <div class="container-fluid" id="myProfileRoot">
     <div class="row hor-sep-60"></div>
+    <div class="row">
+        <div class="col-md-1">
+            <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+        </div>
+    </div>
 
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+
     <div class="profile-tab">
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Uploads')">My Uploads</button>
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Favorites')">Favorites</button>
@@ -20,6 +25,7 @@
 
     <div id="Uploads" class="profileTabContent row">
 
+
         <div class="col-md-5 offset-md-2">
             <div v-if="updateData != 'photo'">
                 <h3>Welcome, {{user.firstName}}!</h3>
@@ -28,8 +34,6 @@
 
 
             <div class="photoUploadContainer">
-
-
                 <img v-if="updateData === 'photo'" :src="uploadPhotoPreview" class="upload-photo-preview"/>
 
 
@@ -46,26 +50,33 @@
 
 
                 <div class="form-group">
-                    <label for="photoUploadTitle">Title</label>
+                    <label for="uploadPhotoTitle">Title</label>
 
-                    <input class="data-input" id="photoUploadTitle" type="text"/>
+                    <input class="data-input" v-model="uploadPhotoTitle" id="uploadPhotoTitle" type="text"/>
 
                 </div>
                 <div class="form-group">
-                    <label for="photoUploadDescription">Description</label>
-                    <textarea class="data-input" id="photoUploadDescription" rows="3"></textarea>
+                    <label for="uploadPhotoDescription">Description</label>
+                    <textarea class="data-input" v-model="uploadPhotoDescription" id="uploadPhotoDescription"
+                              rows="3"></textarea>
                 </div>
 
-                <select class="data-input" id="photoUploadCategory">
-                    <option>Choose category...</option>
+                <select v-model="uploadPhotoCategory" class="data-input" id="uploadPhotoCategory">
+                    <option disabled="disabled" value="">Choose category...</option>
                     <option v-for="category in categories">{{category.name}}</option>
                 </select>
-                <br/>
 
-                <button v-on:click="" class="btn btn-success">Submit
+                <button v-on:click="uploadPhoto" class="btn btn-success">Submit
                 </button>
                 <button v-on:click="cancelPhotoUploading" class="btn btn-danger">Cancel</button>
+
+
+                <h6 v-html="statusMessage" style="text-align: center"></h6>
+
             </div>
+            <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
+            <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
+
         </div>
 
         <div class="col-md-4">
@@ -73,6 +84,21 @@
 
         </div>
 
+
+        <!--USER UPLOADED PHOTOS AREA-->
+
+        <div class="row">
+            <div class="col-md-10 offset-md-2">
+
+                <div class="photos-container">
+                    <div v-for="photo in userPhotos" class="photo-grid-item">
+
+                        <img v-bind:src="photo.url" alt=""/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -115,12 +141,8 @@
                 <button v-on:click="updateData = ''" class="btn btn-danger">Cancel</button>
             </div>
 
-            <div v-if="updateDataStatus === 'errors'" class="alert alert-warning" role="alert">
-                {{updateDataMessage}}
-            </div>
-            <div v-if="updateDataStatus === 'success'" class="alert alert-success" role="alert">
-                {{updateDataMessage}}
-            </div>
+            <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
+            <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
 
 
         </div>
@@ -135,22 +157,10 @@
                            value="Choose file"/>
                     <label for="avatar_input_file" class="btn btn-outline-dark">Choose</label>
                 </div>
-
-
             </div>
-            <h6 v-if="updateData === 'avatar'" style="text-align: center">{{updateAvatarStatus}} <i
+            <h6 v-if="updateData === 'avatar'" style="text-align: center">{{statusMessage}} <i
                     class="fas fa-sync fa-spin"></i></h6>
-            <!--<button v-if="updateData === 'avatar'" class="btn btn-success w-100 "-->
-            <!--v-on:click="uploadAvatar">-->
-            <!--</button>-->
-            <!--<button v-if="updateData === 'avatar'" class="btn btn-danger w-100"-->
-            <!--v-on:click="">Cancel-->
-            <!--</button>-->
-
         </div>
-        <!--<div class="col-md-2">-->
-        <!---->
-        <!--</div>-->
     </div>
 
 </div>
@@ -174,29 +184,40 @@
             newPassConfirm: '',
             newEmail: '',
             newEmailConfirm: '',
-            updateAvatarStatus: '',
+
             updateData: '',
-            updateDataStatus: '',
-            updateDataMessage: '',
+
+            hasError: false,
+            statusMessage: '',
+
+            userPhotos: [],
+
 
             uploadPhotoPreview: '',
             categories: [],
+            uploadPhotoTitle: '',
+            uploadPhotoDescription: '',
+            uploadPhotoCategory: '',
         },
         mounted() {
             if (getCookie("access_token")) {
+                $('.alert').fadeOut();
                 axios.get("/api/users/loggedUser?" + accessTokenPath())
                     .then(function (response) {
                         this.user = response.data;
                         this.avatarImage = response.data.avatarUrl;
                         if (this.avatarImage === "")
                             this.avatarImage = "/img/user-icon-white.png";
+
+                        this.fetchCategories();
+                        this.fetchUserPhotos();
                     }.bind(this))
                     .catch(function (error) {
                         deleteCookie("access_token");
                         return error;
                     });
+
             }
-            this.fetchCategories();
         },
         methods: {
             onFileChange(e) {
@@ -204,10 +225,8 @@
                 if (!files.length)
                     return;
                 this.createImage(files[0]);
-                console.log(currentProfileTab);
             },
             createImage(file) {
-                // var avatarImage = new Image();
                 var reader = new FileReader();
 
                 if (currentProfileTab === 'Settings') {
@@ -228,12 +247,12 @@
             uploadAvatar() {
                 var formData = new FormData();
                 formData.append("avatarImage", document.getElementById("avatar_input_file").files[0]);
-                this.updateAvatarStatus = "Uploading";
+                this.statusMessage = "Uploading";
                 axios.put('/api/users/' + this.user.id + '/updateAvatar?' + accessTokenPath(), formData).then(
                     function () {
                         vueLoggedUser.avatar_link = this.avatarImage;
                         this.updateData = '';
-                        this.updateAvatarStatus = "";
+                        this.statusMessage = "";
 
                     }.bind(this)
                 );
@@ -244,13 +263,13 @@
                     url: '/api/users/' + this.user.id + '/updateEmail?' + accessTokenPath(),
                     params: {newEmail, newEmailConfirm}
                 }).then((resultAxios) => {
-                    this.updateDataMessage = resultAxios.data;
-                    this.updateDataStatus = 'success';
+                    this.statusMessage = resultAxios.data;
+                    this.hasError = false;
                     this.updateData = '';
                     this.user.email = newEmail;
                 }).catch(function (error) {
-                    this.updateDataMessage = error.response.data;
-                    this.updateDataStatus = 'errors';
+                    this.statusMessage = error.response.data;
+                    this.hasError = true;
                 }.bind(this));
                 this.showAndHideAlert();
             },
@@ -260,12 +279,12 @@
                     url: '/api/users/' + this.user.id + '/updatePassword?' + accessTokenPath(),
                     params: {oldPass, newPass, newPassConfirm}
                 }).then((resultAxios) => {
-                    this.updateDataMessage = resultAxios.data;
-                    this.updateDataStatus = 'success';
+                    this.statusMessage = resultAxios.data;
+                    this.hasError = false;
                     this.updateData = '';
                 }).catch(function (error) {
-                    this.updateDataMessage = error.response.data;
-                    this.updateDataStatus = 'errors';
+                    this.statusMessage = error.response.data;
+                    this.hasError = true;
                 }.bind(this));
 
                 this.showAndHideAlert();
@@ -279,28 +298,42 @@
 
             fetchCategories() {
                 axios.get("/api/categories").then(function (response) {
-                    console.log(response.data);
                     this.categories = response.data;
                 }.bind(this));
+            },
+            cleanFileInput(id) {
+                $(id).val("");
             },
             cancelPhotoUploading() {
                 this.updateData = '';
                 this.uploadPhotoPreview = '';
-            }
-            ,
-
-            uploadPhoto() {
-                // var formData = new FormData();
-                // formData.append("photo", document.getElementById("avatar_input_file").files[0]);
-                // this.updateAvatarStatus = "Uploading...";
-                // axios.put('/api/users/' + this.user.id + '/updateAvatar?' + accessTokenPath(), formData).then(
-                //     function () {
-                //         vueLoggedUser.avatar_link = this.avatarImage;
-                //         this.updateAvatarStatus = "Update";
-                //         this.updateData = '';
-                //     }.bind(this)
-                // );
+                this.statusMessage = '';
+                this.cleanFileInput("#photo_input_file");
             },
+            uploadPhoto() {
+                var formData = new FormData();
+                formData.append("photo", document.getElementById("photo_input_file").files[0]);
+                formData.append("title", this.uploadPhotoTitle);
+                formData.append("description", this.uploadPhotoDescription);
+                formData.append("category", this.uploadPhotoCategory);
+
+                this.statusMessage = 'Uploading... ' + '<i class="fas fa-sync fa-spin"></i>';
+
+                axios.post('/api/users/' + this.user.id + '/photos?' + accessTokenPath(), formData).then(
+                    function () {
+                        this.statusMessage = "";
+                        this.updateData = '';
+                        //TODO add to photo list to display
+                        this.cleanFileInput("#photo_input_file");
+                        this.fetchUserPhotos();
+                    }.bind(this)
+                );
+            },
+            fetchUserPhotos() {
+                axios.get("/api/users/" + this.user.id + "/photos").then(function (response) {
+                    this.userPhotos = response.data.reverse();
+                }.bind(this));
+            }
         }
     })
 </script>

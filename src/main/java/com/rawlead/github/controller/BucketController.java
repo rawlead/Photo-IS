@@ -15,12 +15,12 @@ public class BucketController {
         this.amazonClient = amazonClient;
     }
 
-    @PostMapping("/api/storage/uploadPhoto")
+    @PostMapping("/storage/uploadPhoto")
     public String uploadPhoto(@RequestPart(value = "file")MultipartFile file) {
         return this.amazonClient.uploadFile(file);
     }
 
-    @DeleteMapping("/api/storage/deletePhoto")
+    @DeleteMapping("/storage/deletePhoto")
     public String deletePhoto(@RequestPart(value = "url") String url) {
         return this.amazonClient.deleteFileFromS3Bucket(url);
     }

@@ -1,8 +1,10 @@
 package com.rawlead.github.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -15,19 +17,20 @@ public class Photo {
     private String description;
     private LocalDateTime dateCreated;
 
-    @ManyToOne
-    @JoinColumn
-    private User user;
-
     private String url;
 
     @ManyToOne
     @JoinColumn
-    private PhotoCategory category;
+    private PhotoCategory photoCategory;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn
+    private User user;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> userFavorites;
-//
+
     public Photo() {
         this.dateCreated = LocalDateTime.now();
     }
@@ -88,12 +91,11 @@ public class Photo {
         this.url = url;
     }
 
-
-    public PhotoCategory getCategory() {
-        return category;
+    public PhotoCategory getPhotoCategory() {
+        return photoCategory;
     }
 
-    public void setCategory(PhotoCategory category) {
-        this.category = category;
+    public void setPhotoCategory(PhotoCategory photoCategory) {
+        this.photoCategory = photoCategory;
     }
 }

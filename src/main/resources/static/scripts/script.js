@@ -1,4 +1,3 @@
-
 $('#search-input').attr("placeholder", " Search");
 
 function accessTokenPath() {
@@ -35,12 +34,12 @@ function deleteCookie(name) {
 
 
 var vueLoggedUser = new Vue({
-    el:'#loggedUser',
+    el: '#loggedUser',
     data: {
         // default avatar image
-        avatar_link : '',
-        signedInUsername : '',
-        signedIdInUserId : '',
+        avatar_link: '',
+        signedInUsername: '',
+        signedIdInUserId: '',
     },
     mounted() {
         if (getCookie("access_token")) {
@@ -48,11 +47,10 @@ var vueLoggedUser = new Vue({
                 .then(function (response) {
                     this.signedInUsername = response.data.username;
                     this.signedInUserId = response.data.id;
+                    this.avatar_link = response.data.avatarUrl;
                     // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
-
-                        this.avatar_link = response.data.avatarUrl;
-                        if (this.avatar_link === "")
-                            this.avatar_link = "/img/user-icon-white.png";
+                    if (this.avatar_link === "")
+                        this.avatar_link = "/img/user-icon-white.png";
                     Event.$emit('signed-in');
                     window.Event.isSignedIn = true;
                 }.bind(this))
@@ -71,7 +69,7 @@ var vueLoggedUser = new Vue({
                     window.location.replace("/");
                 }.bind(this));
         },
-        isSignedIn(){
+        isSignedIn() {
             return window.Event.isSignedIn;
         },
         getAvatarLink() {

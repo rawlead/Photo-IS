@@ -1,8 +1,12 @@
 package com.rawlead.github.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,12 +20,20 @@ public class User {
     private String lastName;
     private String email;
     private String username;
+
+    @JsonIgnore
     private String password;
+
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;
+
+
     private String avatarUrl;
     private LocalDateTime registrationDate;
-    @OneToMany(fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<Photo> photos;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,6 +55,15 @@ public class User {
         this.roles = roles;
         this.avatarUrl = avatarUrl;
     }
+
+
+    public void addPhoto(Photo photo) {
+        if (this.photos == null)
+            this.photos = new HashSet<>();
+        this.photos.add(photo);
+    }
+
+
 
     public String getAvatarUrl() {
         return avatarUrl;

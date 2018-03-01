@@ -168,6 +168,7 @@ html {
 	left: 0;
 	opacity: 0.75;
 	font-size: 0.95em;
+	z-index: 20;
 	border-right: #1E1E24 1px solid ;
 	/*border-left: #1E1E24 5px solid;*/
 
@@ -236,9 +237,9 @@ html {
 }
 
 @media screen and (min-width: 1200px) {
-	#left-nav {
-		width: 13%;
-	}
+	/*#left-nav {*/
+		/*width: 13%;*/
+	/*}*/
 
 	#left-nav li a {
 		/*font-size: 1em;*/

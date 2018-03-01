@@ -33,13 +33,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/posts").authenticated()
+                .antMatchers(HttpMethod.POST,"/api/users/**/photos").authenticated()
                 .antMatchers(HttpMethod.PUT,"/api/users/**/updateAvatar").authenticated()
-                .antMatchers(HttpMethod.DELETE,"/api/users/**/deleteAvatar").authenticated()
                 .antMatchers(HttpMethod.PUT,"/api/users/**/updatePassword").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/api/users/**/deleteAvatar").authenticated()
                 .antMatchers(HttpMethod.PUT,"/api/users/**/updateEmail").authenticated()
-//                .antMatchers("/profile/**").hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
 
     }
 }

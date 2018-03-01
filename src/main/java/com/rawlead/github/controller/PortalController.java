@@ -1,15 +1,14 @@
 package com.rawlead.github.controller;
 
-import com.rawlead.github.configuration.CustomUserDetails;
 import com.rawlead.github.entity.Photo;
 import com.rawlead.github.service.PhotoService;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,22 +29,23 @@ public class PortalController {
 
     @GetMapping(value = "/api/photos")
     public List<Photo> posts() {
-        return photoService.gerAllPosts();
+        return photoService.getAllPhotos();
     }
 
-    @PostMapping(value = "/api/photos")
-    public String publishPhoto(@RequestBody Photo photo) {
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (photo.getDateCreated() == null)
-            photo.setDateCreated(LocalDateTime.now());
-        photo.setUser(userService.getUser(userDetails.getUsername()));
-        photoService.insert(photo);
-        return "Photo was published";
+    @GetMapping(value = "/api/users/{userId}/photos")
+    public List<Photo> postsByUser(@PathVariable Long userId) {
+        return photoService.findByUser(userId);
     }
 
-    @GetMapping(value = "/api/users/{username}/photos")
-    public List<Photo> postsByUser(@PathVariable String username) {
-        return photoService.findByUser(userService.getUser(username));
+    @PostMapping(value = "/api/users/{userId}/photos")
+    public ResponseEntity<?> postPhoto(@RequestPart MultipartFile photo,
+                                       @RequestPart(required = false) String title,
+                                       @RequestPart(required = false) String description,
+                                       @RequestPart String category,
+                                       @PathVariable Long userId) {
+        System.out.println("title: " + title + "; description: " + description + "; category: " + category);
+        this.photoService.postPhoto(userId,photo,title,description,category);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/api/photos/{id}")

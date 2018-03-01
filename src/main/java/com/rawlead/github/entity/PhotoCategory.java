@@ -1,5 +1,7 @@
 package com.rawlead.github.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,7 +14,8 @@ public class PhotoCategory {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "photoCategory", fetch = FetchType.EAGER)
     private List<Photo> photos;
 
     public PhotoCategory() {
