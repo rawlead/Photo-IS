@@ -1,5 +1,6 @@
 package com.rawlead.github.controller;
 
+import com.rawlead.github.ResponseMessage;
 import com.rawlead.github.entity.Photo;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.service.PhotoService;
@@ -62,7 +63,7 @@ public class PortalController {
 
         this.photoService.deletePhoto(photoId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ResponseMessage.PHOTO_DELETED,HttpStatus.OK);
     }
 
 

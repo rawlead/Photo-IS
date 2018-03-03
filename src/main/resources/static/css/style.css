@@ -4,11 +4,6 @@ body {
 	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 	/*background: linear-gradient(110deg, #fdfbfb 60%, #1E1E24 60%);*/
 
-
-
-
-
-
 	color: #1E1E24;
 	height: 100%;
 }
@@ -25,6 +20,18 @@ a {
 }
 
 
+.btn-outline-dark {
+	color: #1E1E24;
+}
+
+.btn-outline-dark:hover {
+	background-color: #1E1E24;
+	color: #EEB902;
+}
+
+option {
+	background-color: #1E1E24;
+}
 
 .submit-btn {
 	display: inherit;

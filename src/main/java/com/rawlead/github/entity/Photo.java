@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Entity
@@ -66,8 +67,10 @@ public class Photo {
         this.description = description;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
+    public String getDateCreated() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        return  this.dateCreated.format(formatter);
     }
 
     public void setDateCreated(LocalDateTime dateCreated) {

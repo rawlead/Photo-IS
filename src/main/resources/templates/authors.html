@@ -17,12 +17,11 @@
             <div class="authors-container">
                 <div v-for="author in users" class="grid-item">
                     <a :href="getLink(author)">
-                        <img v-bind:src="author.avatarUrl" alt=""/>
-                        <p>@{{author.username}}<br/>
-                            {{author.firstName}} {{author.lastName}}
-
-                        </p>
+                    <img v-bind:src="author.avatarUrl" alt=""/>
+                    <p>@{{author.username}}<br/>
+                    {{author.firstName}}</p>
                     </a>
+
                 </div>
             </div>
 
@@ -49,8 +48,12 @@
                     this.users = response.data;
                 }.bind(this));
             },
-            getLink(author){
+            getLink(author) {
                 return '/profile/' + author.username;
+            },
+            getAuthorPhotosLength(author) {
+                console.log(author)
+
             }
         }
     });

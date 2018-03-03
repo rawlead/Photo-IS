@@ -2,20 +2,17 @@
 .profile-tab {
     overflow: hidden;
     background-color: #1E1E24;
-    /*border-bottom: 1px black solid;*/
     width: 85%;
     right: 0;
     position: fixed;
     font-size: 0.875em;
     font-weight: bold;
     z-index: 20;
-    /*opacity: .75;*/
 }
 
 /* Style the buttons inside the tab */
 .profileTabBtn {
     background-color: inherit;
-    /*outline: none;*/
     float: left;
     border: none;
     outline: none;
@@ -23,13 +20,11 @@
     padding: 8px 50px;
     transition: 0.3s;
     color: #F7EBE8;
-    /*border-radius: 25px;*/
 }
 
 /* Change background color of buttons on hover */
 .profile-tab .profileTabBtn:hover {
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
-    /*background-color: #E5E6E4;*/
     color: #EEB902;
 }
 
@@ -39,7 +34,6 @@
     height: 37px;
     outline: none;
     color: #EEB902;
-    /*background-color: #F9F8F8;*/
 }
 
 /* Style the tab content */
@@ -55,7 +49,6 @@
 
 .photoUploadContainer {
     max-width: 600px;
-
 }
 
 .upload-photo-preview {
@@ -71,8 +64,10 @@
 
 #uploadPhotoDescription {
     resize: none;
-    height: 100px;
-    padding: 5px 10px 5px 10px;
+    height: 85px;
+    /*padding: 5px 10px 5px 10px;*/
+    padding: 8px 20px;
+
 }
 
 #uploadPhotoCategory {
@@ -89,7 +84,6 @@
 
 
 .photos-container {
-    /*width: 50%;*/
     margin-top: 10px;
     display: grid;
     grid-gap: 15px;
@@ -104,6 +98,9 @@
     position: relative;
     cursor: zoom-in;
 }
+
+
+
 
 .photo-grid-item img {
     width: 100%;
@@ -127,7 +124,6 @@
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
-    /*text-align: left;*/
 }
 
 .photo-grid-item:hover .grid-image {
@@ -143,17 +139,38 @@
     color: white;
     font-size: 16px;
     padding: 16px 32px;
-
-    /*top: 10%;*/
-    /*position: absolute;*/
 }
 
 
+/*      modal*/
+.user-photo-modal {
+    font-size: 0.9em;
+}
 
+.user-photo-modal > .modal-dialog > .modal-content > h5 {
+    position: absolute;
+    top: 5px;
+}
 
+.user-photo-modal > .modal-dialog > .modal-content > h5 > a > img {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 3px;
+}
 
+.modal-footer {
+    justify-content: start;
+    border: none;
 
+}
 
+.user-photo-modal > .modal-dialog > .modal-content > img {
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    border: none;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
 
 
 
@@ -175,7 +192,6 @@
     overflow: hidden;
     object-fit: cover;
     transition: 0.5s ease;
-    /*border-radius: 50%;*/
     border: 2px solid #EEB902;
     backface-visibility: hidden;
 }
@@ -227,9 +243,6 @@
 }
 
 @media screen and (min-width: 1200px) {
-    /*.profile-tab {*/
-        /*width: 87%;*/
-    /*}*/
 }
 
 @media screen and (max-width: 767px) {
