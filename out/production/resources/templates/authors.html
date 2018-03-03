@@ -14,13 +14,14 @@
     <!--v-for="author in users"-->
     <div class="row">
         <div class="col-md-10 offset-md-2">
-
             <div class="authors-container">
                 <div v-for="author in users" class="grid-item">
                     <a :href="getLink(author)">
-                        <p><img v-bind:src="author.avatarUrl" alt=""/></p>
-                        <p>@{{author.username}}</p>
-                        <p>{{author.firstName}} {{author.lastName}}</p>
+                        <img v-bind:src="author.avatarUrl" alt=""/>
+                        <p>@{{author.username}}<br/>
+                            {{author.firstName}} {{author.lastName}}
+
+                        </p>
                     </a>
                 </div>
             </div>

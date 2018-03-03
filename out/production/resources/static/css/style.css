@@ -1,5 +1,14 @@
 body {
-	background-color: #CDD3CE;
+	/*background-color: #E7ECEF;*/
+
+	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+	/*background: linear-gradient(110deg, #fdfbfb 60%, #1E1E24 60%);*/
+
+
+
+
+
+
 	color: #1E1E24;
 	height: 100%;
 }
@@ -9,6 +18,10 @@ body {
 }
 html {
 	height: 100%;
+}
+
+a {
+	text-decoration: none;
 }
 
 
@@ -22,6 +35,7 @@ html {
 	background-color: #1E1E24;
 	color: #F7EBE8;
 	cursor: pointer;
+	outline: none;
 	margin-top: 20px;
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
 }
@@ -96,9 +110,9 @@ html {
 
 #top-nav input:focus {
 	width: 100%;
-	color: #F7EBE8;
+	color: #EEB902;
 	outline: none;
-	border-bottom: 2px solid #F7EBE8;
+	border-bottom: 2px solid #EEB902;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -116,8 +130,8 @@ html {
 
 
 #top-nav a:hover {
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
 	cursor: pointer;
+	color: #EEB902;
 }
 
 /*MOBILE MENU*/
@@ -159,46 +173,51 @@ html {
 /*LEFT SIDE VERTICAL NAVIGATION BAR*/
 #left-nav {
 	list-style-type: none;
-	background-color: #F9F8F8;
+	background-color: #1E1E24;
 	position: fixed;
 	display: block;
 	box-sizing: border-box;
 	height: 100%;
 	width: 15%;
 	left: 0;
-	opacity: 0.75;
+	padding-top: 150px;
+	/*opacity: 0.75;*/
 	font-size: 0.95em;
 	z-index: 20;
 	border-right: #1E1E24 1px solid ;
+	/*margin-top: 20%;*/
 	/*border-left: #1E1E24 5px solid;*/
 
 }
 
+
+
 #left-nav li {
 	text-align: right;
-	padding: 2px 0;
+}
+
+#left-nav li {
+	cursor: pointer;
 }
 
 #left-nav li a {
 	display: inline-block;
-	color: #1E1E24;
+	color: #F7EBE8;
 	font-weight: bold;
 	padding: 8px 16px;
 	text-decoration: none;
-	font-size: 0.875em;
+	font-size: 0.975em;
+	transition: color 200ms;
 	/*text-align: center;*/
 	/*width: 100%;*/
 }
 
 #left-nav li a.active {
-	color: #910000FF;
+	color: #EEB902;
 }
-#left-nav li a:hover:not(.active) {
-	/*color: #910000FF;*/
 
-}
 #left-nav li a:hover {
-	color: #5E0B15;
+	color: #EEB902;
 }
 
 
@@ -208,6 +227,7 @@ html {
 @media screen and (max-width: 767px) {
 	#left-nav {
 		display: none;
+		padding-top: 0;
 	}
 
 	.search-field {

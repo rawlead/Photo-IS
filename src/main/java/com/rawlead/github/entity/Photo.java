@@ -23,7 +23,6 @@ public class Photo {
     @JoinColumn
     private PhotoCategory photoCategory;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn
     private User user;

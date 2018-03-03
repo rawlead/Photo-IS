@@ -10,6 +10,11 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public String index() {
+        return "redirect:/news";
+    }
+
+    @GetMapping(value = "/news")
+    public String home() {
         return "index";
     }
 

@@ -47,20 +47,29 @@ public class PhotoService {
     }
 
 
-        public boolean deletePost(Long id) {
+    public boolean deletePhoto(Long id) {
         Photo photo = photoRepository.findOne(id);
         if (photo == null)
             return false;
+        amazonClient.deleteFileFromS3Bucket(photo.getUrl());
+
         photoRepository.delete(photo);
         return true;
     }
 
-    public Photo getPost(Long id) {
+    public void deletePhoto(Long userId, Long photoId) {
+        User user = userRepository.findOne(userId);
+        Photo photo = photoRepository.findOne(photoId);
+
+        photoRepository.delete(photoId);
+    }
+
+    public Photo getPhoto(Long id) {
         return photoRepository.findOne(id);
     }
 
 
-//    @Transactional
+    //    @Transactional
     public void postPhoto(Long userId, MultipartFile photo, String title, String description, String category) {
         User user = userRepository.findOne(userId);
         String url = amazonClient.uploadFile(photo);
@@ -77,4 +86,6 @@ public class PhotoService {
         photoRepository.save(newPhoto);
         userRepository.save(user);
     }
+
+
 }

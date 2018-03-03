@@ -1,11 +1,13 @@
 package com.rawlead.github.controller;
 
 import com.rawlead.github.entity.Photo;
+import com.rawlead.github.entity.User;
 import com.rawlead.github.service.PhotoService;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,15 +50,32 @@ public class PortalController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    public User getLoggedUser() {
+        return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    @DeleteMapping(value = "/api/users/{userId}/photos/{photoId}")
+    public ResponseEntity<?> deletePhoto(@PathVariable Long userId, @PathVariable Long photoId) {
+        if (!userId.equals(getLoggedUser().getId()))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        this.photoService.deletePhoto(photoId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @DeleteMapping(value = "/api/photos/{id}")
     public boolean delete(@PathVariable Long id) {
-        return photoService.deletePost(id);
+        return photoService.deletePhoto(id);
+
     }
 
 
     //TODO THIS IS SHIT
     @GetMapping(value = "/api/the_post/{id}")
     public Photo getPostById(@PathVariable Long id) {
-        return photoService.getPost(id);
+        return photoService.getPhoto(id);
     }
 }

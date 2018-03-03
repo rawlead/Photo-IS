@@ -1,8 +1,20 @@
 $('#search-input').attr("placeholder", " Search");
 
-function accessTokenPath() {
-    return "access_token=" + getCookie("access_token")
-}
+
+$(function(){
+    var current = location.pathname;
+    $('#left-nav li a').each(function(){
+        var $this = $(this);
+        // if the current path is like this link, make it active
+        if($this.attr('href').indexOf(current) !== -1){
+            $this.addClass('active');
+        }
+    })
+});
+
+
+
+
 
 // responsive mobile nav menu
 function openMobileMenu() {
@@ -13,6 +25,12 @@ function openMobileMenu() {
         x.className = "nav flex-column";
     }
 }
+
+
+function accessTokenPath() {
+    return "access_token=" + getCookie("access_token")
+}
+
 
 window.Event = new Vue({
     data: {isSignedIn: false}

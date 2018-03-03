@@ -33,6 +33,7 @@ public class User {
     private String avatarUrl;
     private LocalDateTime registrationDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<Photo> photos;
 

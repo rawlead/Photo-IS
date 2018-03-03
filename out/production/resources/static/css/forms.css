@@ -1,5 +1,5 @@
 .signForm {
-    opacity: 0.8;
+    opacity: 0.9;
     margin: 25px 0 15px 0;
     display: block;
     font-size: 0.875em;
@@ -30,7 +30,7 @@
 .signForm label {
     /*margin-left: 30px;*/
     /*display: inline-block;*/
-    color: #5E0B15;
+    color: #1E1E24;
     opacity: 0.8;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .input-group {
-    width: 48%;
+    width: 49%;
 }
 
 .data-input {
@@ -51,11 +51,11 @@
     width: 100%;
     outline: none;
     padding: 3px 20px;
-    border-radius: 5px;
+    border-radius: 3px;
     border: 1px black solid;
     height: 40px;
     /*box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);*/
-    background-color: #9A9C9F;
+    background-color: #1E1E24;
     color: #F7EBE8;
 }
 
@@ -65,6 +65,7 @@
 
 .signForm button:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #EEB902;
 }
 
 #signin-container {
