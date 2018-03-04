@@ -4,6 +4,7 @@ import com.rawlead.github.ResponseMessage;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
 import com.rawlead.github.service.UserService;
+import com.rawlead.github.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,50 +14,38 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 @RestController
+@RequestMapping("/api/users")
 public class UserController {
     private UserService userService;
     private TokenStore tokenStore;
+    private Validator validator;
 
     @Autowired
-    public UserController(UserService userService, TokenStore tokenStore) {
+    public UserController(UserService userService, TokenStore tokenStore, Validator validator) {
         this.userService = userService;
         this.tokenStore = tokenStore;
+        this.validator = validator;
     }
 
-    @PostMapping(value = "/api/users/signup", produces = "application/json")
+    private boolean isNotLoggedInUserMakesRequest(Long userId) {
+        return !userId.equals(getLoggedUser().getId());
+    }
+
+    @PostMapping(value = "/signup", produces = "application/json")
     public ResponseEntity<?> register(@RequestBody UserRegistrationForm userRegistrationForm) {
-        Pattern loginPattern = Pattern.compile("[^a-zA-Z0-9]");
-        Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
-
-        if (    userRegistrationForm.getFirstName().trim().equals("") ||
-                userRegistrationForm.getEmail().trim().equals("") ||
-                userRegistrationForm.getUsername().trim().equals("") ||
-                userRegistrationForm.getPassword().trim().equals("") ||
-                userRegistrationForm.getPasswordConfirm().trim().equals(""))
-            return new ResponseEntity<>(ResponseMessage.EMPTY_FIELD, HttpStatus.CONFLICT);
-        else if (userService.getUser(userRegistrationForm.getUsername()) != null)
-            return new ResponseEntity<>(ResponseMessage.DUPLICATE_USER, HttpStatus.CONFLICT);
-        else if (!userRegistrationForm.getPassword().equals(userRegistrationForm.getPasswordConfirm()))
-            return new ResponseEntity<>(ResponseMessage.PASSWORD_MISMATCH, HttpStatus.CONFLICT);
-        else if (loginPattern.matcher(userRegistrationForm.getUsername()).find())
-            return new ResponseEntity<>(ResponseMessage.SPECIAL_CHARACTERS, HttpStatus.CONFLICT);
-        else if (!emailPattern.matcher(userRegistrationForm.getEmail()).matches())
-            return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
-
-        userService.createNewUser(userRegistrationForm);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return validator.signUp(userRegistrationForm);
     }
 
-    @GetMapping(value = "/api/users")
+    @GetMapping
     public List<User> users() {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value ="/api/users/{username}")
+    @GetMapping(value ="/{username}")
     public ResponseEntity<?> userByUsername(@PathVariable String username) {
         User user = userService.getUser(username);
         if (user == null)
@@ -64,64 +53,92 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @GetMapping(value = "/api/users/signout")
+    @GetMapping(value = "/signout")
     public void logout(@RequestParam(value = "access_token") String token) {
         tokenStore.removeAccessToken(tokenStore.readAccessToken(token));
     }
 
-    @GetMapping(value = "/api/users/loggedUser")
+    @GetMapping(value = "/loggedUser")
     public User getLoggedUser() {
         return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
-    @PutMapping(value = "/api/users/{userId}/updateAvatar")
+
+    @PutMapping(value = "/{userId}/avatar")
     public ResponseEntity<?> updateAvatar(@RequestParam(value = "avatarImage") MultipartFile avatarImage, @PathVariable Long userId) {
-        if (!userId.equals(getLoggedUser().getId()))
+        if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         userService.updateUserAvatar(userId, avatarImage);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/api/users/{userId}/deleteAvatar")
+    @DeleteMapping(value = "/{userId}/avatar")
     public ResponseEntity<?> deleteAvatar(@PathVariable Long userId) {
-        if (!userId.equals(getLoggedUser().getId()))
+        if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (userService.deleteUserAvatar(userId))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping(value = "/api/users/{userId}/updateEmail")
+    @PutMapping(value = "/{userId}/email")
     public ResponseEntity<?> updateEmail(@PathVariable Long userId, @RequestParam String newEmail, @RequestParam String newEmailConfirm) {
-        if (!userId.equals(getLoggedUser().getId()))
+        if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
+        return validator.updateEmail(userId, newEmail, newEmailConfirm);
 
-        if (!emailPattern.matcher(newEmail).matches())
-            return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
-        else if (!emailPattern.matcher(newEmailConfirm).matches())
-            return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
-        else if (!newEmail.equals(newEmailConfirm))
-            return new ResponseEntity<>(ResponseMessage.EMAIL_MISMATCH, HttpStatus.CONFLICT);
-        userService.updateUserEmail(userId, newEmail, newEmailConfirm);
-        return new ResponseEntity<>(ResponseMessage.EMAIL_UPDATED, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/api/users/{userId}/updatePassword")
+    @PutMapping(value = "/{userId}/password")
     public ResponseEntity<?> updatePassword(@PathVariable Long userId, @RequestParam String oldPass, @RequestParam String newPass, @RequestParam String newPassConfirm) {
-        if (!userId.equals(getLoggedUser().getId()))
+        if(isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return validator.updatePassword(userId,oldPass,newPass,newPassConfirm);
+    }
 
-        if (oldPass.trim().equals("") ||
-                newPass.trim().equals("") ||
-                newPassConfirm.trim().equals(""))
-            return new ResponseEntity<>(ResponseMessage.EMPTY_FIELD, HttpStatus.CONFLICT);
-        else if (!newPass.equals(newPassConfirm))
-            return new ResponseEntity<>(ResponseMessage.NEW_PASSWORDS_MISMATCH,HttpStatus.CONFLICT);
+    @GetMapping(value = "/{userId}/favorite/users")
+    public Set<User> getFavoriteUsers(@PathVariable Long userId) {
+        return userService.getFavoriteUsers(userId);
+    }
 
-        if (!userService.updateUserPassword(userId, oldPass, newPass, newPassConfirm))
-            return new ResponseEntity<>(ResponseMessage.CURRENT_PASSWORD_MISMATCH, HttpStatus.UNAUTHORIZED);
+    @GetMapping(value = "/{userId}/favorite/users/{favoriteUserId}")
+    public User getFavoriteUser(@PathVariable Long userId, @PathVariable Long favoriteUserId) {
+         return userService.getFavoriteUser(userId,favoriteUserId);
+    }
 
-        return new ResponseEntity<>(ResponseMessage.PASSWORD_UPDATED,HttpStatus.OK);
+    @PostMapping(value = "/{userId}/favorite/users")
+    public ResponseEntity<?> addFavoriteUser(@PathVariable Long userId, @RequestParam Long favoriteUserId) {
+        if (isNotLoggedInUserMakesRequest(userId))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return validator.addFavoriteUser(userId, favoriteUserId);
+    }
+
+    @DeleteMapping(value = "/{userId}/favorite/users/{favoriteUserId}")
+    public ResponseEntity<?> deleteFavoriteUser(@PathVariable Long userId, @PathVariable Long favoriteUserId) {
+        if (isNotLoggedInUserMakesRequest(userId))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return validator.deleteFavoriteUser(userId,favoriteUserId);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +37,7 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<Photo> photos;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> favoriteUsers;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -64,7 +65,27 @@ public class User {
         this.photos.add(photo);
     }
 
+    public boolean addFavoriteUser(User favoriteUser) {
+        if (this.favoriteUsers == null)
+            this.favoriteUsers = new HashSet<>();
+        return this.favoriteUsers.add(favoriteUser);
+    }
 
+    public boolean deleteFavoriteUser(User favoriteUser) {
+        if (this.favoriteUsers == null || this.favoriteUsers.isEmpty())
+            return false;
+        return this.favoriteUsers.remove(favoriteUser);
+    }
+
+    public boolean hasFavoriteUser(User favoriteUser) {
+        return this.favoriteUsers.contains(favoriteUser);
+    }
+
+    public String getRegistrationDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        return  this.registrationDate.format(formatter);
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -126,9 +147,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public LocalDateTime getRegistrationDate() {
-        return registrationDate;
-    }
+
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
@@ -157,4 +176,6 @@ public class User {
     public void setFavoritePhotos(Set<Photo> favoritePhotos) {
         this.favoritePhotos = favoritePhotos;
     }
+
+
 }

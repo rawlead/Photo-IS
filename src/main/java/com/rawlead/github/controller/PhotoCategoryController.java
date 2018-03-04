@@ -21,7 +21,4 @@ public class PhotoCategoryController {
     public List<PhotoCategory> listCategories() {
         return categoryService.getAllCategories();
     }
-
-
-
 }

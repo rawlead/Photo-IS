@@ -58,7 +58,8 @@
                 </div>
                 <div class="form-group">
                     <label for="uploadPhotoDescription">Description</label>
-                    <textarea maxlength="100" placeholder="Not required" class="data-input" v-model="uploadPhotoDescription"
+                    <textarea maxlength="100" placeholder="Not required" class="data-input"
+                              v-model="uploadPhotoDescription"
                               id="uploadPhotoDescription"
                               rows="3"></textarea>
                 </div>
@@ -126,12 +127,11 @@
         <!--USER UPLOADED PHOTOS GRID -->
         <div class="col-md-10 offset-md-2">
             <div class="photos-container row">
+                <!--<transition name="slide-fade">-->
                 <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                    <!--data-toggle="modal" data-target="#user-photo-modal" -->
                     <img v-bind:src="photo.url"
                          class="grid-image openImageDialog"
                          alt=""/>
-
                     <div class="middle">
                         <h5><b>{{photo.title}}</b></h5>
                         <p>{{photo.description}}</p>
@@ -143,9 +143,21 @@
 
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
     <div id="Favorites" class="profileTabContent row">
-        <div class="col-md-5 col-xl-3 offset-md-2 col-6">
+        <div class="col-md-3 offset-md-2">
             <h3>Welcome, {{user.firstName}}!</h3>
-            <p>On this page you can see your favorite authors</p><!-- FAVORITES -->
+            <p>On this page you can see your favorite authors and photos</p><!-- FAVORITES -->
+        </div>
+        <div class="col-md-2">
+            <p>Favorite Users</p>
+            <ul>
+                <li v-for="user in favoriteUsers">{{user.firstName}}</li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <p>Favorite Photos</p>
+            <ul>
+                <li></li>
+            </ul>
         </div>
     </div>
 
@@ -170,7 +182,8 @@
                 <div class="avatar-middle-overlay">
                     <input type="file" v-on:change="onFileChange" class="inputFile" id="avatar_input_file"
                            value="Choose file"/>
-                    <label for="avatar_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i> Choose</label>
+                    <label for="avatar_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i>
+                        Choose</label>
                 </div>
             </div>
             <h6 v-if="updateData === 'avatar'" style="text-align: center">{{statusMessage}} <i
@@ -179,30 +192,37 @@
 
         <div class="col-md-5  col-xl-4 offset-md-2">
             <!--change email form-->
+            <p>Date of registration: {{user.registrationDate}}</p>
             <h5>Email: {{user.email}} <br/><a class="badge badge-dark" v-on:click="updateData = 'email'" href="#">Change
                 email</a>
                 <a v-on:click="updateData = 'password'" class="badge badge-dark" href="#">Change password</a></h5>
 
-            <div v-if="updateData === 'email'">
-                <input class="data-input" v-model="newEmail" type="email" placeholder="Enter new email"/>
-                <input class="data-input" v-model="newEmailConfirm" type="email" placeholder="Confirm new email"/>
-                <button v-on:click="updateEmail(newEmail,newEmailConfirm)" class="btn btn-success"><i
-                        class="fas fa-chevron-circle-up"></i> Submit
-                </button>
-                <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button>
-            </div>
+            <transition name="slide-fade">
+                <div v-if="updateData === 'email'">
+                    <input class="data-input" v-model="newEmail" type="email" placeholder="Enter new email"/>
+                    <input class="data-input" v-model="newEmailConfirm" type="email" placeholder="Confirm new email"/>
+                    <button v-on:click="updateEmail(newEmail,newEmailConfirm)" class="btn btn-success"><i
+                            class="fas fa-chevron-circle-up"></i> Submit
+                    </button>
+                    <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </transition>
 
             <!-- change password form-->
-            <div v-if="updateData === 'password'">
-                <input class="data-input" v-model="oldPass" type="password" placeholder="Enter old password"/>
-                <input class="data-input" v-model="newPass" type="password" placeholder="Enter new password"/>
-                <input class="data-input" v-model="newPassConfirm" type="password"
-                       placeholder="Confirm new password"/>
-                <button v-on:click="updatePassword(oldPass,newPass,newPassConfirm)" class="btn btn-success"><i
-                        class="fas fa-chevron-circle-up"></i> Submit
-                </button>
-                <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button>
-            </div>
+            <transition name="slide-fade">
+                <div v-if="updateData === 'password'">
+                    <input class="data-input" v-model="oldPass" type="password" placeholder="Enter old password"/>
+                    <input class="data-input" v-model="newPass" type="password" placeholder="Enter new password"/>
+                    <input class="data-input" v-model="newPassConfirm" type="password"
+                           placeholder="Confirm new password"/>
+                    <button v-on:click="updatePassword(oldPass,newPass,newPassConfirm)" class="btn btn-success"><i
+                            class="fas fa-chevron-circle-up"></i> Submit
+                    </button>
+                    <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </transition>
 
             <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
             <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
@@ -232,6 +252,7 @@
             hasError: false,
 
             userPhotos: [],
+            favoriteUsers: [],
             categories: [],
 
             modalPhoto: '',
@@ -243,25 +264,29 @@
             uploadPhotoCategory: '',
         },
         mounted() {
-            if (getCookie("access_token")) {
-                $('.alert').fadeOut();
-                axios.get("/api/users/loggedUser?" + accessTokenPath())
-                    .then(function (response) {
-                        this.user = response.data;
-                        this.avatarImage = response.data.avatarUrl;
-                        if (this.avatarImage === "")
-                            this.avatarImage = "/img/user-icon-white.png";
-
-                        this.fetchCategories();
-                        this.fetchUserPhotos();
-                    }.bind(this))
-                    .catch(function (error) {
-                        deleteCookie("access_token");
-                        return error;
-                    });
-            }
+            $('.alert').fadeOut();
+            this.getLoggedInUser();
         },
         methods: {
+            getLoggedInUser() {
+                if (getCookie("access_token")) {
+                    axios.get("/api/users/loggedUser?" + accessTokenPath())
+                        .then(function (response) {
+                            this.user = response.data;
+                            this.avatarImage = response.data.avatarUrl;
+                            if (this.avatarImage === "")
+                                this.avatarImage = "/img/user-icon-white.png";
+
+                            this.fetchCategories();
+                            this.fetchFavoriteUsers();
+                            this.fetchUserPhotos();
+                        }.bind(this))
+                        .catch(function (error) {
+                            deleteCookie("access_token");
+                            return error;
+                        });
+                }
+            },
             onFileChange(e) {
                 var files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
@@ -290,19 +315,21 @@
                 var formData = new FormData();
                 formData.append("avatarImage", document.getElementById("avatar_input_file").files[0]);
                 this.statusMessage = "Uploading";
-                axios.put('/api/users/' + this.user.id + '/updateAvatar?' + accessTokenPath(), formData).then(
+                axios.put('/api/users/' + this.user.id + '/avatar?' + accessTokenPath(), formData).then(
                     function () {
                         vueLoggedUser.avatar_link = this.avatarImage;
                         this.updateData = '';
                         this.statusMessage = "";
-
                     }.bind(this)
                 );
+            },
+            cleanFileInput(id) {
+                $(id).val("");
             },
             updateEmail(newEmail, newEmailConfirm) {
                 axios({
                     method: 'put',
-                    url: '/api/users/' + this.user.id + '/updateEmail?' + accessTokenPath(),
+                    url: '/api/users/' + this.user.id + '/email?' + accessTokenPath(),
                     params: {newEmail, newEmailConfirm}
                 }).then((resultAxios) => {
                     this.statusMessage = resultAxios.data;
@@ -318,7 +345,7 @@
             updatePassword(oldPass, newPass, newPassConfirm) {
                 axios({
                     method: 'put',
-                    url: '/api/users/' + this.user.id + '/updatePassword?' + accessTokenPath(),
+                    url: '/api/users/' + this.user.id + '/password?' + accessTokenPath(),
                     params: {oldPass, newPass, newPassConfirm}
                 }).then((resultAxios) => {
                     this.statusMessage = resultAxios.data;
@@ -341,9 +368,7 @@
                     this.categories = response.data;
                 }.bind(this));
             },
-            cleanFileInput(id) {
-                $(id).val("");
-            },
+
             cancelPhotoUploading() {
                 this.updateData = '';
                 this.statusMessage = '';
@@ -398,11 +423,20 @@
             },
             deletePhoto(photo) {
                 axios.delete("/api/users/" + this.user.id + "/photos/" + photo.id + '?' + accessTokenPath()).then((res) => {
-                    $('#user-photo-modal').modal('hide');
                     this.fetchUserPhotos();
+                    $('.user-photo-modal').modal('hide');
                 }).catch(function (errors) {
                     alert(errors.response)
                 });
+            },
+            fetchFavoriteUsers() {
+                axios.get("/api/users/" + this.user.id + "/favorite/users" )
+                    .then(function (response) {
+                        this.favoriteUsers = response.data;
+                    }.bind(this))
+                    .catch(function (error) {
+
+                    });
             }
         }
     })

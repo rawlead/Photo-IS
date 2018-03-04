@@ -33,12 +33,21 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/photos").authenticated()
+
                 .antMatchers(HttpMethod.DELETE,"/api/users/**/photos/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/api/users/**/photos").authenticated()
-                .antMatchers(HttpMethod.PUT,"/api/users/**/updateAvatar").authenticated()
-                .antMatchers(HttpMethod.PUT,"/api/users/**/updatePassword").authenticated()
-                .antMatchers(HttpMethod.DELETE,"/api/users/**/deleteAvatar").authenticated()
-                .antMatchers(HttpMethod.PUT,"/api/users/**/updateEmail").authenticated()
+
+
+
+
+                .antMatchers(HttpMethod.PUT,"/api/users/**/avatar").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/users/**/password").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/api/users/**/avatar").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/users/**/email").authenticated()
+
+                .antMatchers(HttpMethod.POST,"/api/users/**/favorite/users").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/api/users/**/favorite/users/**").authenticated()
+
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }

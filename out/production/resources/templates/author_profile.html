@@ -13,7 +13,7 @@
 
     <div class="row">
         <div class="col-md-1 offset-md-2">
-            <h4 v-show="errorMessage">{{errorMessage}}</h4>
+            <h4 v-show="statusMessage">awdwa da{{statusMessage}}</h4>
         </div>
 
         <div class="col-md-9">
@@ -24,7 +24,8 @@
                 <h1><b>{{user.firstName}}</b></h1>
                 <h1><b>{{user.lastName}}</b></h1>
                 <h1>@{{user.username}}</h1>
-                <button class="btn btn-primary">Follow <i class="far fa-star"></i></button>
+                <button v-if="!isFavorite" v-on:click="addUserToFavorites" class="btn btn-primary"><i class="fas fa-star"></i> Add to favorites</button>
+                <button v-else-if="isFavorite" v-on:click="removeUserFromFavorites" class="btn btn-primary"><i class="far fa-star"></i> Remove from favorites</button>
             </div>
         </div>
     </div>
@@ -42,7 +43,8 @@
                 </h5>
 
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i> {{modalPhoto.photoCategory.name}}</a>
+                    <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i>
+                        {{modalPhoto.photoCategory.name}}</a>
                 </h5>
 
                 <img v-bind:src="modalPhoto.url" alt=""/>
@@ -54,8 +56,11 @@
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
                             <a class="btn btn-dark" href=""><i class="fas fa-star"></i> Favorite</a>
-                            <a v-bind:href="modalPhoto.url" class="btn btn-success"><i class="fas fa-arrow-alt-circle-down"></i> Download</a>
-                            <button disabled="disabled" class=" btn btn-outline-dark" v-if="modalPhoto.dateCreated"><i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}</button>
+                            <a v-bind:href="modalPhoto.url" class="btn btn-success"><i
+                                    class="fas fa-arrow-alt-circle-down"></i> Download</a>
+                            <button disabled="disabled" class=" btn btn-outline-dark" v-if="modalPhoto.dateCreated"><i
+                                    class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
+                            </button>
 
                         </div>
                     </div>
@@ -81,17 +86,15 @@
         </div>
     </div>
 </div>
-
-
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
-
     var app = new Vue({
         el: '#profileRoot',
         data: {
-            username: '',
-            user: '',
-            errorMessage: '',
+            isFavorite : '',
+            user: [],
+            loggedInUser: [],
+            statusMessage: '',
             userPhotos: [],
             modalPhoto: '',
         },
@@ -106,13 +109,27 @@
             getAuthorByUsername() {
                 axios.get("/api/users/" + this.getAuthorUsername())
                     .then((resultAxios) => {
-                        console.log(resultAxios.data);
                         this.user = resultAxios.data;
+                        this.getLoggedInUser();
                         this.fetchUserPhotos();
                     }).catch(function (error) {
-                    console.log(error.response);
-                    this.errorMessage = error.response.data;
+                    this.statusMessage = error.response.data;
                 }.bind(this))
+
+            },
+            getLoggedInUser() {
+                if (getCookie("access_token")) {
+                    // $('.alert').fadeOut();
+                    axios.get("/api/users/loggedUser?" + accessTokenPath())
+                        .then(function (response) {
+                            this.loggedInUser = response.data;
+                            this.isUserFavorite();
+                        }.bind(this))
+                        .catch(function (error) {
+                            deleteCookie("access_token");
+                            return error;
+                        });
+                }
             },
             fetchUserPhotos() {
                 axios.get("/api/users/" + this.user.id + "/photos").then(function (response) {
@@ -124,6 +141,47 @@
                 this.modalPhoto = photo;
                 $('.user-photo-modal').modal('show')
             },
+            isUserFavorite() {
+                axios.get('/api/users/' + this.loggedInUser.id + '/favorite/users/' + this.user.id)
+                    .then(function (response) {
+                        if (response.data !== '') {
+                            this.isFavorite = true;
+                        } else {
+                            this.isFavorite = false;
+                        }
+                    }.bind(this));
+            },
+            addUserToFavorites() {
+                if (this.loggedInUser.id === this.user.id)
+                    return;
+                axios({
+                    method: 'post',
+                    url: '/api/users/' + this.loggedInUser.id + '/favorite/users?' + accessTokenPath(),
+                    params: {
+                        favoriteUserId: this.user.id
+                    }
+                }).then(function (response) {
+                    this.isFavorite = true;
+                }.bind(this)).catch(function (error) {
+                    alert(error.response.data);
+                });
+            },
+            removeUserFromFavorites() {
+                this.isFavorite = false;
+
+                axios({
+                    method: 'delete',
+                    url: '/api/users/' + this.loggedInUser.id + '/favorite/users/ ' + this.user.id + ' ?' + accessTokenPath(),
+                }).then(function (response) {
+                    // console.log(response);
+                    // this.statusMessage = response.data;
+                }).catch(function (error) {
+                    alert(error.response.data);
+                }.bind(this));
+            },
+            addPhotoToFavorites() {
+
+            }
         }
     });
 

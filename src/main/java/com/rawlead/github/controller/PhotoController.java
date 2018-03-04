@@ -15,19 +15,22 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-public class PortalController {
+public class PhotoController {
     private PhotoService photoService;
     private UserService userService;
 
     @Autowired
-    public PortalController(PhotoService photoService, UserService userService) {
+    public PhotoController(PhotoService photoService, UserService userService) {
         this.photoService = photoService;
         this.userService = userService;
     }
 
-    @GetMapping(value = "/private")
-    public String privateArea() {
-        return "private";
+    private boolean isNotLoggedInUserMakesRequest(Long userId) {
+        return !userId.equals(getLoggedUser().getId());
+    }
+
+    private User getLoggedUser() {
+        return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @GetMapping(value = "/api/photos")
@@ -36,7 +39,7 @@ public class PortalController {
     }
 
     @GetMapping(value = "/api/users/{userId}/photos")
-    public List<Photo> postsByUser(@PathVariable Long userId) {
+    public List<Photo> getPhotosByUser(@PathVariable Long userId) {
         return photoService.findByUser(userId);
     }
 
@@ -46,37 +49,20 @@ public class PortalController {
                                        @RequestPart(required = false) String description,
                                        @RequestPart String category,
                                        @PathVariable Long userId) {
-        System.out.println("title: " + title + "; description: " + description + "; category: " + category);
         this.photoService.postPhoto(userId,photo,title,description,category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    public User getLoggedUser() {
-        return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
-    }
-
     @DeleteMapping(value = "/api/users/{userId}/photos/{photoId}")
     public ResponseEntity<?> deletePhoto(@PathVariable Long userId, @PathVariable Long photoId) {
-        if (!userId.equals(getLoggedUser().getId()))
+        if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
         this.photoService.deletePhoto(photoId);
-
         return new ResponseEntity<>(ResponseMessage.PHOTO_DELETED,HttpStatus.OK);
     }
-
 
     @DeleteMapping(value = "/api/photos/{id}")
     public boolean delete(@PathVariable Long id) {
         return photoService.deletePhoto(id);
-
-    }
-
-
-    //TODO THIS IS SHIT
-    @GetMapping(value = "/api/the_post/{id}")
-    public Photo getPostById(@PathVariable Long id) {
-        return photoService.getPhoto(id);
     }
 }

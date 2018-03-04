@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -49,7 +50,7 @@ public class UserService {
     public boolean deleteUserAvatar(Long userId) {
         User user = userRepository.findOne(userId);
         String avatarUrl = user.getAvatarUrl();
-        if(avatarUrl.equals(""))
+        if (avatarUrl.equals(""))
             return false;
         amazonClient.deleteFileFromS3Bucket(avatarUrl);
         user.setAvatarUrl("");
@@ -72,7 +73,7 @@ public class UserService {
         user.setEmail(userRegistrationForm.getEmail());
         user.setPassword(getPasswordEncoder().encode(userRegistrationForm.getPassword()));
         user.setUsername(userRegistrationForm.getUsername());
-        user.setRoles(Arrays.asList(new Role("USER"),new Role("PHOTOGRAPHER")));
+        user.setRoles(Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")));
         user.setAvatarUrl("/img/user-icon-white.png");
         userRepository.save(user);
     }
@@ -85,11 +86,69 @@ public class UserService {
 
     public boolean updateUserPassword(Long userId, String oldPass, String newPass, String newPassConfirm) {
         User user = userRepository.getOne(userId);
-        if(!getPasswordEncoder().matches(oldPass,user.getPassword()))
+        if (!getPasswordEncoder().matches(oldPass, user.getPassword()))
             return false;
-
         user.setPassword(getPasswordEncoder().encode(newPass));
         userRepository.save(user);
         return true;
     }
+
+    public Set<User> getFavoriteUsers(Long userId) {
+        User user = userRepository.getOne(userId);
+        return user.getFavoriteUsers();
+    }
+
+    public boolean addFavoriteUser(Long userId, Long favoriteUserId) {
+        User user = userRepository.findOne(userId);
+        User favoriteUser = userRepository.findOne(favoriteUserId);
+        if (user == null || favoriteUser == null)
+            return false;
+        if (!user.addFavoriteUser(favoriteUser))
+            return false;
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean deleteFavoriteUser(Long userId, Long favoriteUserId) {
+        User user = userRepository.findOne(userId);
+        User favoriteUser = userRepository.findOne(favoriteUserId);
+        if (user == null || favoriteUser == null)
+            return false;
+        if (!user.deleteFavoriteUser(favoriteUser))
+            return false;
+        userRepository.save(user);
+        return true;
+    }
+
+    public User getFavoriteUser(Long userId, Long favoriteUserId) {
+        User user = userRepository.findOne(userId);
+        User favoriteUser = userRepository.findOne(favoriteUserId);
+        if (user.hasFavoriteUser(favoriteUser))
+            return favoriteUser;
+        return null;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

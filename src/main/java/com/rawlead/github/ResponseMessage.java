@@ -13,6 +13,8 @@ public interface ResponseMessage {
     String PASSWORD_UPDATED = "Password has been changed";
     String CURRENT_PASSWORD_MISMATCH = "Please enter the correct current password";
     String AVATAR_CHANGED = "Profile picture has been changed";
-    String USER_NOT_FOUND = "Author not found";
+    String USER_NOT_FOUND = "User not found";
     String PHOTO_DELETED = "Photo has been deleted";
+    String USER_ALREADY_FAVORITE_OR_DOESNT_EXIST = "User already in favorites or doesn't exist";
+    String FAVORITE_MYSELF = "Cannot add or delete myself to or from favorite users";
 }

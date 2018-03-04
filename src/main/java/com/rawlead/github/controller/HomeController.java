@@ -19,20 +19,17 @@ public class HomeController {
     }
 
     @GetMapping(value = "/signin")
-    public String signin(){
+    public String signin() {
         return "forms/signin";
     }
 
     @GetMapping(value = "/signup")
-    public String signup() { return "forms/signup"; }
-
-    @GetMapping(value = "/photos/{id}")
-    public String singlePost(@PathVariable Long id) {
-        return "post";
+    public String signup() {
+        return "forms/signup";
     }
 
-    @GetMapping( value = "/profile")
-    public String profile(@CookieValue(value = "access_token",required = false) String access_token) {
+    @GetMapping(value = "/profile")
+    public String profile(@CookieValue(value = "access_token", required = false) String access_token) {
         if (access_token == null)
             return "redirect:/signin";
         return "my_profile";
