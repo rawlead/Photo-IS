@@ -40,6 +40,8 @@ public class User {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> favoriteUsers;
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Photo> favoritePhotos;
 
@@ -72,18 +74,31 @@ public class User {
     }
 
     public boolean deleteFavoriteUser(User favoriteUser) {
-        if (this.favoriteUsers == null || this.favoriteUsers.isEmpty())
-            return false;
-        return this.favoriteUsers.remove(favoriteUser);
+        return this.favoriteUsers != null && !this.favoriteUsers.isEmpty() && this.favoriteUsers.remove(favoriteUser);
     }
 
     public boolean hasFavoriteUser(User favoriteUser) {
         return this.favoriteUsers.contains(favoriteUser);
     }
 
+
+    public boolean addFavoritePhoto(Photo favoritePhoto) {
+        if (this.favoritePhotos == null)
+            this.favoritePhotos = new HashSet<>();
+        return this.favoritePhotos.add(favoritePhoto);
+    }
+
+    public boolean deleteFavoritePhoto(Photo favoritePhoto) {
+        return this.favoritePhotos != null && !this.favoritePhotos.isEmpty() && this.favoritePhotos.remove(favoritePhoto);
+    }
+
+
+    public boolean hasFavoritePhoto(Photo photo) {
+        return this.photos.contains(photo);
+    }
+
     public String getRegistrationDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
         return  this.registrationDate.format(formatter);
     }
 

@@ -65,11 +65,7 @@ public class AmazonClient {
         return "File deleted";
     }
 
-
-
-
     // save a file to S3 bucket and return fileUrl
-    //TODO fileUrl store to database
     public String uploadFile(MultipartFile multipartFile) {
         String url = "";
         try {

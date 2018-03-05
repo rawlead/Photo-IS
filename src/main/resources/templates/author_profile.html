@@ -24,8 +24,16 @@
                 <h1><b>{{user.firstName}}</b></h1>
                 <h1><b>{{user.lastName}}</b></h1>
                 <h1>@{{user.username}}</h1>
-                <button v-if="!isFavorite" v-on:click="addUserToFavorites" class="btn btn-primary"><i class="fas fa-star"></i> Add to favorites</button>
-                <button v-else-if="isFavorite" v-on:click="removeUserFromFavorites" class="btn btn-primary"><i class="far fa-star"></i> Remove from favorites</button>
+                <div v-show="user.id !== loggedInUser.id">
+                    <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
+                            onclick="addUserToFavorites(author.loggedInUser, author.user)" class="btn btn-primary"><i
+                            class="fas fa-star"></i> Add to favorites
+                    </button>
+                    <button v-else-if="isUserFavorite" v-on:click="isUserFavorite = !isUserFavorite"
+                            onclick="removeUserFromFavorites(author.loggedInUser, author.user)" class="btn btn-primary">
+                        <i class="far fa-star"></i> Remove from favorites
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -55,7 +63,14 @@
                             <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
-                            <a class="btn btn-dark" href=""><i class="fas fa-star"></i> Favorite</a>
+                            <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
+                               onclick="addPhotoToFavorites(author.loggedInUser, author.modalPhoto)"
+                               class="btn btn-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
+                            <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
+                               onclick="removePhotoFromFavorites(author.loggedInUser, author.modalPhoto)"
+                               class="btn btn-dark" href="#"><i class="far fa-star"></i> Remove</a>
+
+
                             <a v-bind:href="modalPhoto.url" class="btn btn-success"><i
                                     class="fas fa-arrow-alt-circle-down"></i> Download</a>
                             <button disabled="disabled" class=" btn btn-outline-dark" v-if="modalPhoto.dateCreated"><i
@@ -88,10 +103,11 @@
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
-    var app = new Vue({
+    var author = new Vue({
         el: '#profileRoot',
         data: {
-            isFavorite : '',
+            isPhotoFavorite: false,
+            isUserFavorite: '',
             user: [],
             loggedInUser: [],
             statusMessage: '',
@@ -123,7 +139,7 @@
                     axios.get("/api/users/loggedUser?" + accessTokenPath())
                         .then(function (response) {
                             this.loggedInUser = response.data;
-                            this.isUserFavorite();
+                            this.fetchIsUserFavorite();
                         }.bind(this))
                         .catch(function (error) {
                             deleteCookie("access_token");
@@ -137,51 +153,29 @@
                 }.bind(this));
             },
             openModalPhoto(photo) {
+                this.isPhotoFavorite = false;
                 this.modalPhoto = '';
                 this.modalPhoto = photo;
+                this.fetchIsPhotoFavorite(photo);
                 $('.user-photo-modal').modal('show')
             },
-            isUserFavorite() {
+            fetchIsUserFavorite() {
                 axios.get('/api/users/' + this.loggedInUser.id + '/favorite/users/' + this.user.id)
                     .then(function (response) {
                         if (response.data !== '') {
-                            this.isFavorite = true;
+                            this.isUserFavorite = true;
                         } else {
-                            this.isFavorite = false;
+                            this.isUserFavorite = false;
                         }
                     }.bind(this));
             },
-            addUserToFavorites() {
-                if (this.loggedInUser.id === this.user.id)
-                    return;
-                axios({
-                    method: 'post',
-                    url: '/api/users/' + this.loggedInUser.id + '/favorite/users?' + accessTokenPath(),
-                    params: {
-                        favoriteUserId: this.user.id
-                    }
-                }).then(function (response) {
-                    this.isFavorite = true;
-                }.bind(this)).catch(function (error) {
-                    alert(error.response.data);
-                });
+            fetchIsPhotoFavorite(photo) {
+                var loggedUserId = this.loggedInUser.id;
+                var favorites = photo.userFavorites;
+                if (favorites.some(e => e.id === loggedUserId)) {
+                    this.isPhotoFavorite = true;
+                }
             },
-            removeUserFromFavorites() {
-                this.isFavorite = false;
-
-                axios({
-                    method: 'delete',
-                    url: '/api/users/' + this.loggedInUser.id + '/favorite/users/ ' + this.user.id + ' ?' + accessTokenPath(),
-                }).then(function (response) {
-                    // console.log(response);
-                    // this.statusMessage = response.data;
-                }).catch(function (error) {
-                    alert(error.response.data);
-                }.bind(this));
-            },
-            addPhotoToFavorites() {
-
-            }
         }
     });
 

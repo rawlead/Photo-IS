@@ -1,5 +1,6 @@
 package com.rawlead.github.service;
 
+import com.rawlead.github.entity.Photo;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +45,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
+    public User getUser(Long id) {
         return userRepository.findOne(id);
     }
 
@@ -94,7 +96,9 @@ public class UserService {
     }
 
     public Set<User> getFavoriteUsers(Long userId) {
-        User user = userRepository.getOne(userId);
+        User user = userRepository.findOne(userId);
+        if (user == null)
+            return new HashSet<>();
         return user.getFavoriteUsers();
     }
 
@@ -127,6 +131,11 @@ public class UserService {
             return favoriteUser;
         return null;
     }
+
+
+
+
+
 }
 
 

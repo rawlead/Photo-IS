@@ -16,5 +16,8 @@ public interface ResponseMessage {
     String USER_NOT_FOUND = "User not found";
     String PHOTO_DELETED = "Photo has been deleted";
     String USER_ALREADY_FAVORITE_OR_DOESNT_EXIST = "User already in favorites or doesn't exist";
+
     String FAVORITE_MYSELF = "Cannot add or delete myself to or from favorite users";
+    String FAVORITE_OWN_PHOTO = "Cannot add or delete own photo to or from favorite photos";
+    String PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST = "Photo already in favorites or doesn't exist";
 }

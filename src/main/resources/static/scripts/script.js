@@ -16,6 +16,71 @@ $(function(){
 
 
 
+
+
+
+
+
+
+
+function addUserToFavorites(loggedInUser, user) {
+    if (loggedInUser.id === user.id)
+        return;
+    axios({
+        method: 'post',
+        url: '/api/users/' + loggedInUser.id + '/favorite/users?' + accessTokenPath(),
+        params: {
+            favoriteUserId: user.id
+        }
+    }).then(function (response) {
+    }.bind(this)).catch(function (error) {
+        alert(error.response.data);
+    });
+}
+function removeUserFromFavorites(loggedInUser, user) {
+    if (loggedInUser.id === user.id)
+        return;
+    axios({
+        method: 'delete',
+        url: '/api/users/' + loggedInUser.id + '/favorite/users/ ' + user.id + ' ?' + accessTokenPath(),
+    }).then(function (response) {
+    }).catch(function (error) {
+        alert(error.response.data);
+    }.bind(this));
+}
+
+function addPhotoToFavorites(loggedInUser, photo) {
+    if (loggedInUser.id === photo.user.id)
+        return;
+    console.log("Adding photo to favorites");
+    axios({
+        method: 'post',
+        url: '/api/users/' + loggedInUser.id + '/favorite/photos?' + accessTokenPath(),
+        params: {
+            favoritePhotoId: photo.id
+        }
+    }).then(function (response) {
+        console.log(response);
+        author.fetchUserPhotos();
+    }.bind(this)).catch(function (error) {
+        console.log(error.response.data)
+    });
+}
+
+function removePhotoFromFavorites(loggedInUser, photo) {
+    if (loggedInUser.id === photo.user.id)
+        return;
+    axios({
+        method: 'delete',
+        url: '/api/users/' + loggedInUser.id + '/favorite/photos/ ' + photo.id + ' ?' + accessTokenPath(),
+    }).then(function (response) {
+        author.fetchUserPhotos();
+    }).catch(function (error) {
+        alert("Something wrong with removephotofromfavorites")
+    }.bind(this));
+}
+
+
 // responsive mobile nav menu
 function openMobileMenu() {
     var x = document.getElementById("left-nav");
@@ -54,7 +119,6 @@ function deleteCookie(name) {
 var vueLoggedUser = new Vue({
     el: '#loggedUser',
     data: {
-        // default avatar image
         avatar_link: '',
         signedInUsername: '',
         signedIdInUserId: '',
@@ -84,7 +148,7 @@ var vueLoggedUser = new Vue({
                 .then(function (response) {
                     window.Event.isSignedIn = false;
                     deleteCookie("access_token");
-                    window.location.replace("/");
+                    window.location.replace("/signin");
                 }.bind(this));
         },
         isSignedIn() {

@@ -1,5 +1,10 @@
-$(document).ready(function(){ 
-  document.getElementsByClassName('profileTabBtn')[0].click()
+$(document).ready(function(){
+    if (localStorage.getItem("tabName") === "Favorites")
+        document.getElementsByClassName('profileTabBtn')[1].click();
+    else if (localStorage.getItem("tabName") === "Settings")
+        document.getElementsByClassName('profileTabBtn')[2].click();
+    else
+        document.getElementsByClassName('profileTabBtn')[0].click();
 });
 
 
@@ -7,6 +12,8 @@ var currentProfileTab = '';
 
 
 function openProfileTab(evt, tabName) {
+
+    localStorage.setItem("tabName", tabName);
     var i, profileTabContent, profileTabBtn;
     profileTabContent = document.getElementsByClassName("profileTabContent");
     for (i = 0; i < profileTabContent.length; i++) {
@@ -21,3 +28,6 @@ function openProfileTab(evt, tabName) {
     evt.currentTarget.className += " active";
     currentProfileTab = tabName;
 }
+
+
+

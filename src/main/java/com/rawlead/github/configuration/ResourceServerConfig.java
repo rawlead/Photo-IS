@@ -37,9 +37,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                 .antMatchers(HttpMethod.DELETE,"/api/users/**/photos/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/api/users/**/photos").authenticated()
 
-
-
-
                 .antMatchers(HttpMethod.PUT,"/api/users/**/avatar").authenticated()
                 .antMatchers(HttpMethod.PUT,"/api/users/**/password").authenticated()
                 .antMatchers(HttpMethod.DELETE,"/api/users/**/avatar").authenticated()

@@ -1,6 +1,8 @@
 package com.rawlead.github.service;
 
 import com.rawlead.github.ResponseMessage;
+import com.rawlead.github.entity.Photo;
+import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +14,12 @@ import java.util.regex.Pattern;
 @Service
 public class Validator {
     private UserService userService;
+    private PhotoService photoService;
 
     @Autowired
-    public Validator(UserService userService) {
+    public Validator(UserService userService, PhotoService photoService) {
         this.userService = userService;
+        this.photoService = photoService;
     }
 
     public ResponseEntity<?> signUp(UserRegistrationForm userRegistrationForm) {
@@ -77,5 +81,25 @@ public class Validator {
         else if (userService.deleteFavoriteUser(userId,favoriteUserId))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.USER_NOT_FOUND,HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> addFavoritePhoto(Long userId, Long favoritePhotoId) {
+        User user = userService.getUser(userId);
+        Photo photo = photoService.getPhoto(favoritePhotoId);
+        if (user.hasFavoritePhoto(photo))
+            return new ResponseEntity<>(ResponseMessage.FAVORITE_OWN_PHOTO,HttpStatus.CONFLICT);
+        else if (photoService.addFavoritePhoto(userId,favoritePhotoId))
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ResponseMessage.PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
+    }
+
+    public ResponseEntity<?> deleteFavoritePhoto(Long userId, Long favoritePhotoId) {
+        User user = userService.getUser(userId);
+        Photo photo = photoService.getPhoto(favoritePhotoId);
+        if (user.hasFavoritePhoto(photo))
+            return new ResponseEntity<>(ResponseMessage.FAVORITE_OWN_PHOTO,HttpStatus.CONFLICT);
+        else if (photoService.deleteFavoritePhoto(userId,favoritePhotoId))
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ResponseMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 }

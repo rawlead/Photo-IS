@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,17 @@ public class Photo {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> userFavorites;
+
+
+    public boolean addUserFavorite(User user) {
+        if (this.userFavorites == null)
+            this.userFavorites = new HashSet<>();
+        return this.userFavorites.add(user);
+    }
+
+    public boolean deleteUserFavorite(User user) {
+        return this.userFavorites != null && !this.userFavorites.isEmpty() && this.userFavorites.remove(user);
+    }
 
     public Photo() {
         this.dateCreated = LocalDateTime.now();
@@ -100,4 +112,7 @@ public class Photo {
     public void setPhotoCategory(PhotoCategory photoCategory) {
         this.photoCategory = photoCategory;
     }
+
+
+
 }

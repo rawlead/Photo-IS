@@ -5,6 +5,7 @@ import com.rawlead.github.entity.Photo;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.service.PhotoService;
 import com.rawlead.github.service.UserService;
+import com.rawlead.github.service.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class PhotoController {
     private PhotoService photoService;
     private UserService userService;
+    private Validator validator;
 
     @Autowired
-    public PhotoController(PhotoService photoService, UserService userService) {
+    public PhotoController(PhotoService photoService, UserService userService, Validator validator) {
         this.photoService = photoService;
         this.userService = userService;
+        this.validator = validator;
     }
 
     private boolean isNotLoggedInUserMakesRequest(Long userId) {
@@ -44,12 +48,12 @@ public class PhotoController {
     }
 
     @PostMapping(value = "/api/users/{userId}/photos")
-    public ResponseEntity<?> postPhoto(@RequestPart MultipartFile photo,
+    public ResponseEntity<?> addPhoto(@RequestPart MultipartFile photo,
                                        @RequestPart(required = false) String title,
                                        @RequestPart(required = false) String description,
                                        @RequestPart String category,
                                        @PathVariable Long userId) {
-        this.photoService.postPhoto(userId,photo,title,description,category);
+        this.photoService.addPhoto(userId,photo,title,description,category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -65,4 +69,54 @@ public class PhotoController {
     public boolean delete(@PathVariable Long id) {
         return photoService.deletePhoto(id);
     }
+
+    @GetMapping(value = "/api/users/{userId}/favorite/photos")
+    public Set<Photo> getFavoritePhotos(@PathVariable Long userId) {
+        return photoService.getFavoritePhotos(userId);
+    }
+
+//    @GetMapping(value = "/api/users/{userId}/favorite/photos/{favoritePhotoId}")
+//    public Photo getFavoritePhoto(@PathVariable Long userId, @PathVariable Long favoritePhotoId) {
+//        return photoService.getFavoritePhoto(userId,favoritePhotoId);
+//    }
+
+    @PostMapping(value = "/api/users/{userId}/favorite/photos")
+    public ResponseEntity<?> addFavoritePhoto(@PathVariable Long userId, @RequestParam Long favoritePhotoId) {
+
+        return validator.addFavoritePhoto(userId,favoritePhotoId);
+    }
+
+    @DeleteMapping(value = "/api/users/{userId}/favorite/photos/{favoritePhotoId}")
+    public ResponseEntity<?> deleteFavoritePhoto(@PathVariable Long userId, @PathVariable Long favoritePhotoId) {
+        if (isNotLoggedInUserMakesRequest(userId))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return validator.deleteFavoritePhoto(userId,favoritePhotoId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
