@@ -1,10 +1,10 @@
 package com.rawlead.github.controller;
 
-import com.rawlead.github.ResponseMessage;
+import com.rawlead.github.pojo.ResponseMessage;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
 import com.rawlead.github.service.UserService;
-import com.rawlead.github.service.Validator;
+import com.rawlead.github.service.ValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +15,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private UserService userService;
     private TokenStore tokenStore;
-    private Validator validator;
+    private UserService userService;
+    private ValidatorService validatorService;
 
     @Autowired
-    public UserController(UserService userService, TokenStore tokenStore, Validator validator) {
-        this.userService = userService;
+    public UserController(TokenStore tokenStore, UserService userService, ValidatorService validatorService) {
         this.tokenStore = tokenStore;
-        this.validator = validator;
+        this.userService = userService;
+        this.validatorService = validatorService;
     }
 
     private boolean isNotLoggedInUserMakesRequest(Long userId) {
@@ -37,7 +36,7 @@ public class UserController {
 
     @PostMapping(value = "/signup", produces = "application/json")
     public ResponseEntity<?> register(@RequestBody UserRegistrationForm userRegistrationForm) {
-        return validator.signUp(userRegistrationForm);
+        return validatorService.signUp(userRegistrationForm);
     }
 
     @GetMapping
@@ -85,7 +84,7 @@ public class UserController {
     public ResponseEntity<?> updateEmail(@PathVariable Long userId, @RequestParam String newEmail, @RequestParam String newEmailConfirm) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        return validator.updateEmail(userId, newEmail, newEmailConfirm);
+        return validatorService.updateEmail(userId, newEmail, newEmailConfirm);
 
     }
 
@@ -93,7 +92,7 @@ public class UserController {
     public ResponseEntity<?> updatePassword(@PathVariable Long userId, @RequestParam String oldPass, @RequestParam String newPass, @RequestParam String newPassConfirm) {
         if(isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        return validator.updatePassword(userId,oldPass,newPass,newPassConfirm);
+        return validatorService.updatePassword(userId,oldPass,newPass,newPassConfirm);
     }
 
     @GetMapping(value = "/{userId}/favorite/users")
@@ -110,14 +109,14 @@ public class UserController {
     public ResponseEntity<?> addFavoriteUser(@PathVariable Long userId, @RequestParam Long favoriteUserId) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        return validator.addFavoriteUser(userId, favoriteUserId);
+        return validatorService.addFavoriteUser(userId, favoriteUserId);
     }
 
     @DeleteMapping(value = "/{userId}/favorite/users/{favoriteUserId}")
     public ResponseEntity<?> deleteFavoriteUser(@PathVariable Long userId, @PathVariable Long favoriteUserId) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        return validator.deleteFavoriteUser(userId,favoriteUserId);
+        return validatorService.deleteFavoriteUser(userId,favoriteUserId);
     }
 }
 

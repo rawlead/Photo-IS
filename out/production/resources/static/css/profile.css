@@ -180,7 +180,7 @@
 
 .favorite-column {
     overflow: scroll;
-    height: 70vh;
+    height: 80vh;
 }
 
 .favorite-column > p {
@@ -206,7 +206,7 @@
     grid-template-columns: 1fr;
 }
 
-.favorite-photos > ul > li > img {
+.favorite-photos > ul > li > a >  img {
     width: 100%;
     cursor: zoom-in;
 }

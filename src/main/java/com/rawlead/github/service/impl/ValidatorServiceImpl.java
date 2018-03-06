@@ -1,9 +1,10 @@
-package com.rawlead.github.service;
+package com.rawlead.github.service.impl;
 
-import com.rawlead.github.ResponseMessage;
-import com.rawlead.github.entity.Photo;
-import com.rawlead.github.entity.User;
+import com.rawlead.github.pojo.ResponseMessage;
 import com.rawlead.github.pojo.UserRegistrationForm;
+import com.rawlead.github.service.PhotoService;
+import com.rawlead.github.service.UserService;
+import com.rawlead.github.service.ValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +13,17 @@ import org.springframework.stereotype.Service;
 import java.util.regex.Pattern;
 
 @Service
-public class Validator {
+public class ValidatorServiceImpl implements ValidatorService {
     private UserService userService;
     private PhotoService photoService;
 
     @Autowired
-    public Validator(UserService userService, PhotoService photoService) {
+    public ValidatorServiceImpl(UserService userService, PhotoService photoService) {
         this.userService = userService;
         this.photoService = photoService;
     }
 
+    @Override
     public ResponseEntity<?> signUp(UserRegistrationForm userRegistrationForm) {
         Pattern loginPattern = Pattern.compile("[^a-zA-Z0-9]");
         Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
@@ -39,10 +41,11 @@ public class Validator {
             return new ResponseEntity<>(ResponseMessage.SPECIAL_CHARACTERS, HttpStatus.CONFLICT);
         else if (!emailPattern.matcher(userRegistrationForm.getEmail()).matches())
             return new ResponseEntity<>(ResponseMessage.INVALID_EMAIL, HttpStatus.CONFLICT);
-        userService.createNewUser(userRegistrationForm);
+        userService.save(userRegistrationForm);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<?> updateEmail(Long userId, String newEmail, String newEmailConfirm) {
         Pattern emailPattern = Pattern.compile("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$", Pattern.CASE_INSENSITIVE);
         if (!emailPattern.matcher(newEmail).matches())
@@ -55,6 +58,7 @@ public class Validator {
         return new ResponseEntity<>(ResponseMessage.EMAIL_UPDATED, HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<?> updatePassword(Long userId, String oldPass, String newPass, String newPassConfirm) {
         if (oldPass.trim().equals("") ||
                 newPass.trim().equals("") ||
@@ -67,6 +71,7 @@ public class Validator {
         return new ResponseEntity<>(ResponseMessage.PASSWORD_UPDATED,HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<?> addFavoriteUser(Long userId, Long favoriteUserId) {
         if(userId.equals(favoriteUserId))
             return new ResponseEntity<>(ResponseMessage.FAVORITE_MYSELF, HttpStatus.CONFLICT);
@@ -75,6 +80,7 @@ public class Validator {
         return new ResponseEntity<>(ResponseMessage.USER_ALREADY_FAVORITE_OR_DOESNT_EXIST,HttpStatus.CONFLICT);
     }
 
+    @Override
     public ResponseEntity<?> deleteFavoriteUser(Long userId, Long favoriteUserId) {
         if(userId.equals(favoriteUserId))
             return new ResponseEntity<>(ResponseMessage.FAVORITE_MYSELF, HttpStatus.CONFLICT);
@@ -83,12 +89,14 @@ public class Validator {
         return new ResponseEntity<>(ResponseMessage.USER_NOT_FOUND,HttpStatus.NOT_FOUND);
     }
 
+    @Override
     public ResponseEntity<?> addFavoritePhoto(Long userId, Long favoritePhotoId) {
         if (photoService.addFavoritePhoto(userId,favoritePhotoId))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
     }
 
+    @Override
     public ResponseEntity<?> deleteFavoritePhoto(Long userId, Long favoritePhotoId) {
          if (photoService.deleteFavoritePhoto(userId,favoritePhotoId))
             return new ResponseEntity<>(HttpStatus.OK);

@@ -1,12 +1,11 @@
 package com.rawlead.github;
 
 import com.rawlead.github.configuration.CustomUserDetails;
-import com.rawlead.github.entity.PhotoCategory;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.repository.UserRepository;
-import com.rawlead.github.service.PhotoCategoryService;
-import com.rawlead.github.service.UserService;
+import com.rawlead.github.service.impl.PhotoCategoryServiceImpl;
+import com.rawlead.github.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,11 +19,11 @@ import java.util.Arrays;
 public class PhotoIsApplication {
 
 	private PasswordEncoder passwordEncoder;
-	private PhotoCategoryService categoryService;
+	private PhotoCategoryServiceImpl categoryService;
 
 
 	@Autowired
-	public PhotoIsApplication(PasswordEncoder passwordEncoder, PhotoCategoryService categoryService) {
+	public PhotoIsApplication(PasswordEncoder passwordEncoder, PhotoCategoryServiceImpl categoryService) {
 		this.passwordEncoder = passwordEncoder;
 		this.categoryService = categoryService;
 	}
@@ -40,16 +39,16 @@ public class PhotoIsApplication {
 	 * @throws Exception
 	 * */
 	@Autowired
-	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository, UserService service) throws Exception {
+	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository, UserServiceImpl service) throws Exception {
 		if (userRepository.count() == 0) {
 			service.save(new User("NameUser","LastNameUser","user@mail.com","user", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "/img/user-icon-white.png"));
 			service.save(new User("NameUserTwo","","usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "/img/user-icon-white.png"));
 			service.save(new User("NameAdmin","LastNameAdmin","admin@mail.com","admin", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("ADMIN")), "/img/user-icon-white.png"));
 
 
-			categoryService.saveCategory("Nature");
-			categoryService.saveCategory("Animals");
-			categoryService.saveCategory("Food");
+			categoryService.addCategory("Nature");
+			categoryService.addCategory("Animals");
+			categoryService.addCategory("Food");
 		}
 		builder.userDetailsService(userDetailsService(userRepository)).passwordEncoder(passwordEncoder);
 

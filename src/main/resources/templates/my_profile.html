@@ -38,8 +38,9 @@
                     <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
+                <a v-bind:href="'/photo/' + modalPhoto.id">
                 <img v-bind:src="modalPhoto.url" style="width: 100%" alt=""/>
-
+                </a>
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-md-12">
@@ -143,7 +144,9 @@
                 <p>Favorite Photos</p>
                 <ul>
                     <li v-for="photo in favoritePhotos">
+                        <a v-bind:href="'/photo/' + photo.id">
                         <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
+                        </a>
                     </li>
                 </ul>
             </div>

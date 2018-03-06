@@ -1,5 +1,5 @@
 $('#search-input').attr("placeholder", " Search");
-loadProgressBar()
+loadProgressBar();
 
 
 // highlight active left nav link
@@ -24,7 +24,7 @@ function openMobileMenu() {
 }
 
 
-function accessTokenPath() {
+function accessToken() {
     return "access_token=" + getCookie("access_token")
 }
 
@@ -46,7 +46,6 @@ function setCookie(name, value) {
 function deleteCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
-
 
 var vueLoggedUser = new Vue({
     el: '#loggedUser',

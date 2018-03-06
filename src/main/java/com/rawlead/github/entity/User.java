@@ -35,6 +35,10 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<Comment> comments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<Photo> photos;
 
     @JsonIgnore
@@ -193,4 +197,11 @@ public class User {
     }
 
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

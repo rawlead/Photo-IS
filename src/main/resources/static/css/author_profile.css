@@ -15,16 +15,11 @@
 
 .author-profile-description {
     display: inline-block;
-    /*vertical-align: middle;*/
-
-    /*float: right;*/
 }
-
 
 .author-profile-description h1 {
     font-size: 1em;
 }
-
 
 @media screen and (min-width: 767px) {
     .author-profile-avatar {
@@ -34,7 +29,6 @@
     .author-profile-description h1 {
         font-size: 1.15em;
     }
-
 
     .author-profile-avatar img {
         width: 150px;

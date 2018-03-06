@@ -3,13 +3,13 @@ package com.rawlead.github.controller;
 import com.rawlead.github.entity.PhotoCategory;
 import com.rawlead.github.service.PhotoCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class PhotoCategoryController {
+
     private PhotoCategoryService categoryService;
 
     @Autowired
@@ -20,5 +20,15 @@ public class PhotoCategoryController {
     @GetMapping(value = "/api/categories")
     public List<PhotoCategory> listCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @PostMapping(value = "/api/categories")
+    public PhotoCategory addCategory(@RequestBody PhotoCategory photoCategory) {
+        return categoryService.addCategory(photoCategory);
+    }
+
+    @DeleteMapping(value = "/api/categories/{categoryId}")
+    public boolean deleteCategory(@PathVariable Long categoryId) {
+        return categoryService.deleteCategory(categoryId);
     }
 }

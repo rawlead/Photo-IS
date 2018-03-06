@@ -1,24 +1,29 @@
 function getUsersRequest() {
     return axios.get("/api/users");
 }
+
 function getUserPhotosRequest(user) {
     return axios.get("/api/users/" + user.id + "/photos");
 }
 function getLoggedInUserRequest() {
-    return axios.get("/api/users/loggedUser?" + accessTokenPath());
+    return axios.get("/api/users/loggedUser?" + accessToken());
 }
 function getAuthorByUsernameRequest(username) {
     return axios.get("/api/users/" + username);
 }
+
+function getPhotoRequest(id) {
+    return axios.get("/api/photos/" + id);
+}
 function postPhotoRequest(id, formData) {
     return axios({
         method: 'post',
-        url: '/api/users/' + id + '/photos?' + accessTokenPath(),
+        url: '/api/users/' + id + '/photos?' + accessToken(),
         data: formData,
     })
 }
 function deletePhotoRequest(user,photo) {
-    return axios.delete("/api/users/" + user.id + "/photos/" + photo.id + '?' + accessTokenPath());
+    return axios.delete("/api/users/" + user.id + "/photos/" + photo.id + '?' + accessToken());
 }
 function getIsUserFavoriteRequest(loggedInUser,user) {
     return axios.get('/api/users/' + loggedInUser.id + '/favorite/users/' + user.id);
@@ -33,19 +38,19 @@ function getFavoritePhotosRequest(user) {
 function putPasswordRequest(user, oldPass, newPass, newPassConfirm) {
     return  axios({
         method: 'put',
-        url: '/api/users/' + user.id + '/password?' + accessTokenPath(),
+        url: '/api/users/' + user.id + '/password?' + accessToken(),
         params: {oldPass, newPass, newPassConfirm}
     })
 }
 function putEmailRequest(user, newEmail, newEmailConfirm) {
     return axios({
         method: 'put',
-        url: '/api/users/' + user.id + '/email?' + accessTokenPath(),
+        url: '/api/users/' + user.id + '/email?' + accessToken(),
         params: {newEmail, newEmailConfirm}
     })
 }
 function putAvatarRequest(user, formData) {
-    return axios.put('/api/users/' + user.id + '/avatar?' + accessTokenPath(), formData);
+    return axios.put('/api/users/' + user.id + '/avatar?' + accessToken(), formData);
 }
 
 function addUserToFavoritesRequest(loggedInUser, user) {
@@ -53,7 +58,7 @@ function addUserToFavoritesRequest(loggedInUser, user) {
         return;
     axios({
         method: 'post',
-        url: '/api/users/' + loggedInUser.id + '/favorite/users?' + accessTokenPath(),
+        url: '/api/users/' + loggedInUser.id + '/favorite/users?' + accessToken(),
         params: {
             favoriteUserId: user.id
         }
@@ -67,7 +72,7 @@ function removeUserFromFavoritesRequest(loggedInUser, user) {
         return;
     axios({
         method: 'delete',
-        url: '/api/users/' + loggedInUser.id + '/favorite/users/ ' + user.id + ' ?' + accessTokenPath(),
+        url: '/api/users/' + loggedInUser.id + '/favorite/users/ ' + user.id + ' ?' + accessToken(),
     }).then(function (response) {
     }).catch(function (error) {
         alert(error.response.data);
@@ -76,7 +81,7 @@ function removeUserFromFavoritesRequest(loggedInUser, user) {
 function addPhotoToFavoritesRequest(loggedInUser, photo) {
     axios({
         method: 'post',
-        url: '/api/users/' + loggedInUser.id + '/favorite/photos?' + accessTokenPath(),
+        url: '/api/users/' + loggedInUser.id + '/favorite/photos?' + accessToken(),
         params: {
             favoritePhotoId: photo.id
         }
@@ -90,7 +95,7 @@ function addPhotoToFavoritesRequest(loggedInUser, photo) {
 function removePhotoFromFavoritesRequest(loggedInUser, photo) {
     axios({
         method: 'delete',
-        url: '/api/users/' + loggedInUser.id + '/favorite/photos/ ' + photo.id + ' ?' + accessTokenPath(),
+        url: '/api/users/' + loggedInUser.id + '/favorite/photos/ ' + photo.id + ' ?' + accessToken(),
     }).then(function (response) {
         author.fetchUserPhotos();
     }).catch(function (error) {
@@ -98,6 +103,6 @@ function removePhotoFromFavoritesRequest(loggedInUser, photo) {
     }.bind(this));
 }
 function signOutRequest() {
-    return axios.get("/api/users/signout?" + accessTokenPath());
+    return axios.get("/api/users/signout?" + accessToken());
 
 }

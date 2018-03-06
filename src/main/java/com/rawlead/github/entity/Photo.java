@@ -1,12 +1,12 @@
 package com.rawlead.github.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,6 +20,10 @@ public class Photo {
     private LocalDateTime dateCreated;
 
     private String url;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "photo",fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn
@@ -113,6 +117,11 @@ public class Photo {
         this.photoCategory = photoCategory;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

@@ -1,10 +1,11 @@
-package com.rawlead.github.service;
+package com.rawlead.github.service.impl;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.rawlead.github.service.AmazonClientService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Service
-public class AmazonClient {
+public class AmazonClientServiceImpl implements AmazonClientService {
     private AmazonS3 s3client;
 
     @Value("${amazonProperties.endpointUrl}")
@@ -57,15 +58,17 @@ public class AmazonClient {
     }
 
 
-    public String deleteFileFromS3Bucket(String url) {
+    @Override
+    public boolean deleteFileFromS3Bucket(String url) {
         String name = url.substring(url.lastIndexOf("/") + 1);
         System.out.println(name);
         System.out.println(bucketName);
         s3client.deleteObject(new DeleteObjectRequest(bucketName,name));
-        return "File deleted";
+        return true;
     }
 
     // save a file to S3 bucket and return fileUrl
+    @Override
     public String uploadFile(MultipartFile multipartFile) {
         String url = "";
         try {
