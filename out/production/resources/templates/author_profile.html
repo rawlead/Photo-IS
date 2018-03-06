@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-9">
-            <div class="author-profile-avatar">
+            <div class="author-profile-avatar animated rotateIn">
                 <img v-bind:src="user.avatarUrl" alt=""/>
             </div>
             <div class="author-profile-description">
@@ -26,17 +26,19 @@
                 <h1>@{{user.username}}</h1>
                 <div v-show="user.id !== loggedInUser.id">
                     <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
-                            onclick="addUserToFavorites(author.loggedInUser, author.user)" class="btn btn-primary"><i
+                            onclick="addUserToFavoritesRequest(author.loggedInUser, author.user)" class="btn submit-btn hvr-sweep-to-right"><i
                             class="fas fa-star"></i> Add to favorites
                     </button>
                     <button v-else-if="isUserFavorite" v-on:click="isUserFavorite = !isUserFavorite"
-                            onclick="removeUserFromFavorites(author.loggedInUser, author.user)" class="btn btn-primary">
+                            onclick="removeUserFromFavoritesRequest(author.loggedInUser, author.user)" class="btn submit-btn hvr-sweep-to-right">
                         <i class="far fa-star"></i> Remove from favorites
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="hor-sep-30"></div>
 
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
@@ -64,10 +66,10 @@
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
                             <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="addPhotoToFavorites(author.loggedInUser, author.modalPhoto)"
+                               onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto)"
                                class="btn btn-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
                             <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="removePhotoFromFavorites(author.loggedInUser, author.modalPhoto)"
+                               onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto)"
                                class="btn btn-dark" href="#"><i class="far fa-star"></i> Remove</a>
 
 
@@ -88,14 +90,12 @@
     <div class="col-md-10 offset-md-2">
         <div class="photos-container row">
             <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                <!--data-toggle="modal" data-target="#user-photo-modal" -->
                 <img v-bind:src="photo.url"
                      class="grid-image openImageDialog"
                      alt=""/>
 
                 <div class="middle">
                     <h5><b>{{photo.title}}</b></h5>
-                    <p>{{photo.description}}</p>
                 </div>
             </div>
         </div>
@@ -115,28 +115,27 @@
             modalPhoto: '',
         },
         mounted() {
-            this.getAuthorByUsername();
+            this.fetchAuthorByUsername();
         },
         methods: {
             getAuthorUsername() {
                 var splitted = window.location.href.split('/');
                 return splitted[splitted.length - 1];
             },
-            getAuthorByUsername() {
-                axios.get("/api/users/" + this.getAuthorUsername())
+            fetchAuthorByUsername() {
+                var username = this.getAuthorUsername();
+                getAuthorByUsernameRequest(username)
                     .then((resultAxios) => {
                         this.user = resultAxios.data;
-                        this.getLoggedInUser();
+                        this.fetchLoggedInUser();
                         this.fetchUserPhotos();
                     }).catch(function (error) {
                     this.statusMessage = error.response.data;
                 }.bind(this))
-
             },
-            getLoggedInUser() {
+            fetchLoggedInUser() {
                 if (getCookie("access_token")) {
-                    // $('.alert').fadeOut();
-                    axios.get("/api/users/loggedUser?" + accessTokenPath())
+                    getLoggedInUserRequest()
                         .then(function (response) {
                             this.loggedInUser = response.data;
                             this.fetchIsUserFavorite();
@@ -148,9 +147,9 @@
                 }
             },
             fetchUserPhotos() {
-                axios.get("/api/users/" + this.user.id + "/photos").then(function (response) {
+                getUserPhotosRequest(this.user).then(function (response) {
                     this.userPhotos = response.data.reverse();
-                }.bind(this));
+                }.bind(this))
             },
             openModalPhoto(photo) {
                 this.isPhotoFavorite = false;
@@ -160,7 +159,7 @@
                 $('.user-photo-modal').modal('show')
             },
             fetchIsUserFavorite() {
-                axios.get('/api/users/' + this.loggedInUser.id + '/favorite/users/' + this.user.id)
+                getIsUserFavoriteRequest(this.loggedInUser,this.user)
                     .then(function (response) {
                         if (response.data !== '') {
                             this.isUserFavorite = true;
@@ -178,7 +177,6 @@
             },
         }
     });
-
 </script>
 </body>
 </html>

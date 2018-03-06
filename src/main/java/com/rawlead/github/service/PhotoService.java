@@ -52,6 +52,13 @@ public class PhotoService {
         if (photo == null)
             return false;
         amazonClient.deleteFileFromS3Bucket(photo.getUrl());
+
+
+
+        for (User user : photo.getUserFavorites())
+            user.getFavoritePhotos().remove(photo);
+        photo.getUserFavorites().clear();
+
         photoRepository.delete(photo);
         return true;
     }

@@ -14,8 +14,8 @@
 }
 
 .author-profile-description {
-    display : inline-block;
-    vertical-align: top;
+    display: inline-block;
+    /*vertical-align: middle;*/
 
     /*float: right;*/
 }

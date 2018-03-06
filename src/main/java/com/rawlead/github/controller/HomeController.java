@@ -44,4 +44,7 @@ public class HomeController {
     public String authorProfile() {
         return "author_profile";
     }
+
+    @GetMapping(value = "/photo/{photoId}")
+    public String singlePhoto() { return "photo"; }
 }

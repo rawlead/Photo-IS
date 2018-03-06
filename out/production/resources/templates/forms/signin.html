@@ -20,19 +20,18 @@
 
                 <button class="submit-btn" type="button"  v-on:click="signin">SUBMIT</button>
             </div>
-            <div v-if="signInErrors" class="alert alert-warning" role="alert">
-                {{signInAlertMessage}}
+            <div v-show="statusMessage" class="alert alert-warning" role="alert">{{statusMessage}}</div>
             </div>
         </div>
     </div>
-</div>
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
     var signinVue = new Vue({
         el: '#signin-container',
         data: {
-            signInAlertMessage : '',
-            signInErrors : false,
+            // signInAlertMessage : '',
+            // signInErrors : false,
+            statusMessage: '',
             username: '',
             password: '',
         },
@@ -59,10 +58,16 @@
                     setCookie("access_token", response.data.access_token);
                     document.location.replace("/profile");
                 }).catch(function (error) {
-                    this.signInErrors = true;
-                    this.signInAlertMessage = "Wrong username or password";
+                    this.statusMessage = "Wrong username or password";
+                    this.showAndHideAlert();
                 }.bind(this))
-            }
+            },
+            showAndHideAlert() {
+                $(".alert").fadeIn('slow');
+                setTimeout(function () {
+                    $('.alert').fadeOut('slow');
+                }, 1500);
+            },
         }
     });
 </script>

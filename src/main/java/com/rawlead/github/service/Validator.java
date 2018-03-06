@@ -84,21 +84,13 @@ public class Validator {
     }
 
     public ResponseEntity<?> addFavoritePhoto(Long userId, Long favoritePhotoId) {
-        User user = userService.getUser(userId);
-        Photo photo = photoService.getPhoto(favoritePhotoId);
-        if (user.hasFavoritePhoto(photo))
-            return new ResponseEntity<>(ResponseMessage.FAVORITE_OWN_PHOTO,HttpStatus.CONFLICT);
-        else if (photoService.addFavoritePhoto(userId,favoritePhotoId))
+        if (photoService.addFavoritePhoto(userId,favoritePhotoId))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
     }
 
     public ResponseEntity<?> deleteFavoritePhoto(Long userId, Long favoritePhotoId) {
-        User user = userService.getUser(userId);
-        Photo photo = photoService.getPhoto(favoritePhotoId);
-        if (user.hasFavoritePhoto(photo))
-            return new ResponseEntity<>(ResponseMessage.FAVORITE_OWN_PHOTO,HttpStatus.CONFLICT);
-        else if (photoService.deleteFavoritePhoto(userId,favoritePhotoId))
+         if (photoService.deleteFavoritePhoto(userId,favoritePhotoId))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }

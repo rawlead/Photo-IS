@@ -87,7 +87,8 @@
     margin-top: 10px;
     display: grid;
     grid-gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(250px, 300px));
 }
 
 
@@ -95,8 +96,6 @@
     position: relative;
     cursor: zoom-in;
 }
-
-
 
 
 .photo-grid-item img {
@@ -171,20 +170,40 @@
 
 
 
-.favorite-photos {
+
+
+
+                        /*FAVORITES     = = = == = = = === == = = = === = == ==== = =  = = == ====*/
+
+
+
+
+.favorite-column {
     overflow: scroll;
     height: 70vh;
 }
 
+.favorite-column > p {
+    text-align: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #1E1E24;
+    color: #F7EBE8;
+    padding: 5px;
+    border-radius: 2px;
+}
 
-
-.favorite-photos ul {
+.favorite-column ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+}
+
+.favorite-photos ul {
     display: grid;
     grid-gap: 15px;
     grid-template-columns: 1fr;
-    /*grid-template-columns: 1fr 1fr;*/
 }
 
 .favorite-photos > ul > li > img {
@@ -192,41 +211,39 @@
     cursor: zoom-in;
 }
 
-.favorite-photos > p {
-    text-align: center;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background-color: white;
 
-}
+
 
 
 .favorite-users {
-    overflow: scroll;
-    height: 70vh;
     border: none;
     scrollbar-base-color: #1E1E24;
 }
 
-.favorite-users > p {
-    text-align: center;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background-color: white;
+.favorite-users a {
+    text-decoration: none;
+    color: #F7EBE8;
 }
 
-.favorite-users ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.favorite-users a:hover {
+    color: #EEB902;
 }
+
+
+.favorite-users img {
+    display: none;
+    object-fit: cover;
+}
+
+
 
 .favorite-users >ul >li {
+    height: 50px;
+    border-radius: 2px;
+    margin: 5px 0;
     background-color: #1E1E24;
     color: #F7EBE8;
-    padding: 20px 5px 20px 5px;
+
 }
 
 @media screen and (min-width: 767px) {
@@ -239,12 +256,22 @@
     .favorite-photos ul {
         grid-template-columns: 1fr 1fr 1fr;
     }
+
+    .favorite-users img {
+        display: inline-block;
+    }
+
+}
+
+@media screen and (min-width: 960px) {
+
 }
 
 
 
 
 
+                        /*SETTINGS ======= ====== == == = = = = = = == = = = = = */
 
 
 .avatarContainer {

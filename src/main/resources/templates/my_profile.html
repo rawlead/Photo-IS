@@ -23,7 +23,6 @@
     <!-- Tab content -->
     <div class="row hor-sep-50"></div>
 
-
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
          aria-labelledby="user-photo-modal" aria-hidden="true">
@@ -35,13 +34,11 @@
                         <img src="" v-bind:src="modalPhoto.user.avatarUrl" alt=""/>
                         @{{modalPhoto.user.username}}</a>
                 </h5>
-
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
                     <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
-
-                <img v-bind:src="modalPhoto.url" alt=""/>
+                <img v-bind:src="modalPhoto.url" style="width: 100%" alt=""/>
 
                 <div class="modal-footer">
                     <div class="row">
@@ -49,8 +46,8 @@
                             <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
-                            <a v-bind:href="modalPhoto.url" class="btn btn-success"><i
-                                    class="fas fa-arrow-alt-circle-down"></i> Download</a>
+                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-success"><i
+                                    class="fas fa-arrow-alt-circle-down"></i> Open</a>
                             <div class="btn-group" role="group">
                                 <button id="btnMoreGroup" type="button" class="btn btn-secondary dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +61,6 @@
                             <button disabled="disabled" class=" btn btn-outline-dark" v-if="modalPhoto.dateCreated">
                                 <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -72,31 +68,30 @@
         </div>
     </div>
 
-
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
-
     <div id="Uploads" class="profileTabContent row"><!-- UPLOADS -->
-
         <div class="col-md-5 offset-md-2">
             <div v-if="updateData != 'photo'">
                 <h3>Welcome, {{user.firstName}}!</h3>
                 <p>On this page you can upload new photos</p>
             </div>
-
             <div class="photoUploadContainer">
                 <img v-if="updateData === 'photo'" :src="uploadPhotoPreview" class="upload-photo-preview"/>
 
-                <input type="file" v-on:change="onFileChange" class="inputFile" id="photo_input_file"
+                <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile" id="photo_input_file"
                        value="Choose file"/>
-
                 <label for="photo_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i> Choose
                     photo</label>
             </div>
         </div>
 
-
         <div class="col-md-4">
+            <!--<div class="progress">-->
+                <!--<div v-bind:style="{width : progressBarWidth}" class="progress-bar"  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
+            <!--</div>-->
+
             <h6 v-html="statusMessage" style="text-align: center"></h6>
+
 
             <div v-if="updateData === 'photo'">
                 <div class="form-group">
@@ -129,7 +124,6 @@
         <!--USER UPLOADED PHOTOS GRID -->
         <div class="col-md-10 offset-md-2">
             <div class="photos-container row">
-                <!--<transition name="slide-fade">-->
                 <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
                     <img v-bind:src="photo.url"
                          class="grid-image openImageDialog"
@@ -142,35 +136,33 @@
             </div>
         </div>
     </div>
-
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
     <div id="Favorites" class="profileTabContent row">
-        <div class="col-md-10 offset-md-2">
-            <!--<h3>Welcome, {{user.firstName}}!</h3>-->
-            <p>On this page you can see your favorite authors and photos</p>                <!-- FAVORITES -->
-        </div>
-        <div class="col-md-6 col-8 offset-md-2">
-            <div class="favorite-photos">
+        <div class="col-md-6 col-8 col-xl-8 offset-md-2">
+            <div class="favorite-photos favorite-column">
                 <p>Favorite Photos</p>
                 <ul>
-                    <li v-for="photo in favoritePhotos"  v-on:click="openModalPhoto(photo)">
-                        <img v-bind:src="photo.url" alt=""/>
+                    <li v-for="photo in favoritePhotos">
+                        <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="col-md-4 col-4">
-            <div class="favorite-users">
-                <p class="favorites-header">Favorite Users</p>
+        <div class="col-md-4 col-4 col-xl-2">
+            <div class="favorite-users favorite-column">
+                <p>Favorite Authors</p>
                 <ul>
-                    <li v-for="user in favoriteUsers"><a v-bind:href="'/profile/' + user.username">@{{user.username}}</a></li>
+                    <li v-for="user in favoriteUsers">
+
+                        <a v-bind:href="'/profile/' + user.username">
+                            <img v-bind:src="user.avatarUrl" style="width: 50px" height="50px" alt=""/>
+                            @{{user.username}}</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
-
     <div id="Settings" class="profileTabContent row">                                           <!--   SETTING  -->
         <div class="col-md-4 col-xl-3 offset-md-2 col-6">
             <h3>Welcome, {{user.firstName}}!</h3>
@@ -188,14 +180,16 @@
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
 
                 <div class="avatar-middle-overlay">
-                    <input type="file" v-on:change="onFileChange" class="inputFile" id="avatar_input_file"
+                    <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile" id="avatar_input_file"
                            value="Choose file"/>
                     <label for="avatar_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i>
                         Choose</label>
                 </div>
             </div>
-            <h6 v-if="updateData === 'avatar'" style="text-align: center">{{statusMessage}} <i
-                    class="fas fa-sync fa-spin"></i></h6>
+            <div v-if="updateData === 'avatar'" style="text-align: center">
+                <h6 v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</h6>
+                <h6 v-else="" class="alert alert-success" role="alert">{{statusMessage}} <i class="fas fa-sync fa-spin"></i></h6>
+            </div>
         </div>
 
         <div class="col-md-5  col-xl-4 offset-md-2">
@@ -214,6 +208,7 @@
                     </button>
                     <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
                     </button>
+
                 </div>
             </transition>
 
@@ -229,11 +224,12 @@
                     </button>
                     <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
                     </button>
+
                 </div>
             </transition>
-
             <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
             <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
+
         </div>
         <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     </div>
@@ -248,6 +244,8 @@
         el: '#myProfileRoot',
         data: {
             user: {},
+
+            progressBarWidth: '5%',
 
             oldPass: '',
             newPass: '',
@@ -273,19 +271,19 @@
             uploadPhotoCategory: '',
         },
         mounted() {
-            $('.alert').fadeOut();
-            this.getLoggedInUser();
+
+            $('.alert').hide();
+            this.fetchLoggedInUser();
         },
         methods: {
-            getLoggedInUser() {
+            fetchLoggedInUser() {
                 if (getCookie("access_token")) {
-                    axios.get("/api/users/loggedUser?" + accessTokenPath())
+                    getLoggedInUserRequest()
                         .then(function (response) {
                             this.user = response.data;
                             this.avatarImage = response.data.avatarUrl;
                             if (this.avatarImage === "")
                                 this.avatarImage = "/img/user-icon-white.png";
-
                             this.fetchCategories();
                             this.fetchUserPhotos();
                             this.fetchFavoriteUsers();
@@ -322,10 +320,18 @@
                 }
             },
             uploadAvatar() {
+                var uploadingFile = document.getElementById("avatar_input_file").files[0];
+                if (!this.isUploadingFileTypeOfImage(uploadingFile)) {
+                    this.hasError = true;
+                    this.statusMessage = "File should be type of image";
+                    this.showAndHideAlert();
+                    return;
+                }
                 var formData = new FormData();
-                formData.append("avatarImage", document.getElementById("avatar_input_file").files[0]);
+                formData.append("avatarImage", uploadingFile);
+                this.hasError = false;
                 this.statusMessage = "Uploading";
-                axios.put('/api/users/' + this.user.id + '/avatar?' + accessTokenPath(), formData).then(
+                putAvatarRequest(this.user,formData).then(
                     function () {
                         vueLoggedUser.avatar_link = this.avatarImage;
                         this.updateData = '';
@@ -337,31 +343,25 @@
                 $(id).val("");
             },
             updateEmail(newEmail, newEmailConfirm) {
-                axios({
-                    method: 'put',
-                    url: '/api/users/' + this.user.id + '/email?' + accessTokenPath(),
-                    params: {newEmail, newEmailConfirm}
-                }).then((resultAxios) => {
-                    this.statusMessage = resultAxios.data;
-                    this.hasError = false;
-                    this.updateData = '';
-                    this.user.email = newEmail;
-                }).catch(function (error) {
+                putEmailRequest(this.user, newEmail, newEmailConfirm)
+                    .then((resultAxios) => {
+                        this.statusMessage = resultAxios.data;
+                        this.hasError = false;
+                        this.updateData = '';
+                        this.user.email = newEmail;
+                    }).catch(function (error) {
                     this.statusMessage = error.response.data;
                     this.hasError = true;
                 }.bind(this));
                 this.showAndHideAlert();
             },
             updatePassword(oldPass, newPass, newPassConfirm) {
-                axios({
-                    method: 'put',
-                    url: '/api/users/' + this.user.id + '/password?' + accessTokenPath(),
-                    params: {oldPass, newPass, newPassConfirm}
-                }).then((resultAxios) => {
-                    this.statusMessage = resultAxios.data;
-                    this.hasError = false;
-                    this.updateData = '';
-                }).catch(function (error) {
+                putPasswordRequest(this.user, oldPass, newPass, newPassConfirm)
+                    .then((resultAxios) => {
+                        this.statusMessage = resultAxios.data;
+                        this.hasError = false;
+                        this.updateData = '';
+                    }).catch(function (error) {
                     this.statusMessage = error.response.data;
                     this.hasError = true;
                 }.bind(this));
@@ -386,14 +386,22 @@
                 this.cleanFileInput("#photo_input_file");
             },
             uploadPhoto() {
+                var uploadingFile = document.getElementById("photo_input_file").files[0];
+                if(!this.isUploadingFileTypeOfImage(uploadingFile)){
+                    this.hasError = true;
+                    this.statusMessage = "File should be type of image";
+                    this.showAndHideAlert();
+                    return;
+                }
                 if (this.uploadPhotoCategory === '') {
                     this.hasError = true;
                     this.statusMessage = "Please choose a category";
                     this.showAndHideAlert();
                     return;
                 }
+
                 var formData = new FormData();
-                formData.append("photo", document.getElementById("photo_input_file").files[0]);
+                formData.append("photo", uploadingFile);
                 formData.append("title", this.uploadPhotoTitle);
                 formData.append("description", this.uploadPhotoDescription);
                 formData.append("category", this.uploadPhotoCategory);
@@ -403,22 +411,22 @@
 
                 this.cleanFileInput("#photo_input_file");
 
-                axios({
-                    method: 'post',
-                    url: '/api/users/' + this.user.id + '/photos?' + accessTokenPath(),
-                    data: formData
-                }).then((resultAxios) => {
-                    this.statusMessage = "";
-                    this.hasError = false;
-                    this.updateData = '';
-                    this.fetchUserPhotos();
-                }).catch(function (error) {
+                postPhotoRequest(this.user.id, formData)
+                    .then((resultAxios) => {
+                        this.statusMessage = "";
+                        this.hasError = false;
+                        this.updateData = '';
+                        this.fetchUserPhotos();
+                    }).catch(function (error) {
                     alert(error.response.data);
                     this.hasError = true;
                 }.bind(this));
             },
+            isUploadingFileTypeOfImage(file) {
+                return file.name.match(/.(jpg|jpeg|png|gif)$/i);
+            },
             fetchUserPhotos() {
-                axios.get("/api/users/" + this.user.id + "/photos").then(function (response) {
+                getUserPhotosRequest(this.user).then(function (response) {
                     this.userPhotos = response.data.reverse();
                 }.bind(this));
             },
@@ -432,7 +440,7 @@
                 return this.modalPhoto.photoCategory.name;
             },
             deletePhoto(photo) {
-                axios.delete("/api/users/" + this.user.id + "/photos/" + photo.id + '?' + accessTokenPath()).then((res) => {
+                deletePhotoRequest(this.user, photo).then((res) => {
                     this.fetchUserPhotos();
                     $('.user-photo-modal').modal('hide');
                 }).catch(function (errors) {
@@ -440,7 +448,7 @@
                 });
             },
             fetchFavoriteUsers() {
-                axios.get("/api/users/" + this.user.id + "/favorite/users")
+                getFavoriteUsersRequest(this.user)
                     .then(function (response) {
                         this.favoriteUsers = response.data;
                     }.bind(this))
@@ -449,7 +457,7 @@
                     });
             },
             fetchFavoritePhotos() {
-                axios.get("/api/users/" + this.user.id + "/favorite/photos")
+                getFavoritePhotosRequest(this.user)
                     .then(function (response) {
                         this.favoritePhotos = response.data;
                     }.bind(this))

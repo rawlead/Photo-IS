@@ -21,23 +21,7 @@
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
-    var printAllPosts = new Vue({
-        el: '#content',
-        data: {posts: []},
-        mounted() {
-            this.fetchPosts();
-        },
-        methods: {
-            fetchPosts() {
-                axios.get("/api/posts").then(function(response) {
-                    this.posts = response.data;
-                }.bind(this));
-            },
-            getLink(photo) {
-                return '/api/posts/' + photo.id;
-            }
-        }
-    });
+
 </script>
 </body>
 </html>
