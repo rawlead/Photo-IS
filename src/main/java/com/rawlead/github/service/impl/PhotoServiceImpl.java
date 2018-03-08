@@ -32,7 +32,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public List<Photo> getAllPhotos() {
+    public List<Photo> listAllPhotos() {
         return photoRepository.findAll();
     }
 
@@ -47,11 +47,6 @@ public class PhotoServiceImpl implements PhotoService {
         if (photo == null)
             return false;
         amazonClientService.deleteFileFromS3Bucket(photo.getUrl());
-
-        for (User user : photo.getUserFavorites())
-            user.getFavoritePhotos().remove(photo);
-        photo.getUserFavorites().clear();
-
         photoRepository.delete(photo);
         return true;
     }
@@ -62,7 +57,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public void addPhoto(Long userId, MultipartFile photo, String title, String description, String category) {
+    public Photo addPhoto(Long userId, MultipartFile photo, String title, String description, String category) {
         User user = userRepository.findOne(userId);
         String url = amazonClientService.uploadFile(photo);
         Photo newPhoto = new Photo();
@@ -75,12 +70,13 @@ public class PhotoServiceImpl implements PhotoService {
 
         newPhoto.setUser(user);
         user.addPhoto(newPhoto);
-        photoRepository.save(newPhoto);
         userRepository.save(user);
+        return photoRepository.save(newPhoto);
+
     }
 
     @Override
-    public Set<Photo> getFavoritePhotos(Long userId) {
+    public Set<Photo> listFavoritePhotos(Long userId) {
         User user = userRepository.findOne(userId);
         if (user == null)
             return new HashSet<>();
@@ -95,8 +91,6 @@ public class PhotoServiceImpl implements PhotoService {
             return false;
         if (!user.addFavoritePhoto(favoritePhoto))
             return false;
-        if (!favoritePhoto.addUserFavorite(user))
-            return false;
         userRepository.save(user);
         photoRepository.save(favoritePhoto);
         return true;
@@ -109,8 +103,6 @@ public class PhotoServiceImpl implements PhotoService {
         if (user == null || photoRepository == null)
             return false;
         if (!user.deleteFavoritePhoto(favoritePhoto))
-            return false;
-        if (!favoritePhoto.deleteUserFavorite(user))
             return false;
         userRepository.save(user);
         photoRepository.save(favoritePhoto);

@@ -2,6 +2,7 @@ package com.rawlead.github.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Comment {
@@ -31,8 +32,9 @@ public class Comment {
         this.photo = photo;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
+    public String getDateCreated() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return this.dateCreated.format(formatter);
     }
 
     public void setDateCreated(LocalDateTime dateCreated) {

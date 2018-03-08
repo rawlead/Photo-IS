@@ -13,15 +13,15 @@ public interface UserService {
     @Bean
     PasswordEncoder getPasswordEncoder();
 
-    void save(User user);
+    User save (User user);
 
-    void save(UserRegistrationForm userRegistrationForm);
+    User save(UserRegistrationForm userRegistrationForm);
 
     User getUser(String username);
 
     User getUser(Long id);
 
-    List<User> getAllUsers();
+    List<User> listAllUsers();
 
     boolean deleteUserAvatar(Long userId);
 
@@ -31,7 +31,7 @@ public interface UserService {
 
     boolean updateUserPassword(Long userId, String oldPass, String newPass, String newPassConfirm);
 
-    Set<User> getFavoriteUsers(Long userId);
+    Set<User> listFavoriteUsers(Long userId);
 
     boolean addFavoriteUser(Long userId, Long favoriteUserId);
 

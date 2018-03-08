@@ -5,24 +5,54 @@
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
 <div class="container-fluid" id="photoRoot">
+
+
+    <img v-bind:src="photo.url" class="blurred-background"/>
+
+
     <div class="row hor-sep-60"></div>
 
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
+
     <div class="hor-sep-30"></div>
     <div class="row">
-        <div class="col-md-5 offset-md-2">
-            <h5><b>{{photo.title}}</b></h5>
-            <p>{{photo.description}}</p>
-            <img  style="width: 100%;" v-bind:src="photo.url" alt=""/>
+        <div class="col-md-5 offset-md-2 single-photo">
+            <div class="photo-container">
+                <div class="photo-header">
+                    <h5><b>{{photo.title}}</b></h5>
+                    <p>{{photo.description}}</p>
+                </div>
+                <div class="photo">
+                    <a v-bind:href="photo.url"><img v-bind:src="photo.url" alt=""/></a>
+                </div>
+
+                <div class="photo-description" v-if="photo.user">
+                    <p>
+                        <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>| <span>{{photo.photoCategory.name}}</span>
+                        <span class="float-right"> {{photo.dateCreated}}</span>
+                    </p>
+
+                </div>
+            </div>
         </div>
 
 
-
-        <div class="col-md-5 ">
-            <p>Comments:</p>
+        <div class="col-md-4 single-photo">
+            <div class="comments-container">
+                <div class="comments-header">
+                    <h5><b>Comments</b></h5>
+                </div>
+                <div class="comments-body">
+                    <ul>
+                        <li v-show="!commentsExist">No comments yet . . .</li>
+                        <li v-for="comment in comments">
+                            <a v-bind:href="'/profile/' + comment.user.username"><b>@{{comment.user.username}}</b></a> : {{comment.content}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
 
 
     </div>
@@ -33,7 +63,9 @@
         el: '#photoRoot',
         data: {
             photo: {},
-            loggedInUser: {}
+            loggedInUser: {},
+            comments: "",
+            commentsExist: false
         },
         mounted() {
             this.fetchPhotoById();
@@ -47,11 +79,11 @@
                 var id = this.getPhotoId();
                 getPhotoRequest(id)
                     .then((resultAxios) => {
-                        console.log(resultAxios.data);
                         this.photo = resultAxios.data;
                         this.fetchLoggedInUser();
+                        this.fetchCommentsToPhoto()
+                        ''
                     }).catch(function (error) {
-                    // this.statusMessage = error.response.data;
                 }.bind(this))
             },
             fetchLoggedInUser() {
@@ -66,8 +98,17 @@
                         });
                 }
             },
+            fetchCommentsToPhoto() {
+                getCommentsRequest(this.photo.id)
+                    .then(function (response) {
+                        if (response.data.length > 0)
+                            this.commentsExist = true;
+                        this.comments = response.data.reverse();
+                    }.bind(this)).catch(function (error) {
+                    console.log(error)
+                });
+            }
         }
-
     })
 </script>
 </body>

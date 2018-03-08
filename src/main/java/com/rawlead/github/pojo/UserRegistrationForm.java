@@ -1,11 +1,33 @@
 package com.rawlead.github.pojo;
 
+
+import org.hibernate.validator.constraints.Email;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class UserRegistrationForm {
+
+    @NotNull
+    @Size(min = 2)
     private String firstName;
+
     private String lastName;
+
+    @NotNull
+    @Email(message = ResponseMessage.INVALID_EMAIL)
     private String email;
+
+    @NotNull
+    @Size(min = 2)
     private String username;
+
+    @NotNull
+    @Size(min = 6)
     private String password;
+
+    @NotNull
+    @Size(min = 6)
     private String passwordConfirm;
 
     public UserRegistrationForm() {

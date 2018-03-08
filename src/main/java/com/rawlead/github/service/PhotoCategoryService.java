@@ -5,7 +5,7 @@ import com.rawlead.github.entity.PhotoCategory;
 import java.util.List;
 
 public interface PhotoCategoryService {
-    List<PhotoCategory> getAllCategories();
+    List<PhotoCategory> listAllCategories();
 
     PhotoCategory addCategory(String name);
 

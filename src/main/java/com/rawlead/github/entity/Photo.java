@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 public class Photo {
@@ -22,8 +23,8 @@ public class Photo {
     private String url;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "photo",fetch = FetchType.EAGER)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "photo", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     @ManyToOne
     @JoinColumn
@@ -33,22 +34,14 @@ public class Photo {
     @JoinColumn
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<User> userFavorites;
-
-
-    public boolean addUserFavorite(User user) {
-        if (this.userFavorites == null)
-            this.userFavorites = new HashSet<>();
-        return this.userFavorites.add(user);
-    }
-
-    public boolean deleteUserFavorite(User user) {
-        return this.userFavorites != null && !this.userFavorites.isEmpty() && this.userFavorites.remove(user);
-    }
-
     public Photo() {
         this.dateCreated = LocalDateTime.now();
+    }
+
+    public boolean addComment(Comment comment) {
+        if (this.comments == null)
+            this.comments = new TreeSet<>();
+        return this.comments.add(comment);
     }
 
     public User getUser() {
@@ -85,20 +78,11 @@ public class Photo {
 
     public String getDateCreated() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-        return  this.dateCreated.format(formatter);
+        return this.dateCreated.format(formatter);
     }
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public Set<User> getUserFavorites() {
-        return userFavorites;
-    }
-
-    public void setUserFavorites(Set<User> userFavorites) {
-        this.userFavorites = userFavorites;
     }
 
     public String getUrl() {
@@ -117,11 +101,11 @@ public class Photo {
         this.photoCategory = photoCategory;
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public Set<Comment> getComments() {
+        return this.comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
 }

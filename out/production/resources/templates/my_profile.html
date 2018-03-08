@@ -39,7 +39,7 @@
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
                 <a v-bind:href="'/photo/' + modalPhoto.id">
-                <img v-bind:src="modalPhoto.url" style="width: 100%" alt=""/>
+                    <img v-bind:src="modalPhoto.url" alt=""/>
                 </a>
                 <div class="modal-footer">
                     <div class="row">
@@ -88,7 +88,7 @@
 
         <div class="col-md-4">
             <!--<div class="progress">-->
-                <!--<div v-bind:style="{width : progressBarWidth}" class="progress-bar"  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
+            <!--<div v-bind:style="{width : progressBarWidth}" class="progress-bar"  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
             <!--</div>-->
 
             <h6 v-html="statusMessage" style="text-align: center"></h6>
@@ -131,7 +131,6 @@
                          alt=""/>
                     <div class="middle">
                         <h5><b>{{photo.title}}</b></h5>
-                        <p>{{photo.description}}</p>
                     </div>
                 </div>
             </div>
@@ -145,7 +144,7 @@
                 <ul>
                     <li v-for="photo in favoritePhotos">
                         <a v-bind:href="'/photo/' + photo.id">
-                        <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
+                            <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
                         </a>
                     </li>
                 </ul>
@@ -183,7 +182,8 @@
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
 
                 <div class="avatar-middle-overlay">
-                    <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile" id="avatar_input_file"
+                    <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile"
+                           id="avatar_input_file"
                            value="Choose file"/>
                     <label for="avatar_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i>
                         Choose</label>
@@ -191,7 +191,8 @@
             </div>
             <div v-if="updateData === 'avatar'" style="text-align: center">
                 <h6 v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</h6>
-                <h6 v-else="" class="alert alert-success" role="alert">{{statusMessage}} <i class="fas fa-sync fa-spin"></i></h6>
+                <h6 v-else="" class="alert alert-success" role="alert">{{statusMessage}} <i
+                        class="fas fa-sync fa-spin"></i></h6>
             </div>
         </div>
 
@@ -334,7 +335,7 @@
                 formData.append("avatarImage", uploadingFile);
                 this.hasError = false;
                 this.statusMessage = "Uploading";
-                putAvatarRequest(this.user,formData).then(
+                putAvatarRequest(this.user, formData).then(
                     function () {
                         vueLoggedUser.avatar_link = this.avatarImage;
                         this.updateData = '';
@@ -390,7 +391,7 @@
             },
             uploadPhoto() {
                 var uploadingFile = document.getElementById("photo_input_file").files[0];
-                if(!this.isUploadingFileTypeOfImage(uploadingFile)){
+                if (!this.isUploadingFileTypeOfImage(uploadingFile)) {
                     this.hasError = true;
                     this.statusMessage = "File should be type of image";
                     this.showAndHideAlert();

@@ -2,13 +2,13 @@ package com.rawlead.github.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class User {
@@ -16,29 +16,35 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull
     private String firstName;
     private String lastName;
+
+    @NotNull
     private String email;
+
+    @NotNull
     private String username;
 
     @JsonIgnore
+    @NotNull
     private String password;
-
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;
 
-
     private String avatarUrl;
+
     private LocalDateTime registrationDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Photo> photos;
 
     @JsonIgnore
@@ -64,7 +70,6 @@ public class User {
         this.avatarUrl = avatarUrl;
     }
 
-
     public void addPhoto(Photo photo) {
         if (this.photos == null)
             this.photos = new HashSet<>();
@@ -85,7 +90,6 @@ public class User {
         return this.favoriteUsers.contains(favoriteUser);
     }
 
-
     public boolean addFavoritePhoto(Photo favoritePhoto) {
         if (this.favoritePhotos == null)
             this.favoritePhotos = new HashSet<>();
@@ -96,14 +100,19 @@ public class User {
         return this.favoritePhotos != null && !this.favoritePhotos.isEmpty() && this.favoritePhotos.remove(favoritePhoto);
     }
 
-
     public boolean hasFavoritePhoto(Photo photo) {
         return this.photos.contains(photo);
     }
 
     public String getRegistrationDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return  this.registrationDate.format(formatter);
+        return this.registrationDate.format(formatter);
+    }
+
+    public boolean addComment(Comment comment) {
+        if (this.comments == null)
+            this.comments = new TreeSet<>();
+        return this.comments.add(comment);
     }
 
     public String getAvatarUrl() {
@@ -166,8 +175,6 @@ public class User {
         this.lastName = lastName;
     }
 
-
-
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
@@ -196,12 +203,12 @@ public class User {
         this.favoritePhotos = favoritePhotos;
     }
 
-
-    public List<Comment> getComments() {
-        return comments;
+    public Set<Comment> getComments() {
+        return this.comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+
 }

@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
-        userRepository.save(user);
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> listAllUsers() {
         return userRepository.findAll();
     }
 
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserRegistrationForm userRegistrationForm) {
+    public User save(UserRegistrationForm userRegistrationForm) {
         User user = new User();
         user.setFirstName(userRegistrationForm.getFirstName());
         user.setLastName(userRegistrationForm.getLastName());
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userRegistrationForm.getUsername());
         user.setRoles(Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")));
         user.setAvatarUrl("/img/user-icon-white.png");
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<User> getFavoriteUsers(Long userId) {
+    public Set<User> listFavoriteUsers(Long userId) {
         User user = userRepository.findOne(userId);
         if (user == null)
             return new HashSet<>();
@@ -146,11 +146,6 @@ public class UserServiceImpl implements UserService {
             return favoriteUser;
         return null;
     }
-
-
-
-
-
 }
 
 

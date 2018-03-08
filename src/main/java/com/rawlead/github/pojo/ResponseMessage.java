@@ -20,4 +20,7 @@ public interface ResponseMessage {
     String FAVORITE_MYSELF = "Cannot add or delete myself to or from favorite users";
     String FAVORITE_OWN_PHOTO = "Cannot add or delete own photo to or from favorite photos";
     String PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST = "Photo already in favorites or doesn't exist";
+    String PASSWORD_SIZE = "Password must be at least 6 characters";
+    String USERNAME_SIZE = "Username should be at least 2 characters";
+    String PHOTO_NOT_FOUND = "Photo not found";
 }

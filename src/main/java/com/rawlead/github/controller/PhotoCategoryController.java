@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 public class PhotoCategoryController {
-
     private PhotoCategoryService categoryService;
 
     @Autowired
@@ -19,7 +18,7 @@ public class PhotoCategoryController {
 
     @GetMapping(value = "/api/categories")
     public List<PhotoCategory> listCategories() {
-        return categoryService.getAllCategories();
+        return categoryService.listAllCategories();
     }
 
     @PostMapping(value = "/api/categories")

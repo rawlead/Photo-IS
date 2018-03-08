@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface PhotoService {
-    List<Photo> getAllPhotos();
+    List<Photo> listAllPhotos();
 
     List<Photo> findByUser(Long userId);
 
@@ -16,11 +16,12 @@ public interface PhotoService {
 
     Photo getPhoto(Long id);
 
-    void addPhoto(Long userId, MultipartFile photo, String title, String description, String category);
+    Photo addPhoto(Long userId, MultipartFile photo, String title, String description, String category);
 
-    Set<Photo> getFavoritePhotos(Long userId);
+    Set<Photo> listFavoritePhotos(Long userId);
 
     boolean addFavoritePhoto(Long userId, Long favoritePhotoId);
 
     boolean deleteFavoritePhoto(Long userId, Long favoritePhotoId);
+
 }

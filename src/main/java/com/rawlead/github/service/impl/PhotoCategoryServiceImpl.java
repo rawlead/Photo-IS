@@ -19,7 +19,7 @@ public class PhotoCategoryServiceImpl implements PhotoCategoryService {
     }
 
     @Override
-    public List<PhotoCategory> getAllCategories() {
+    public List<PhotoCategory> listAllCategories() {
         return categoryRepository.findAll();
     }
 

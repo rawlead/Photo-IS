@@ -88,7 +88,7 @@
     display: grid;
     grid-gap: 15px;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(250px, 300px));
+    grid-template-rows: repeat(auto-fit, minmax(250px, 250px));
 }
 
 
@@ -161,7 +161,7 @@
 
 }
 
-.user-photo-modal > .modal-dialog > .modal-content > img {
+.user-photo-modal > .modal-dialog > .modal-content > a > img {
     width: 100%;
     border-radius: 5px 5px 0 0;
     border: none;
@@ -176,10 +176,9 @@
                         /*FAVORITES     = = = == = = = === == = = = === = == ==== = =  = = == ====*/
 
 
-
-
 .favorite-column {
     overflow: scroll;
+    overflow-x: hidden;
     height: 80vh;
 }
 
@@ -288,7 +287,6 @@
     overflow: hidden;
     object-fit: cover;
     transition: 0.5s ease;
-    border: 2px solid #EEB902;
     backface-visibility: hidden;
 }
 
