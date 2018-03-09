@@ -31,7 +31,7 @@ public interface UserService {
 
     boolean updateUserPassword(Long userId, String oldPass, String newPass, String newPassConfirm);
 
-    Set<User> listFavoriteUsers(Long userId);
+    List<User> listFavoriteUsers(Long userId);
 
     boolean addFavoriteUser(Long userId, Long favoriteUserId);
 

@@ -59,6 +59,7 @@ public class PhotoIsApplication {
 	 * @return
 	 */
 	private UserDetailsService userDetailsService(final UserRepository repository) {
+
 		return username -> new CustomUserDetails(repository.findByUsername(username));
 	}
 }

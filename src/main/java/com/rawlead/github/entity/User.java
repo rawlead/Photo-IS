@@ -2,7 +2,6 @@ package com.rawlead.github.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,14 +10,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
 
     @NotNull
@@ -35,25 +38,55 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;
 
+    @Column(name = "avatar_url")
     private String avatarUrl;
 
+    @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<Photo> photos;
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "user",
+            fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
+
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<User> favoriteUsers;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Photo> photos = new HashSet<>();
+
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Photo> favoritePhotos;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "favorite_photos",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "photo_id")})
+    private Set<Photo> favoritePhotos = new HashSet<>();
+
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "favorite_users",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "favorite_user_id")})
+    private List<User> favoriteUsers = new ArrayList<>();
+
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "favorite_users",
+            joinColumns = {@JoinColumn(name = "favorite_user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> favoriteUserOf = new ArrayList<>();
+
 
     public User() {
         this.registrationDate = LocalDateTime.now();
@@ -71,14 +104,10 @@ public class User {
     }
 
     public void addPhoto(Photo photo) {
-        if (this.photos == null)
-            this.photos = new HashSet<>();
         this.photos.add(photo);
     }
 
     public boolean addFavoriteUser(User favoriteUser) {
-        if (this.favoriteUsers == null)
-            this.favoriteUsers = new HashSet<>();
         return this.favoriteUsers.add(favoriteUser);
     }
 
@@ -91,8 +120,6 @@ public class User {
     }
 
     public boolean addFavoritePhoto(Photo favoritePhoto) {
-        if (this.favoritePhotos == null)
-            this.favoritePhotos = new HashSet<>();
         return this.favoritePhotos.add(favoritePhoto);
     }
 
@@ -110,8 +137,6 @@ public class User {
     }
 
     public boolean addComment(Comment comment) {
-        if (this.comments == null)
-            this.comments = new TreeSet<>();
         return this.comments.add(comment);
     }
 
@@ -187,11 +212,11 @@ public class User {
         this.photos = photos;
     }
 
-    public Set<User> getFavoriteUsers() {
+    public List<User> getFavoriteUsers() {
         return favoriteUsers;
     }
 
-    public void setFavoriteUsers(Set<User> favoriteUsers) {
+    public void setFavoriteUsers(List<User> favoriteUsers) {
         this.favoriteUsers = favoriteUsers;
     }
 
@@ -211,4 +236,11 @@ public class User {
         this.comments = comments;
     }
 
+    public List<User> getFavoriteUserOf() {
+        return favoriteUserOf;
+    }
+
+    public void setFavoriteUserOf(List<User> favoriteUserOf) {
+        this.favoriteUserOf = favoriteUserOf;
+    }
 }

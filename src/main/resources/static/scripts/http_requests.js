@@ -12,6 +12,9 @@ function getAuthorByUsernameRequest(username) {
     return axios.get("/api/users/" + username);
 }
 
+function getCategoriesRequest() {
+    return axios.get("/api/categories");
+}
 
 function getCommentsRequest(photoId) {
     return axios.get("/api/photos/" + photoId + "/comments")
@@ -27,6 +30,15 @@ function postPhotoRequest(id, formData) {
         data: formData,
     })
 }
+
+function postCommentRequest(photoId, content) {
+    return axios({
+        method: 'post',
+        url: '/api/photos/' + photoId + '/comments?' + accessToken(),
+        params : {content}
+    })
+}
+
 function deletePhotoRequest(user,photo) {
     return axios.delete("/api/users/" + user.id + "/photos/" + photo.id + '?' + accessToken());
 }
@@ -87,7 +99,7 @@ function removeUserFromFavoritesRequest(loggedInUser, user) {
         alert(error.response.data);
     }.bind(this));
 }
-function addPhotoToFavoritesRequest(loggedInUser, photo) {
+function addPhotoToFavoritesRequest(loggedInUser, photo, object) {
     if (loggedInUser === '') {
         window.location.replace("/signin");
         return;
@@ -100,17 +112,17 @@ function addPhotoToFavoritesRequest(loggedInUser, photo) {
         }
     }).then(function (response) {
         console.log(response);
-        author.fetchFavoritePhotos();
+        object.fetchFavoritePhotos();
     }.bind(this)).catch(function (error) {
         console.log(error.response.data)
     });
 }
-function removePhotoFromFavoritesRequest(loggedInUser, photo) {
+function removePhotoFromFavoritesRequest(loggedInUser, photo, object) {
     axios({
         method: 'delete',
         url: '/api/users/' + loggedInUser.id + '/favorite/photos/ ' + photo.id + ' ?' + accessToken(),
     }).then(function (response) {
-        author.fetchFavoritePhotos();
+        object.fetchFavoritePhotos();
     }).catch(function (error) {
         alert("Something wrong with removephotofromfavorites")
     }.bind(this));

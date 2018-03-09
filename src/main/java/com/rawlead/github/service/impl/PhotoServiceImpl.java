@@ -1,7 +1,9 @@
 package com.rawlead.github.service.impl;
 
+import com.rawlead.github.entity.Comment;
 import com.rawlead.github.entity.Photo;
 import com.rawlead.github.entity.User;
+import com.rawlead.github.repository.CommentRepository;
 import com.rawlead.github.repository.PhotoCategoryRepository;
 import com.rawlead.github.repository.PhotoRepository;
 import com.rawlead.github.repository.UserRepository;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,13 +26,15 @@ public class PhotoServiceImpl implements PhotoService {
     private UserRepository userRepository;
     private PhotoCategoryRepository categoryRepository;
     private AmazonClientService amazonClientService;
+    private CommentRepository commentRepository;
 
     @Autowired
-    public PhotoServiceImpl(PhotoRepository photoRepository, UserRepository userRepository, PhotoCategoryRepository categoryRepository, AmazonClientService amazonClientService) {
+    public PhotoServiceImpl(PhotoRepository photoRepository, UserRepository userRepository, PhotoCategoryRepository categoryRepository, AmazonClientService amazonClientService, CommentRepository commentRepository) {
         this.photoRepository = photoRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.amazonClientService = amazonClientService;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -42,12 +48,23 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public boolean deletePhoto(Long id) {
-        Photo photo = photoRepository.findOne(id);
+    @Transactional
+    public boolean deletePhoto(Long photoId) {
+
+        // TODO FIND ANOTHER WAY, ITS TOO SLOW. HIBERNATE?
+        Photo photo = photoRepository.findOne(photoId);
         if (photo == null)
             return false;
+        // delete comments to photo from every users comment list
+
+        photo.getComments().forEach(comment -> comment.getUser().getComments().remove(comment));
+
+        //delete photo from every users favorite photos
+        photo.getFavoriteOfUsers().forEach(user -> user.getFavoritePhotos().remove(photo));
+
         amazonClientService.deleteFileFromS3Bucket(photo.getUrl());
         photoRepository.delete(photo);
+//        commentRepository.deleteCommentByPhotoId(photoId);
         return true;
     }
 
@@ -57,6 +74,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
+    @Transactional
     public Photo addPhoto(Long userId, MultipartFile photo, String title, String description, String category) {
         User user = userRepository.findOne(userId);
         String url = amazonClientService.uploadFile(photo);
@@ -69,8 +87,8 @@ public class PhotoServiceImpl implements PhotoService {
         newPhoto.setDateCreated(LocalDateTime.now());
 
         newPhoto.setUser(user);
-        user.addPhoto(newPhoto);
-        userRepository.save(user);
+//        user.addPhoto(newPhoto);
+//        userRepository.save(user);
         return photoRepository.save(newPhoto);
 
     }

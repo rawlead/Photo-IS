@@ -1,36 +1,33 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head th:include="fragments/header :: head('News')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
 <div class="container-fluid" id="photoRoot">
 
-
     <img v-bind:src="photo.url" class="blurred-background"/>
-
 
     <div class="row hor-sep-60"></div>
 
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-
 
     <div class="hor-sep-30"></div>
     <div class="row">
         <div class="col-md-5 offset-md-2 single-photo">
             <div class="photo-container">
                 <div class="photo-header">
+                    <span style="font-size: 0.7em; font-style: italic" class="float-right"> {{photo.dateCreated}} </span>
                     <h5><b>{{photo.title}}</b></h5>
                     <p>{{photo.description}}</p>
                 </div>
                 <div class="photo">
                     <a v-bind:href="photo.url"><img v-bind:src="photo.url" alt=""/></a>
                 </div>
-
                 <div class="photo-description" v-if="photo.user">
                     <p>
                         <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>| <span>{{photo.photoCategory.name}}</span>
-                        <span class="float-right"> {{photo.dateCreated}}</span>
+                        | <span onclick="addPhotoToFavoritesRequest(photo.loggedInUser, photo.photo, photo)" class="favorite-add" v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite" > <i class="fas fa-star"></i> add </span>
+                        <span onclick="removePhotoFromFavoritesRequest(photo.loggedInUser, photo.photo, photo)" class="favorite-remove" v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite" ><i class="far fa-star"></i> remove </span>
                     </p>
 
                 </div>
@@ -38,17 +35,40 @@
         </div>
 
 
-        <div class="col-md-4 single-photo">
+        <div class="col-md-5 single-photo">
             <div class="comments-container">
                 <div class="comments-header">
                     <h5><b>Comments</b></h5>
+                    <button v-show="!writingComment" class="btn btn-outline-dark"
+                            v-on:click="writingComment = !writingComment">Leave a comment
+                    </button>
+
+                    <transition name="bounce">
+                        <div v-show="writingComment" class="comment-input-section">
+                            <textarea maxlength="150" v-model="commentContent" type="text" rows="3" id="comment-textarea"></textarea>
+                            <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
+                                    class="btn btn-outline-success">Send
+                            </button>
+                            <span class="length-counter">{{charactersLeft}} left</span>
+
+                            <button class="btn btn-outline-danger float-right"
+                                    v-on:click="writingComment = !writingComment">Cancel
+                            </button>
+                            <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
+                                    v-html="statusMessage"></span></div>
+                        </div>
+                    </transition>
+
                 </div>
+
                 <div class="comments-body">
                     <ul>
                         <li v-show="!commentsExist">No comments yet . . .</li>
                         <li v-for="comment in comments">
-                            <a v-bind:href="'/profile/' + comment.user.username"><b>@{{comment.user.username}}</b></a> : {{comment.content}}
-                        </li>
+                            <a v-bind:href="'/profile/' + comment.user.username"><b>@{{comment.user.username}}</b></a>:
+                            {{comment.content}} <br/>
+                            <span style="font-size: 0.7em; font-style: italic">{{comment.dateCreated}}</span>
+                        </li><br/>
                     </ul>
                 </div>
             </div>
@@ -59,16 +79,32 @@
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
+    const MAX_COMMENT_LENGTH = 150;
+    // loadProgressBar();
+
     var photo = new Vue({
         el: '#photoRoot',
         data: {
             photo: {},
-            loggedInUser: {},
+            loggedInUser: '',
             comments: "",
-            commentsExist: false
+            commentContent: "",
+            commentsExist: false,
+            writingComment: false,
+            statusMessage: '',
+            favoritePhotos: [],
+            isPhotoFavorite: false
         },
         mounted() {
             this.fetchPhotoById();
+        },
+        computed: {
+            commentIsOutOfRange: function () {
+                return this.charactersLeft == MAX_COMMENT_LENGTH || !(this.charactersLeft >= 0);
+            },
+            charactersLeft: function () {
+                return MAX_COMMENT_LENGTH - this.commentContent.length;
+            }
         },
         methods: {
             getPhotoId() {
@@ -81,7 +117,7 @@
                     .then((resultAxios) => {
                         this.photo = resultAxios.data;
                         this.fetchLoggedInUser();
-                        this.fetchCommentsToPhoto()
+                        this.fetchCommentsToPhoto();
                         ''
                     }).catch(function (error) {
                 }.bind(this))
@@ -91,6 +127,7 @@
                     getLoggedInUserRequest()
                         .then(function (response) {
                             this.loggedInUser = response.data;
+                            this.fetchFavoritePhotos();
                         }.bind(this))
                         .catch(function (error) {
                             deleteCookie("access_token");
@@ -107,7 +144,31 @@
                     }.bind(this)).catch(function (error) {
                     console.log(error)
                 });
-            }
+            },
+            postCommentToPhoto() {
+                if (this.loggedInUser === '') {
+                    this.statusMessage = 'Please ' + '<a href="/signin" style="color: #fff; text-decoration: underline" class="alert-link">sign in</a>' + ' to leave a comment';
+                    return;
+                }
+                postCommentRequest(this.photo.id, this.commentContent)
+                    .then(function (response) {
+                        this.commentContent = '';
+                        this.fetchCommentsToPhoto()
+                    }.bind(this))
+            },
+            fetchFavoritePhotos() {
+                getFavoritePhotosRequest(this.loggedInUser)
+                    .then(function (response) {
+                        this.favoritePhotos = response.data;
+                        this.fetchIsPhotoFavorite(this.photo);
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+            fetchIsPhotoFavorite(photo) {
+                this.isPhotoFavorite = this.favoritePhotos.some(e => e.id === photo.id);
+            },
         }
     })
 </script>

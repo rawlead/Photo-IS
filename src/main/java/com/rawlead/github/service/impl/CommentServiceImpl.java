@@ -10,6 +10,7 @@ import com.rawlead.github.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,17 +39,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public Comment addComment(Long photoId, Long userId, String content) {
         if (content.isEmpty())
             return null;
         User user = userRepository.findOne(userId);
         Photo photo = photoRepository.findOne(photoId);
         Comment comment = new Comment(LocalDateTime.now(), content, user, photo);
-        if (!photo.addComment(comment) || !user.addComment(comment))
+        if (!photo.addComment(comment))
             return null;
-        photoRepository.save(photo);
-        userRepository.save(user);
+        if (!user.addComment(comment))
+            return null;
+
+//        photoRepository.save(photo);
+//        userRepository.save(user);
         return commentRepository.save(comment);
+//        return comment;
     }
 
     @Override

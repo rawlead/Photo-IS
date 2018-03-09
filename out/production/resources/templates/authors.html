@@ -33,6 +33,8 @@
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
+
+    loadProgressBar();
     var allUsers = new Vue({
         el: '#authors',
         data: {

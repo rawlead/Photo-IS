@@ -1,26 +1,38 @@
 package com.rawlead.github.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
+@Table(name = "comments")
 public class Comment {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(name = "dateCreated")
     private LocalDateTime dateCreated;
+
+    @NotNull
+    @Size(max = 150)
     private String content;
 
-    @ManyToOne
-    @JoinColumn
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id")
     private Photo photo;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Comment() {
     }

@@ -67,14 +67,13 @@
                         <div class="col-md-12">
                             <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
-                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-success"><i
-                                    class="fas fa-arrow-alt-circle-down"></i> Open</a>
+                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i class="fas fa-comment"></i> Comment</a>
                             <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto)"
-                               class="btn btn-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
+                               onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto, author)"
+                               class="btn btn-outline-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
                             <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto)"
-                               class="btn btn-dark" href="#"><i class="far fa-star"></i> Remove</a>
+                               onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto, author)"
+                               class="btn btn-outline-dark" href="#"><i class="far fa-star"></i> Remove</a>
 
 
                             <button disabled="disabled" class=" btn btn-outline-dark" v-if="modalPhoto.dateCreated"><i

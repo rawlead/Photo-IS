@@ -22,6 +22,29 @@ a {
 	color: #1E1E24;
 }
 
+.btn-outline-danger {
+	border-color: #5E0B15;
+	color: #5E0B15;
+}
+
+.btn-outline-danger:hover {
+	background-color: #5E0B15;
+	border-color: #5E0B15;
+	color: #fff;
+}
+
+.btn-outline-success {
+	border-color: #297045;
+	color: #297045;
+}
+.btn-outline-success:hover {
+	background-color: #297045;
+	border-color: #297045;
+	color: #fff;
+
+}
+
+
 .btn-outline-dark:hover {
 	background-color: #1E1E24;
 	color: #EEB902;

@@ -13,4 +13,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     Iterable<Comment> findCommentByPhotoIdOrderByDateCreated(Long photoId);
 
+    Iterable<Comment> findCommentByPhotoId(Long photoId);
+
+    void deleteCommentByPhotoId(Long photoId);
+
 }

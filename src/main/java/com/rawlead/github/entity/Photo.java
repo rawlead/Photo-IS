@@ -3,44 +3,66 @@ package com.rawlead.github.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @Entity
+@Table(name = "photos")
 public class Photo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Size(max = 100)
     private String title;
+
+    @NotNull
+    @Size(max = 150)
     private String description;
+
+    @NotNull
+    @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
+    @Column
     private String url;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", nullable = false)
+    private User user;
+
+
     @JsonIgnore
-    @OneToMany(mappedBy = "photo", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "favoritePhotos")
+    private Set<User> favoriteOfUsers = new HashSet<>();
+
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "photo")
+    private Set<Comment> comments = new HashSet<>();
+
 
     @ManyToOne
     @JoinColumn
     private PhotoCategory photoCategory;
 
-    @ManyToOne
-    @JoinColumn
-    private User user;
 
     public Photo() {
         this.dateCreated = LocalDateTime.now();
     }
 
     public boolean addComment(Comment comment) {
-        if (this.comments == null)
-            this.comments = new TreeSet<>();
         return this.comments.add(comment);
     }
 
@@ -107,5 +129,13 @@ public class Photo {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<User> getFavoriteOfUsers() {
+        return favoriteOfUsers;
+    }
+
+    public void setFavoriteOfUsers(Set<User> favoriteOfUsers) {
+        this.favoriteOfUsers = favoriteOfUsers;
     }
 }

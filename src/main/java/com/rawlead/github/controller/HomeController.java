@@ -44,4 +44,7 @@ public class HomeController {
 
     @GetMapping(value = "/photo/{photoId}")
     public String singlePhoto() { return "photo"; }
+
+    @GetMapping(value = "/categories")
+    public String categories() { return "categories"; }
 }

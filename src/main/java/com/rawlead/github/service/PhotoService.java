@@ -12,7 +12,7 @@ public interface PhotoService {
 
     List<Photo> findByUser(Long userId);
 
-    boolean deletePhoto(Long id);
+    boolean deletePhoto(Long photoId);
 
     Photo getPhoto(Long id);
 

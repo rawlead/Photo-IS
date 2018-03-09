@@ -39,7 +39,7 @@ public class UserController {
 
 
     @PostMapping(value = "/signup", produces = "application/json")
-    public ResponseEntity<?> register(@Valid @RequestBody UserRegistrationForm userRegistrationForm) {
+    public ResponseEntity<?> register(@RequestBody UserRegistrationForm userRegistrationForm) {
         if (userRegistrationForm.getFirstName().trim().isEmpty() ||
                 userRegistrationForm.getEmail().trim().isEmpty() ||
                 userRegistrationForm.getUsername().trim().isEmpty() ||
@@ -134,7 +134,7 @@ public class UserController {
 
 
     @GetMapping(value = "/{userId}/favorite/users")
-    public Set<User> getFavoriteUsers(@PathVariable Long userId) {
+    public List<User> getFavoriteUsers(@PathVariable Long userId) {
         return userService.listFavoriteUsers(userId);
     }
 

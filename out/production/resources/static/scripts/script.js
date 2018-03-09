@@ -1,7 +1,4 @@
 $('#search-input').attr("placeholder", " Search");
-loadProgressBar();
-
-
 // highlight active left nav link
 $(function () {
     var current = location.pathname;

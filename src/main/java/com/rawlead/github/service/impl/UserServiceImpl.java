@@ -13,10 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -107,10 +104,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<User> listFavoriteUsers(Long userId) {
+    public List<User> listFavoriteUsers(Long userId) {
         User user = userRepository.findOne(userId);
         if (user == null)
-            return new HashSet<>();
+            return new ArrayList<>();
         return user.getFavoriteUsers();
     }
 
