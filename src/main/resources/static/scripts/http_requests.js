@@ -2,6 +2,10 @@ function getUsersRequest() {
     return axios.get("/api/users");
 }
 
+function getAllPhotosRequest() {
+    return axios.get("/api/photos");
+}
+
 function getUserPhotosRequest(user) {
     return axios.get("/api/users/" + user.id + "/photos");
 }

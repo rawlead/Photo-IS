@@ -67,7 +67,8 @@
                         <div class="col-md-12">
                             <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
-                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
+                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
+                                    class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
                             <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
                                onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto, author)"
                                class="btn btn-outline-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
