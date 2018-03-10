@@ -134,7 +134,7 @@ public class UserController {
 
 
     @GetMapping(value = "/{userId}/favorite/users")
-    public List<User> getFavoriteUsers(@PathVariable Long userId) {
+    public Set<User> getFavoriteUsers(@PathVariable Long userId) {
         return userService.listFavoriteUsers(userId);
     }
 

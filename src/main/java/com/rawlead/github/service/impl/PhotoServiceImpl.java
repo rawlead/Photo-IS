@@ -127,4 +127,9 @@ public class PhotoServiceImpl implements PhotoService {
         return true;
     }
 
+    @Override
+    public Set<User> listFavoriteOfUsers(Long photoId) {
+        return photoRepository.findOne(photoId).getFavoriteOfUsers();
+    }
+
 }

@@ -47,7 +47,7 @@
                             <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
                             <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
-                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i class="fas fa-comment"></i> Comment</a>
+                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
                             <div class="btn-group" role="group">
                                 <button id="btnMoreGroup" type="button" class="btn btn-outline-dark dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -94,13 +94,13 @@
                 <div class="form-group">
                     <label for="uploadPhotoTitle">Title</label>
 
-                    <input maxlength="50" placeholder="Not required" class="data-input" v-model="uploadPhotoTitle"
+                    <input maxlength="100" placeholder="Not required" class="data-input" v-model="uploadPhotoTitle"
                            id="uploadPhotoTitle" type="text"/>
 
                 </div>
                 <div class="form-group">
                     <label for="uploadPhotoDescription">Description</label>
-                    <textarea maxlength="100" placeholder="Not required" class="data-input"
+                    <textarea maxlength="150" placeholder="Not required" class="data-input"
                               v-model="uploadPhotoDescription"
                               id="uploadPhotoDescription"
                               rows="3"></textarea>
@@ -261,6 +261,7 @@
             favoriteUsers: [],
             favoritePhotos: [],
             categories: [],
+            commentCounter: 0,
 
             modalPhoto: '',
             avatarImage: '',
@@ -433,6 +434,7 @@
             openModalPhoto(photo) {
                 this.modalPhoto = '';
                 this.modalPhoto = photo;
+                this.fetchCommentsToPhoto(photo);
                 console.log(photo);
                 $('.user-photo-modal').modal('show')
             },
@@ -464,6 +466,12 @@
                     .catch(function (error) {
                         console.log(error)
                     });
+            },
+            fetchCommentsToPhoto(photo) {
+                getCommentsToPhotoRequest(photo.id)
+                    .then(function (response) {
+                        this.commentCounter = response.data.length;
+                    }.bind(this))
             }
         }
     })

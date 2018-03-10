@@ -16,6 +16,14 @@ function getCategoriesRequest() {
     return axios.get("/api/categories");
 }
 
+function getCommentsToPhotoRequest(photoId) {
+    return axios.get("/api/photos/" + photoId + "/comments");
+}
+
+function getFavoriteOfUsersRequst(photoId) {
+    return axios.get("/api/photos/" + photoId + "/favorite")
+}
+
 function getCommentsRequest(photoId) {
     return axios.get("/api/photos/" + photoId + "/comments")
 }

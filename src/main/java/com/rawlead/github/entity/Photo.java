@@ -1,6 +1,7 @@
 package com.rawlead.github.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,16 +12,15 @@ import java.util.*;
 
 @Entity
 @Table(name = "photos")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Size(max = 100)
     private String title;
 
-    @NotNull
     @Size(max = 150)
     private String description;
 
@@ -32,7 +32,7 @@ public class Photo {
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "photo_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 
@@ -53,8 +53,8 @@ public class Photo {
     private Set<Comment> comments = new HashSet<>();
 
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_category_id", nullable = false)
     private PhotoCategory photoCategory;
 
 

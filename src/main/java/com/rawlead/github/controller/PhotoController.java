@@ -43,10 +43,10 @@ public class PhotoController {
         return photoService.getPhoto(photoId);
     }
 
-//    @GetMapping(value = "/api/photos/{photoId}")
-//    public List<User> getFavoritedUsers() {
-//        return photoService.listFavoritedUsers();
-//    }
+    @GetMapping(value = "/api/photos/{photoId}/favorite")
+    public Set<User> gerFavoriteOfUsers(@PathVariable Long photoId) {
+        return photoService.listFavoriteOfUsers(photoId);
+    }
 
     @GetMapping(value = "/api/users/{userId}/photos")
     public List<Photo> getPhotosByUser(@PathVariable Long userId) {

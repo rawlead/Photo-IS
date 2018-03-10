@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class PhotoIsApplication {
@@ -41,9 +43,9 @@ public class PhotoIsApplication {
 	@Autowired
 	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository, UserServiceImpl service) throws Exception {
 		if (userRepository.count() == 0) {
-			service.save(new User("NameUser","LastNameUser","user@mail.com","user", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "/img/user-icon-white.png"));
-			service.save(new User("NameUserTwo","","usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")), "/img/user-icon-white.png"));
-			service.save(new User("NameAdmin","LastNameAdmin","admin@mail.com","admin", passwordEncoder.encode("password"), Arrays.asList(new Role("USER"), new Role("ADMIN")), "/img/user-icon-white.png"));
+			service.save(new User("NameUser","LastNameUser","user@mail.com","user", passwordEncoder.encode("password"), Stream.of(new Role("USER"), new Role("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
+			service.save(new User("NameUserTwo","","usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Stream.of(new Role("USER"), new Role("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
+			service.save(new User("NameAdmin","LastNameAdmin","admin@mail.com","admin", passwordEncoder.encode("password"), Stream.of(new Role("USER"), new Role("ADMIN")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
 
 
 			categoryService.addCategory("Nature");

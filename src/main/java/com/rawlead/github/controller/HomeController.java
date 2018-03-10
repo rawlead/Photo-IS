@@ -3,14 +3,13 @@ package com.rawlead.github.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class HomeController {
 
     @GetMapping(value = "/")
     public String index() {
-        return "index";
+        return "redirect:/photos";
     }
 
 
@@ -45,6 +44,6 @@ public class HomeController {
     @GetMapping(value = "/photo/{photoId}")
     public String singlePhoto() { return "photo"; }
 
-    @GetMapping(value = "/categories")
-    public String categories() { return "categories"; }
+    @GetMapping(value = "/photos")
+    public String categories() { return "photos"; }
 }

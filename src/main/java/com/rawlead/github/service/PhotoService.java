@@ -24,4 +24,5 @@ public interface PhotoService {
 
     boolean deleteFavoritePhoto(Long userId, Long favoritePhotoId);
 
+    Set<User> listFavoriteOfUsers(Long photoId);
 }

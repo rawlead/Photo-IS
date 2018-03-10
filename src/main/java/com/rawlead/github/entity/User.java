@@ -2,6 +2,7 @@ package com.rawlead.github.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class User {
 
     @Id
@@ -35,8 +37,16 @@ public class User {
     private String password;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Role> roles;
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<Role> roles;
 
     @Column(name = "avatar_url")
     private String avatarUrl;
@@ -77,7 +87,7 @@ public class User {
     @JoinTable(name = "favorite_users",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "favorite_user_id")})
-    private List<User> favoriteUsers = new ArrayList<>();
+    private Set<User> favoriteUsers = new HashSet<>();
 
 
     @JsonIgnore
@@ -85,14 +95,14 @@ public class User {
     @JoinTable(name = "favorite_users",
             joinColumns = {@JoinColumn(name = "favorite_user_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private List<User> favoriteUserOf = new ArrayList<>();
+    private Set<User> favoriteUserOf = new HashSet<>();
 
 
     public User() {
         this.registrationDate = LocalDateTime.now();
     }
 
-    public User(String firstName, String lastName, String email, String username, String password, List<Role> roles, String avatarUrl) {
+    public User(String firstName, String lastName, String email, String username, String password, Set<Role> roles, String avatarUrl) {
         this.registrationDate = LocalDateTime.now();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -164,11 +174,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -212,11 +222,11 @@ public class User {
         this.photos = photos;
     }
 
-    public List<User> getFavoriteUsers() {
+    public Set<User> getFavoriteUsers() {
         return favoriteUsers;
     }
 
-    public void setFavoriteUsers(List<User> favoriteUsers) {
+    public void setFavoriteUsers(Set<User> favoriteUsers) {
         this.favoriteUsers = favoriteUsers;
     }
 
@@ -236,11 +246,11 @@ public class User {
         this.comments = comments;
     }
 
-    public List<User> getFavoriteUserOf() {
+    public Set<User> getFavoriteUserOf() {
         return favoriteUserOf;
     }
 
-    public void setFavoriteUserOf(List<User> favoriteUserOf) {
+    public void setFavoriteUserOf(Set<User> favoriteUserOf) {
         this.favoriteUserOf = favoriteUserOf;
     }
 }

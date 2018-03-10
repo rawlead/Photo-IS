@@ -7,9 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 //basic implementation of userdetails interface
 //@Service
@@ -32,8 +30,8 @@ public class CustomUserDetails implements UserDetails {
     *     @param roles list of roles
      *    @return list of granted authorities
     * */
-    private Collection<? extends GrantedAuthority> translate(List<Role> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
+    private Collection<? extends GrantedAuthority> translate(Set<Role> roles) {
+        Set<GrantedAuthority> authorities = new HashSet<>();
         for (Role role : roles) {
             String name = role.getName().toUpperCase();
             // every role starts with the "ROLE_"

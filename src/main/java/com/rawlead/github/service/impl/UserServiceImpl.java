@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -81,7 +83,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRegistrationForm.getEmail());
         user.setPassword(getPasswordEncoder().encode(userRegistrationForm.getPassword()));
         user.setUsername(userRegistrationForm.getUsername());
-        user.setRoles(Arrays.asList(new Role("USER"), new Role("PHOTOGRAPHER")));
+        user.setRoles(Stream.of(new Role("USER"), new Role("PHOTOGRAPHER")).collect(Collectors.toSet()));
         user.setAvatarUrl("/img/user-icon-white.png");
         return userRepository.save(user);
     }
@@ -104,10 +106,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> listFavoriteUsers(Long userId) {
+    public Set<User> listFavoriteUsers(Long userId) {
         User user = userRepository.findOne(userId);
-        if (user == null)
-            return new ArrayList<>();
         return user.getFavoriteUsers();
     }
 
