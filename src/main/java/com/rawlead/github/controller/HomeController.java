@@ -3,6 +3,11 @@ package com.rawlead.github.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
@@ -13,6 +18,13 @@ public class HomeController {
     }
 
 
+    @GetMapping(value = "/categories/{categoryName}")
+    public ModelAndView getCategoryByName(@PathVariable String categoryName, RedirectAttributes redir) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/photos");
+        redir.addFlashAttribute("categoryName", categoryName);
+        return modelAndView;
+    }
 
     @GetMapping(value = "/signin")
     public String signin() {

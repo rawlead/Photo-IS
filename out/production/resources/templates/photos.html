@@ -24,7 +24,8 @@
                 </h5>
 
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i>
+                    <a v-bind:href="'/categories/' + modalPhoto.photoCategory.name" style="color: white;"
+                       class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
                 <a v-bind:href="'/photo/' + modalPhoto.id">
@@ -39,10 +40,10 @@
                             <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
                                     class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
                             <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="addPhotoToFavoritesRequest(photosPage.loggedInUser, photosPage.modalPhoto, photosPage)"
+                               onclick="addPhotoToFavoritesRequest(photosPage.loggedInUser, photosPage.modalPhoto, photosPage); return false"
                                class="btn btn-outline-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
                             <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="removePhotoFromFavoritesRequest(photosPage.loggedInUser, photosPage.modalPhoto, photosPage)"
+                               onclick="removePhotoFromFavoritesRequest(photosPage.loggedInUser, photosPage.modalPhoto, photosPage); return false"
                                class="btn btn-outline-dark" href="#"><i class="far fa-star"></i> Remove</a>
 
 
@@ -58,27 +59,45 @@
     </div>
 
 
+    <div class="container-fluid">
+        <div class="row">
+            <div id="categories-nav" class="categories">
+                <div class="close-categories-btn"><p href="javascript:void(0)" onclick="closeCategoriesNav()"><i
+                        class="fas fa-times"></i></p>
+                    <p style="font-size: 0.6em" v-on:click="fetchAllPhotos" href="#">All categories</p>
+                </div>
+                <p v-for="category in categories" v-on:click="fetchPhotosByCategory(category)"
+                   :class="{ active:activeCategory(category) }" href="#">{{category.name}}</p>
+            </div>
 
-    <div class="row">
-        <div class="col-md-10 offset-md-2">
-            <p v-for="category in categories">{{category.name}}</p>
-            <div class="photos-container row">
-                <div v-for="photo in photos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                    <img v-bind:src="photo.url"
-                         class="grid-image openImageDialog"
-                         alt=""/>
-                    <div class="middle">
-                        <h5><b>{{photo.title}}</b></h5>
+            <div class="col-md-10 offset-md-2">
+                <span class="open-categories-btn" onclick="openCategoriesNav()"><i class="fas fa-bars"></i> Select category</span>
+                <span v-show="category" class="float-right">Category - <b>{{category.name}}</b> - {{photos.length}} photos</span>
+                <div class="photos-container row">
+                    <div v-for="photo in photos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
+                        <img v-bind:src="photo.url"
+                             class="grid-image openImageDialog"
+                             alt=""/>
+                        <div class="middle">
+                            <h5><b>{{photo.title}}</b></h5>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
-<script>
+<script th:inline="javascript">
+
+
+    function openCategoriesNav() {
+        document.getElementById("categories-nav").style.width = "200px";
+    }
+
+    function closeCategoriesNav() {
+        document.getElementById("categories-nav").style.width = "0";
+    }
 
     loadProgressBar();
 
@@ -86,22 +105,22 @@
         el: '#categoriesRoot',
         data: {
             categories: '',
+            category: '',
             photos: [],
             modalPhoto: '',
             commentCounter: 0,
             isPhotoFavorite: false,
             favoritePhotos: [],
-            loggedInUser:''
-
-
+            loggedInUser: ''
         },
         mounted() {
             this.fetchLoggedInUser();
-            this.fetchAllPhotos();
             this.fetchCategories();
         },
-
         methods: {
+            activeCategory(category) {
+                return this.category.id === category.id;
+            },
             fetchLoggedInUser() {
                 if (getCookie("access_token")) {
                     getLoggedInUserRequest()
@@ -118,15 +137,17 @@
             fetchCategories() {
                 getCategoriesRequest()
                     .then(function (response) {
-                        this.categories = response.data
+                        this.categories = response.data;
+                        this.getCategoryFromRequest();
                     }.bind(this)).catch(function (errors) {
                     console.log(errors)
                 });
             },
             fetchAllPhotos() {
+                this.category = '';
                 getAllPhotosRequest()
                     .then(function (response) {
-                        this.photos = response.data;
+                        this.photos = response.data.reverse();
                     }.bind(this)).catch(function (errors) {
                     console.log(errors)
                 })
@@ -154,9 +175,41 @@
                     .then(function (response) {
                         this.commentCounter = response.data.length;
                     }.bind(this))
+            },
+            fetchPhotosByCategory(category) {
+                getPhotosByCategoryRequest(category.id)
+                    .then(function (response) {
+                        this.photos = response.data;
+                        this.category = category;
+                    }.bind(this))
+            },
+            getCategoryFromRequest() {
+                // @GetMapping(value = "/categories/{categoryName}")
+                // redir.addFlashAttribute("categoryName", categoryName);
+
+                /*<![CDATA[*/
+
+                var categoryNameFromModel = /*[[${categoryName}]]*/ 'default';
+
+                /*]]>*/
+
+                console.log(categoryNameFromModel);
+                if (categoryNameFromModel == null || categoryNameFromModel === ''){
+                    this.fetchAllPhotos();
+                    return;
+
+
+                }
+
+                getCategoryByNameRequest(categoryNameFromModel)
+                    .then(function (response) {
+                        this.category = response.data;
+                        this.fetchPhotosByCategory(response.data);
+                    }.bind(this))
+
+
             }
         }
-
     })
 </script>
 </body>

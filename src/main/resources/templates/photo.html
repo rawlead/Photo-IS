@@ -27,7 +27,7 @@
                 </div>
                 <div class="photo-description" v-if="photo.user">
                     <p>
-                        <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>| <span>{{photo.photoCategory.name}}</span>
+                        <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>| <a v-bind:href="'/categories/' + photo.photoCategory.name">{{photo.photoCategory.name}}</a>
 
                         |
                         <span onclick="addPhotoToFavoritesRequest(photo.loggedInUser, photo.photo, photo)"

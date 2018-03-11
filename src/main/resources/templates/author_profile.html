@@ -55,7 +55,7 @@
                 </h5>
 
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i>
+                    <a v-bind:href="'/categories/' + modalPhoto.photoCategory.name" style="color: white;" class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
                 <a v-bind:href="'/photo/' + modalPhoto.id">
@@ -70,17 +70,15 @@
                             <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
                                     class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
                             <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto, author)"
+                               onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto, author); return false"
                                class="btn btn-outline-dark" href="#"><i class="fas fa-star"></i> Favorite</a>
                             <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto, author)"
+                               onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto, author); return false"
                                class="btn btn-outline-dark" href="#"><i class="far fa-star"></i> Remove</a>
-
 
                             <button disabled="disabled" class=" btn btn-outline-dark" v-if="modalPhoto.dateCreated"><i
                                     class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
                             </button>
-
                         </div>
                     </div>
                 </div>

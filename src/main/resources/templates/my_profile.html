@@ -35,7 +35,7 @@
                         @{{modalPhoto.user.username}}</a>
                 </h5>
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a style="color: white;" class="badge badge-dark"><i class="fas fa-clipboard-list"></i>
+                    <a v-bind:href="'/categories/' + modalPhoto.photoCategory.name" style="color: white;" class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
                 <a v-bind:href="'/photo/' + modalPhoto.id">
@@ -54,7 +54,7 @@
                                     <i class="fas fa-info-circle"></i> More
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btnMoreGroup">
-                                    <a class="dropdown-item btn btn-outline-danger" v-on:click="deletePhoto(modalPhoto)"
+                                    <a class="dropdown-item btn btn-outline-danger" v-on:click="deletePhoto(modalPhoto);" onclick="return false"
                                        href="#"><i class="fas fa-trash"></i> Delete</a>
                                 </div>
                             </div>
@@ -412,6 +412,9 @@
 
                 postPhotoRequest(this.user.id, formData)
                     .then((resultAxios) => {
+                        this.uploadPhotoTitle = '';
+                        this.uploadPhotoDescription = '';
+
                         this.statusMessage = "";
                         this.hasError = false;
                         this.updateData = '';

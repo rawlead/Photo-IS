@@ -18,6 +18,10 @@ a {
 	margin-top: 15px;
 }
 
+.category-badge {
+	padding: 10px;
+}
+
 .btn-outline-dark {
 	color: #1E1E24;
 }
@@ -55,7 +59,6 @@ option {
 }
 
 #nprogress .bar {
-	top: 58px !important;
 	background: #EEB902 !important;
 }
 

@@ -25,11 +25,19 @@ function getCommentsToPhotoRequest(photoId) {
 }
 
 function getFavoriteOfUsersRequst(photoId) {
-    return axios.get("/api/photos/" + photoId + "/favorite")
+    return axios.get("/api/photos/" + photoId + "/favorite");
 }
 
 function getCommentsRequest(photoId) {
-    return axios.get("/api/photos/" + photoId + "/comments")
+    return axios.get("/api/photos/" + photoId + "/comments");
+}
+
+function getPhotosByCategoryRequest(photoCategoryId) {
+    return axios.get("/api/categories/" + photoCategoryId + "/photos");
+}
+
+function getCategoryByNameRequest(photoCategoryName) {
+    return axios.get("/api/categories/" + photoCategoryName);
 }
 
 function getPhotoRequest(id) {

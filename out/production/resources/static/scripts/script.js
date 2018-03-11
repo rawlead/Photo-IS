@@ -53,27 +53,31 @@ var vueLoggedUser = new Vue({
         user: '',
     },
     mounted() {
-        if (getCookie("access_token")) {
-            getLoggedInUserRequest()
-                .then(function (response) {
-                    this.user = response.data;
-                    this.signedInUsername = response.data.username;
-                    this.signedInUserId = response.data.id;
-                    this.avatar_link = response.data.avatarUrl;
-                    // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
-                    if (this.avatar_link === "")
-                        this.avatar_link = "/img/user-icon-white.png";
-                    Event.$emit('signed-in');
-                    window.Event.isSignedIn = true;
-                }.bind(this))
-                .catch(function (error) {
-                    deleteCookie("access_token");
-                    window.location.replace("/signin");
-                    return error;
-                });
-        }
+        this.fetchLoggedInUser();
     },
+
     methods: {
+        fetchLoggedInUser() {
+            if (getCookie("access_token")) {
+                getLoggedInUserRequest()
+                    .then(function (response) {
+                        this.user = response.data;
+                        this.signedInUsername = response.data.username;
+                        this.signedInUserId = response.data.id;
+                        this.avatar_link = response.data.avatarUrl;
+                        // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
+                        if (this.avatar_link === "")
+                            this.avatar_link = "/img/user-icon-white.png";
+                        Event.$emit('signed-in');
+                        window.Event.isSignedIn = true;
+                        return response.data;
+                    }.bind(this))
+                    .catch(function (error) {
+                        deleteCookie("access_token");
+                        window.location.replace("/signin");
+                    });
+            }
+        },
         signout() {
             signOutRequest()
                 .then(function (response) {
@@ -87,6 +91,7 @@ var vueLoggedUser = new Vue({
         },
         getAvatarLink() {
             return this.avatar_link;
-        }
+        },
+
     }
 });
