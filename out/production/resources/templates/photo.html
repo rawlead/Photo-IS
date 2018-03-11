@@ -27,14 +27,14 @@
                 </div>
                 <div class="photo-description" v-if="photo.user">
                     <p>
-                        <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>| <a v-bind:href="'/categories/' + photo.photoCategory.name">{{photo.photoCategory.name}}</a>
-
-                        |
-                        <span onclick="addPhotoToFavoritesRequest(photo.loggedInUser, photo.photo, photo)"
+                        <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>
+                        | <a href="#"
+                             onclick="openCategory(photoVue.photo.photoCategory)">{{photo.photoCategory.name}}</a> |
+                        <span onclick="addPhotoToFavoritesRequest(photoVue.loggedInUser, photoVue.photo, photoVue)"
                               class="favorite-add" v-if="!isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount++"> <i
                                 class="fas fa-star"></i> add </span>
-                        <span onclick="removePhotoFromFavoritesRequest(photo.loggedInUser, photo.photo, photo)"
+                        <span onclick="removePhotoFromFavoritesRequest(photoVue.loggedInUser, photoVue.photo, photoVue)"
                               class="favorite-remove" v-else-if="isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount--"><i
                                 class="far fa-star"></i> remove </span>
@@ -83,6 +83,8 @@
                     <ul>
                         <li v-show="!commentsExist">No comments yet . . .</li>
                         <li v-for="comment in comments">
+                            <span style="color:red; cursor: pointer" v-on:click="deleteComment(comment.id)"
+                                  v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span>
                             <a v-bind:href="'/profile/' + comment.user.username"><b>@{{comment.user.username}}</b></a>:
                             {{comment.content}} <br/>
                             <span style="font-size: 0.7em; font-style: italic">{{comment.dateCreated}}</span>
@@ -101,7 +103,7 @@
     const MAX_COMMENT_LENGTH = 150;
     // loadProgressBar();
 
-    var photo = new Vue({
+    var photoVue = new Vue({
         el: '#photoRoot',
         data: {
             photo: {},
@@ -201,7 +203,25 @@
                         this.favoriteOfUsers = response.data;
                         this.favoriteCount = response.data.length;
                     }.bind(this))
-            }
+            },
+            deleteComment(commentId) {
+                deleteCommentRequest(this.loggedInUser.id, commentId)
+                    .then(function (response) {
+                        this.fetchCommentsToPhoto();
+                        this.statusMessage = "Comment has been deleted";
+                        this.showAndHideAlert()
+
+                    }.bind(this))
+                    .catch(function (errors) {
+                        console.log(errors);
+                    })
+            },
+            showAndHideAlert() {
+                $(".alert").fadeIn('slow');
+                setTimeout(function () {
+                    $('.alert').fadeOut('slow');
+                }, 1300);
+            },
         }
     })
 </script>

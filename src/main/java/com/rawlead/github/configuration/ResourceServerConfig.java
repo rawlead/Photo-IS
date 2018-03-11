@@ -17,7 +17,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+
                 .antMatchers(HttpMethod.GET,"/").permitAll()
 
 
@@ -40,7 +42,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
 
                 .antMatchers(HttpMethod.POST,"/api/photos/{photoId}/comments").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/api/comments").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/api/comments/**").authenticated();
 
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }

@@ -12,7 +12,7 @@ public interface CommentService {
 
     Comment addComment( Long photoId,Long userId, String content);
 
-    boolean deleteComment(Long commentId);
+    boolean deleteComment(Long userId, Long commentId);
 
     Iterable<Comment> listComments(Long photoId);
 

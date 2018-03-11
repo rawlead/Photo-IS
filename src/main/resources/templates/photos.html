@@ -24,7 +24,7 @@
                 </h5>
 
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a v-bind:href="'/categories/' + modalPhoto.photoCategory.name" style="color: white;"
+                    <a onclick="openCategory(photosPage.modalPhoto.photoCategory)" style="color: white;" href="#"
                        class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
@@ -184,30 +184,17 @@
                     }.bind(this))
             },
             getCategoryFromRequest() {
-                // @GetMapping(value = "/categories/{categoryName}")
-                // redir.addFlashAttribute("categoryName", categoryName);
-
-                /*<![CDATA[*/
-
-                var categoryNameFromModel = /*[[${categoryName}]]*/ 'default';
-
-                /*]]>*/
-
-                console.log(categoryNameFromModel);
-                if (categoryNameFromModel == null || categoryNameFromModel === ''){
+                var categoryName = localStorage.getItem("categoryName");
+                if (categoryName == null) {
                     this.fetchAllPhotos();
                     return;
-
-
                 }
-
-                getCategoryByNameRequest(categoryNameFromModel)
+                getCategoryByNameRequest(categoryName)
                     .then(function (response) {
                         this.category = response.data;
                         this.fetchPhotosByCategory(response.data);
-                    }.bind(this))
-
-
+                    }.bind(this));
+                localStorage.removeItem("categoryName");
             }
         }
     })

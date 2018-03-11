@@ -20,6 +20,10 @@ function openMobileMenu() {
     }
 }
 
+function openCategory(category) {
+    localStorage.setItem("categoryName",category.name);
+    window.location.replace("/photos")
+}
 
 function accessToken() {
     return "access_token=" + getCookie("access_token")

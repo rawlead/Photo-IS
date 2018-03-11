@@ -59,9 +59,14 @@ function postCommentRequest(photoId, content) {
     })
 }
 
+function deleteCommentRequest(userId, commentId) {
+    return axios.delete("/api/users/"+ userId +"/comments/" + commentId + "?" + accessToken())
+}
+
 function deletePhotoRequest(user,photo) {
     return axios.delete("/api/users/" + user.id + "/photos/" + photo.id + '?' + accessToken());
 }
+
 function getIsUserFavoriteRequest(loggedInUser,user) {
     return axios.get('/api/users/' + loggedInUser.id + '/favorite/users/' + user.id);
 }

@@ -35,7 +35,7 @@
                         @{{modalPhoto.user.username}}</a>
                 </h5>
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a v-bind:href="'/categories/' + modalPhoto.photoCategory.name" style="color: white;" class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
+                    <a onclick="openCategory(profilePage.modalPhoto.photoCategory)" href="#" style="color: white;" class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
                 <a v-bind:href="'/photo/' + modalPhoto.id">

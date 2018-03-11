@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -15,15 +16,6 @@ public class HomeController {
     @GetMapping(value = "/")
     public String index() {
         return "redirect:/photos";
-    }
-
-
-    @GetMapping(value = "/categories/{categoryName}")
-    public ModelAndView getCategoryByName(@PathVariable String categoryName, RedirectAttributes redir) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/photos");
-        redir.addFlashAttribute("categoryName", categoryName);
-        return modelAndView;
     }
 
     @GetMapping(value = "/signin")
@@ -57,5 +49,6 @@ public class HomeController {
     public String singlePhoto() { return "photo"; }
 
     @GetMapping(value = "/photos")
-    public String categories() { return "photos"; }
+    public String categories( ) {
+        return "photos"; }
 }

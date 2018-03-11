@@ -5,6 +5,7 @@ import com.rawlead.github.entity.User;
 import com.rawlead.github.service.CommentService;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -59,14 +60,18 @@ public class CommentController {
 
     }
 
-
     @DeleteMapping(value = "/api/comments")
-    public boolean deleteAllComments() {
-        return this.commentService.deleteAllComments();
+    public ResponseEntity<?> deleteAllComments() {
+        this.commentService.deleteAllComments();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/api/comments/{commentId}")
-    public boolean deleteComment(@PathVariable Long commentId) {
-        return this.commentService.deleteComment(commentId);
+    @DeleteMapping(value = "/api/users/{userId}/comments/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable Long userId, @PathVariable Long commentId) {
+        if (isNotLoggedInUserMakesRequest(userId))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (!this.commentService.deleteComment(userId, commentId))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
