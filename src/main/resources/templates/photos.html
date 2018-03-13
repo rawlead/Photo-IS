@@ -3,13 +3,13 @@
 <head th:include="fragments/header :: head('Photos')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-<div class="container-fluid" id="categoriesRoot">
+<div class="container-fluid" id="photosRoot">
 
-    <div class="row hor-sep-60"></div>
+    <!--<div class="row hor-sep-60"></div>-->
 
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
-    <div class="hor-sep-30"></div>
+    <!--<div class="hor-sep-30"></div>-->
 
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
@@ -24,7 +24,7 @@
                 </h5>
 
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a onclick="openCategory(photosPage.modalPhoto.photoCategory)" style="color: white;" href="#"
+                    <a onclick="openCategory(photosPage.modalPhoto.photoCategory.name)" style="color: white;" href="#"
                        class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
@@ -59,7 +59,7 @@
     </div>
 
 
-    <div class="container-fluid">
+    <div class="container-fluid photos-container">
         <div class="row">
             <div id="categories-nav" class="categories">
                 <div class="close-categories-btn"><p href="javascript:void(0)" onclick="closeCategoriesNav()"><i
@@ -102,7 +102,7 @@
     loadProgressBar();
 
     var photosPage = new Vue({
-        el: '#categoriesRoot',
+        el: '#photosRoot',
         data: {
             categories: '',
             category: '',

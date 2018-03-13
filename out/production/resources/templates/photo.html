@@ -7,11 +7,11 @@
 
     <img v-bind:src="photo.url" class="blurred-background"/>
 
-    <div class="row hor-sep-60"></div>
+    <!--<div class="row hor-sep-60"></div>-->
 
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
-    <div class="hor-sep-30"></div>
+    <!--<div class="hor-sep-30"></div>-->
     <div class="row">
         <div class="col-md-5 offset-md-2 single-photo">
             <div class="photo-container">
@@ -29,7 +29,7 @@
                     <p>
                         <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>
                         | <a href="#"
-                             onclick="openCategory(photoVue.photo.photoCategory)">{{photo.photoCategory.name}}</a> |
+                             onclick="openCategory(photoVue.photo.photoCategory.name)">{{photo.photoCategory.name}}</a> |
                         <span onclick="addPhotoToFavoritesRequest(photoVue.loggedInUser, photoVue.photo, photoVue)"
                               class="favorite-add" v-if="!isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount++"> <i
@@ -81,7 +81,7 @@
 
                 <div class="comments-body">
                     <ul>
-                        <li v-show="!commentsExist">No comments yet . . .</li>
+                        <li v-show="comments.length === 0">No comments yet . . .</li>
                         <li v-for="comment in comments">
                             <span style="color:red; cursor: pointer" v-on:click="deleteComment(comment.id)"
                                   v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span>
@@ -110,7 +110,6 @@
             loggedInUser: '',
             comments: "",
             commentContent: "",
-            commentsExist: false,
             commentCounter: 0,
             writingComment: false,
             statusMessage: '',
@@ -165,8 +164,6 @@
             fetchCommentsToPhoto() {
                 getCommentsRequest(this.photo.id)
                     .then(function (response) {
-                        if (response.data.length > 0)
-                            this.commentsExist = true;
                         this.comments = response.data.reverse();
                         this.commentCounter = response.data.length;
                     }.bind(this)).catch(function (error) {
@@ -207,9 +204,9 @@
             deleteComment(commentId) {
                 deleteCommentRequest(this.loggedInUser.id, commentId)
                     .then(function (response) {
-                        this.fetchCommentsToPhoto();
                         this.statusMessage = "Comment has been deleted";
                         this.showAndHideAlert()
+                        this.fetchCommentsToPhoto();
 
                     }.bind(this))
                     .catch(function (errors) {

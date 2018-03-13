@@ -8,10 +8,14 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css}"/>
-    <link rel="stylesheet" href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css" th:href="@{https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css}"/>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css"
+          th:href="@{https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css}"/>
     <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/helpers.css" th:href="@{/css/helpers.css}" media="screen"/>
     <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" media="screen"/>
@@ -29,23 +33,38 @@
         <a href="javascript:void(0);" class="icon" onclick="openMobileMenu()">&#9776;</a>
 
         <div class="main-logo  float-left">
-            <a href="/"><img src="/img/photo-is-logo.png" alt=""/></a>
+            <a href="/photos"><img src="/img/photo-is-logo.png" alt=""/></a>
         </div>
 
 
-        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin" >Sign In</a>
-        <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right" >Sign Out</a>
+        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin">SIGN IN</a>
+        <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right">SIGN OUT</a>
 
         <a v-show="isSignedIn()" href="/profile" id="top-nav-avatar" class="float-right ">
             <!--{{logged_message}}-->
             <img v-bind:src="avatar_link" alt="Avatar"/>
         </a>
 
-        <form  class="search-field">
-            <input type="text" name="search" id="search-input" />
+        <form class="search-field">
+            <input onclick="toggleSearch()" v-model="search" type="text" name="search" id="search-input"/>
+
+            <div id="search-dropdown" style="z-index: 100" class="dropdown-content">
+                <b><a v-show="filteredUsers.length !== 0"  style="color: #EEB902; text-align: center" href="/authors">
+                    <i class="fas fa-angle-double-down"></i> FOUND AUTHORS <i class="fas fa-angle-double-down"></i></a>
+                </b>
+                <a  v-bind:href="'/profile/' + user.username" v-for="user in filteredUsers">@{{user.username}}
+                    <span style="float:right">{{user.firstName}}</span></a>
+                <b><a v-show="filteredCategories.length !== 0" style=" border-top: 1px solid #EEB902; color: #EEB902; text-align: center" href="/photos"><i
+                        class="fas fa-angle-double-down"></i> FOUND CATEGORIES <i
+                        class="fas fa-angle-double-down"></i></a></b>
+                <a href="#" v-on:click="openCategory(category.name)" v-for="category in filteredCategories">{{category.name}}</a>
+
+            </div>
         </form>
     </div>
 </header>
 
 </body>
+
+
 </html>

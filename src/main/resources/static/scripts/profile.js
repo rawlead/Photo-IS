@@ -12,7 +12,6 @@ var currentProfileTab = '';
 
 
 function openProfileTab(evt, tabName) {
-
     localStorage.setItem("tabName", tabName);
     var i, profileTabContent, profileTabBtn;
     profileTabContent = document.getElementsByClassName("profileTabContent");
@@ -24,6 +23,7 @@ function openProfileTab(evt, tabName) {
         profileTabBtn[i].className = profileTabBtn[i].className.replace(" active", "");
     }
     document.getElementById(tabName).style.display = "flex";
+
     console.log("tab name " + tabName);
     evt.currentTarget.className += " active";
     currentProfileTab = tabName;

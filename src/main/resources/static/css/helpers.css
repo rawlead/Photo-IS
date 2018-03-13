@@ -9,6 +9,10 @@
     height: 50px;
 }
 
+.hor-sep-37 {
+    height: 37px;
+}
+
 .float-right {
     float: right;
 }
@@ -20,6 +24,7 @@
 .w-48 {
     width: 48%;
 }
+
 
 * {
     /*border: 1px red solid;*/

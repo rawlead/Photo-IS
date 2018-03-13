@@ -82,7 +82,7 @@ public class PhotoServiceImpl implements PhotoService {
 
         newPhoto.setTitle(title);
         newPhoto.setDescription(description);
-        newPhoto.setPhotoCategory(categoryRepository.findByName(category));
+        newPhoto.setPhotoCategory(categoryRepository.findByNameOrderByName(category));
         newPhoto.setUrl(url);
         newPhoto.setDateCreated(LocalDateTime.now());
 

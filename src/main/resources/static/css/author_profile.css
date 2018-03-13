@@ -1,3 +1,12 @@
+.author-header {
+    background-color: #1E1E24;
+    padding: 20px 0;
+    color: #F7EBE8;
+}
+
+
+
+
 .author-profile-avatar {
     display: inline-block;
     margin-right: 50px;
@@ -6,7 +15,6 @@
 }
 
 .author-profile-avatar img {
-    /*float: left;*/
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -22,10 +30,6 @@
 }
 
 @media screen and (min-width: 767px) {
-    .author-profile-avatar {
-        /*margin-right: 50px;*/
-    }
-
     .author-profile-description h1 {
         font-size: 1.15em;
     }

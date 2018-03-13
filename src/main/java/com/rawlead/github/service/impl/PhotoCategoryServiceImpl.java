@@ -54,6 +54,6 @@ public class PhotoCategoryServiceImpl implements PhotoCategoryService {
 
     @Override
     public PhotoCategory getCategoryByName(String categoryName) {
-        return categoryRepository.findByName(categoryName);
+        return categoryRepository.findByNameOrderByName(categoryName);
     }
 }

@@ -6,22 +6,21 @@
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
 
 <div class="container-fluid" id="myProfileRoot">
-    <div class="row hor-sep-60"></div>
+    <!--<div class="row hor-sep-60"></div>-->
 
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
     <div class="profile-tab">
-        <button class="profileTabBtn" onclick="openProfileTab(event, 'Uploads')"><i class="fas fa-images"></i> My
-            Uploads
+        <button class="profileTabBtn" onclick="openProfileTab(event, 'Uploads')"><i class="fas fa-images"></i> UPLOADS
         </button>
-        <button class="profileTabBtn" onclick="openProfileTab(event, 'Favorites')"><i class="fas fa-star"></i> Favorites
+        <button class="profileTabBtn" onclick="openProfileTab(event, 'Favorites')"><i class="fas fa-star"></i> FAVORITES
         </button>
-        <button class="profileTabBtn" onclick="openProfileTab(event, 'Settings')"><i class="fas fa-cog"></i> Settings
+        <button class="profileTabBtn" onclick="openProfileTab(event, 'Settings')"><i class="fas fa-cog"></i> SETTINGS
         </button>
     </div>
 
     <!-- Tab content -->
-    <div class="row hor-sep-50"></div>
+    <!--<div class="row hor-sep-37"></div>-->
 
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
@@ -35,7 +34,7 @@
                         @{{modalPhoto.user.username}}</a>
                 </h5>
                 <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a onclick="openCategory(profilePage.modalPhoto.photoCategory)" href="#" style="color: white;" class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
+                    <a onclick="openCategory(profilePage.modalPhoto.photoCategory.name)" href="#" style="color: white;" class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                         {{modalPhoto.photoCategory.name}}</a>
                 </h5>
                 <a v-bind:href="'/photo/' + modalPhoto.id">
@@ -78,19 +77,19 @@
             <div class="photoUploadContainer">
                 <img v-if="updateData === 'photo'" :src="uploadPhotoPreview" class="upload-photo-preview"/>
 
-                <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile" id="photo_input_file"
+                <input accept="image/*" :disabled="statusMessage !== ''" type="file" v-on:change="onFileChange" class="inputFile" id="photo_input_file"
                        value="Choose file"/>
-                <label for="photo_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i> Choose
-                    photo</label>
+                <label for="photo_input_file" class="btn btn-outline-dark" >
+                    <span v-if="statusMessage" v-html="statusMessage">Uploading.. Please wait.. <i class="fas fa-sync fa-spin"></i></span>
+                    <span v-else=""><i class="fas fa-camera"></i> SELECT PHOTO</span>
+                </label>
             </div>
         </div>
 
         <div class="col-md-4">
-
-            <h6 v-html="statusMessage" style="text-align: center"></h6>
-
-
             <div v-if="updateData === 'photo'">
+                <h6 v-html="statusMessage" style="text-align: center"></h6>
+
                 <div class="form-group">
                     <label for="uploadPhotoTitle">Title</label>
 
@@ -120,7 +119,7 @@
 
         <!--USER UPLOADED PHOTOS GRID -->
         <div class="col-md-10 offset-md-2">
-            <div class="photos-container row">
+            <div class="photos-container">
                 <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
                     <img v-bind:src="photo.url"
                          class="grid-image openImageDialog"
@@ -133,10 +132,13 @@
         </div>
     </div>
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
+    <!--<div class="solid-color-background"></div>-->
+
+
     <div id="Favorites" class="profileTabContent row">
         <div class="col-md-6 col-8 col-xl-8 offset-md-2">                               <!--FAVORITES-->
             <div class="favorite-photos favorite-column">
-                <p>Favorite Photos</p>
+                <p><b><i class="fas fa-star"></i> PHOTOS</b></p>
                 <ul>
                     <li v-for="photo in favoritePhotos">
                         <a v-bind:href="'/photo/' + photo.id">
@@ -148,7 +150,7 @@
         </div>
         <div class="col-md-4 col-4 col-xl-2">
             <div class="favorite-users favorite-column">
-                <p>Favorite Authors</p>
+                <p><b><i class="fas fa-star"></i> AUTHORS</b></p>
                 <ul>
                     <li v-for="user in favoriteUsers">
 
@@ -162,7 +164,7 @@
 
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     <div id="Settings" class="profileTabContent row">                                           <!--   SETTING  -->
-        <div class="col-md-4 col-xl-3 offset-md-2 col-6">
+        <div class="col-md-5 col-xl-4 offset-md-2 col 6">
             <h3>Welcome, {{user.firstName}}!</h3>
             <p>On this page you can:</p>
             <ol>
@@ -170,11 +172,47 @@
                 <li>Change your email</li>
                 <li>Change your password</li>
             </ol>
+
+            <!--change email form-->
+            <p>Date of registration: {{user.registrationDate}}</p>
+            <h5>Email: {{user.email}} <br/><a class="badge badge-dark" v-on:click="updateData = 'email'" href="#">Change
+                email</a>
+                <a v-on:click="updateData = 'password'" class="badge badge-dark" href="#">Change password</a></h5>
+
+            <transition name="slide-fade">
+                <div v-if="updateData === 'email'" class="profile-settings-form">
+                    <input class="data-input" v-model="newEmail" type="email" placeholder="Enter new email"/>
+                    <input class="data-input" v-model="newEmailConfirm" type="email" placeholder="Confirm new email"/>
+                    <button v-on:click="updateEmail(newEmail,newEmailConfirm)" class="btn btn-success"><i
+                            class="fas fa-chevron-circle-up"></i> Submit
+                    </button>
+                    <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
+                    </button>
+
+                </div>
+            </transition>
+
+            <!-- change password form-->
+            <transition name="slide-fade">
+                <div v-if="updateData === 'password'" class="profile-settings-form">
+                    <input class="data-input" v-model="oldPass" type="password" placeholder="Enter old password"/>
+                    <input class="data-input" v-model="newPass" type="password" placeholder="Enter new password"/>
+                    <input class="data-input" v-model="newPassConfirm" type="password"
+                           placeholder="Confirm new password"/>
+                    <button v-on:click="updatePassword(oldPass,newPass,newPassConfirm)" class="btn btn-success"><i
+                            class="fas fa-chevron-circle-up"></i> Submit
+                    </button>
+                    <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
+                    </button>
+
+                </div>
+            </transition>
+            <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
+            <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
         </div>
 
         <div class="col-md-3 col-avatar col-5" style="max-width: 280px;">
             <div class="avatarContainer">
-
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
 
                 <div class="avatar-middle-overlay">
@@ -191,46 +229,10 @@
                         class="fas fa-sync fa-spin"></i></h6>
             </div>
         </div>
+        <!--<div class="col-md-5  col-xl-4 offset-md-2">-->
 
-        <div class="col-md-5  col-xl-4 offset-md-2">
-            <!--change email form-->
-            <p>Date of registration: {{user.registrationDate}}</p>
-            <h5>Email: {{user.email}} <br/><a class="badge badge-dark" v-on:click="updateData = 'email'" href="#">Change
-                email</a>
-                <a v-on:click="updateData = 'password'" class="badge badge-dark" href="#">Change password</a></h5>
 
-            <transition name="slide-fade">
-                <div v-if="updateData === 'email'">
-                    <input class="data-input" v-model="newEmail" type="email" placeholder="Enter new email"/>
-                    <input class="data-input" v-model="newEmailConfirm" type="email" placeholder="Confirm new email"/>
-                    <button v-on:click="updateEmail(newEmail,newEmailConfirm)" class="btn btn-outline-success"><i
-                            class="fas fa-chevron-circle-up"></i> Submit
-                    </button>
-                    <button v-on:click="updateData = ''" class="btn btn-outline-danger"><i class="fas fa-times"></i> Cancel
-                    </button>
-
-                </div>
-            </transition>
-
-            <!-- change password form-->
-            <transition name="slide-fade">
-                <div v-if="updateData === 'password'">
-                    <input class="data-input" v-model="oldPass" type="password" placeholder="Enter old password"/>
-                    <input class="data-input" v-model="newPass" type="password" placeholder="Enter new password"/>
-                    <input class="data-input" v-model="newPassConfirm" type="password"
-                           placeholder="Confirm new password"/>
-                    <button v-on:click="updatePassword(oldPass,newPass,newPassConfirm)" class="btn btn-outline-success"><i
-                            class="fas fa-chevron-circle-up"></i> Submit
-                    </button>
-                    <button v-on:click="updateData = ''" class="btn btn-outline-danger"><i class="fas fa-times"></i> Cancel
-                    </button>
-
-                </div>
-            </transition>
-            <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
-            <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
-
-        </div>
+        <!--</div>-->
         <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     </div>
 </div>
@@ -270,7 +272,6 @@
             uploadPhotoCategory: '',
         },
         mounted() {
-
             $('.alert').hide();
             this.fetchLoggedInUser();
         },
@@ -405,7 +406,7 @@
                 formData.append("description", this.uploadPhotoDescription);
                 formData.append("category", this.uploadPhotoCategory);
 
-                this.statusMessage = 'Uploading Photo... ' + '<i class="fas fa-sync fa-spin"></i>';
+                this.statusMessage = 'Uploading.. Please wait.. ' + '<i class="fas fa-sync fa-spin"></i>';
                 this.updateData = '';
 
                 this.cleanFileInput("#photo_input_file");

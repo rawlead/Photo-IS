@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PhotoCategoryRepository extends JpaRepository<PhotoCategory, Long> {
 
-    PhotoCategory findByName(String name);
-
+    PhotoCategory findByNameOrderByName(String name);
 
 
 }

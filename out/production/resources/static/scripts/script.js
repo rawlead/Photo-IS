@@ -1,4 +1,5 @@
-$('#search-input').attr("placeholder", " Search");
+$('#search-input').attr("placeholder", " search");
+
 // highlight active left nav link
 $(function () {
     var current = location.pathname;
@@ -20,8 +21,8 @@ function openMobileMenu() {
     }
 }
 
-function openCategory(category) {
-    localStorage.setItem("categoryName",category.name);
+function openCategory(categoryName) {
+    localStorage.setItem("categoryName",categoryName);
     window.location.replace("/photos")
 }
 
@@ -55,10 +56,32 @@ var vueLoggedUser = new Vue({
         signedInUsername: '',
         signedIdInUserId: '',
         user: '',
+        users: [],
+        categories: [],
+        search: '',
+        category: ''
     },
     mounted() {
+        this.fetchUsers();
+        this.fetchCategories();
         this.fetchLoggedInUser();
     },
+
+    computed: {
+        filteredUsers() {
+            return this.users.filter(user => {
+                return (user.firstName.toLowerCase().includes(this.search.toLowerCase())
+                    || user.username.toLowerCase().includes(this.search.toLowerCase()))
+                    && this.search !== '';
+            })
+        },
+        filteredCategories() {
+            return this.categories.filter(category => {
+                return category.name.toLowerCase().includes(this.search.toLowerCase())
+                    && this.search !== '';
+            })
+        }
+},
 
     methods: {
         fetchLoggedInUser() {
@@ -82,6 +105,18 @@ var vueLoggedUser = new Vue({
                     });
             }
         },
+        fetchUsers() {
+            getUsersRequest()
+                .then(function (response) {
+                    this.users = response.data;
+                }.bind(this))
+        },
+        fetchCategories() {
+            getCategoriesRequest()
+                .then(function (response) {
+                    this.categories = response.data;
+                }.bind(this))
+        },
         signout() {
             signOutRequest()
                 .then(function (response) {
@@ -96,6 +131,37 @@ var vueLoggedUser = new Vue({
         getAvatarLink() {
             return this.avatar_link;
         },
+        openCategory(name) {
+            openCategory(name);
+        }
+    },
 
-    }
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function toggleSearch() {
+    document.getElementById("search-dropdown").classList.toggle("showSearch");
+}
+
+
+$(document).mouseup(function(e) {
+    var container = $("#search-dropdown");
+    var searchInput = $("#search-input");
+    if (!container.is(e.target) && container.has(e.target).length === 0);
+    container.removeClass('showSearch')
+});
+
+

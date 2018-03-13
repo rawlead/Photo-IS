@@ -12,6 +12,10 @@
 /*}*/
 /*It simply tries to fit as many 100px wide columns into the container as possible.*/
 
+#authors {
+    padding-top: 60px;
+}
+
 .authors-container {
     display: grid;
     grid-gap: 5px;
