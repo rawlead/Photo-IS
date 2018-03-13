@@ -51,6 +51,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
 	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.282'
 
-
+	compile('de.codecentric:spring-boot-admin-starter-client:1.5.6')
+//	compile('org.lightadmin:lightadmin:1.2.0.RC1')
 
 }

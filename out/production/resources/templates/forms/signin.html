@@ -4,7 +4,7 @@
 <head th:include="fragments/header :: head('Sign In')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-<div class="container-fluid" id="signin-container">
+<div class="container-fluid" id="signInRoot">
     <div class="row hor-sep-60"></div>
     <ul th:replace="fragments/nav :: leftNav"></ul>
     <div class="row">
@@ -27,10 +27,8 @@
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
     var signinVue = new Vue({
-        el: '#signin-container',
+        el: '#signInRoot',
         data: {
-            // signInAlertMessage : '',
-            // signInErrors : false,
             statusMessage: '',
             username: '',
             password: '',

@@ -1,21 +1,3 @@
-/*.authors-container {*/
-/*display: grid;*/
-/*grid-template-columns: 1fr 2fr 1fr;   SAME grid-template-columns: repeat(3,100px); !* WIDTH *!*/
-/*grid-template-rows: 50px 50px;        SAME repeat(2,50px)  !* HEIGHT *!*/
-/*}*/
-
-/*.authors-container {*/
-/*display: grid;*/
-/*grid-gap: 5px;*/
-/*grid-template-columns: repeat(auto-fit,100px); !* WIDTH *!*/
-/*grid-template-rows: repeat(2,50px);  !* HEIGHT *!*/
-/*}*/
-/*It simply tries to fit as many 100px wide columns into the container as possible.*/
-
-#authors {
-    padding-top: 60px;
-}
-
 .authors-container {
     display: grid;
     grid-gap: 5px;
@@ -34,7 +16,6 @@
 .grid-item:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     cursor: pointer;
-
 }
 
 .grid-item {
@@ -49,7 +30,6 @@
     width: 100%;
     height: 200px;
     object-fit: cover;
-
 }
 
 .grid-item p {
@@ -62,16 +42,3 @@
     background-color: #1E1E24;
     width: 100%;
 }
-
-/*DON'T REMOVE*/
-
-/*.item1 {*/
-/*grid-column-start: 1;*/
-/*grid-column-end: 4;*/
-/*}*/
-
-/* SAME AS */
-
-/*.item1 {*/
-/*grid-column: 1 / 4;*/
-/*}*/

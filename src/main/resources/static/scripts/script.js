@@ -22,7 +22,7 @@ function openMobileMenu() {
 }
 
 function openCategory(categoryName) {
-    localStorage.setItem("categoryName",categoryName);
+    localStorage.setItem("categoryName", categoryName);
     window.location.replace("/photos")
 }
 
@@ -53,8 +53,6 @@ var vueLoggedUser = new Vue({
     el: '#loggedUser',
     data: {
         avatar_link: '',
-        signedInUsername: '',
-        signedIdInUserId: '',
         user: '',
         users: [],
         categories: [],
@@ -66,7 +64,6 @@ var vueLoggedUser = new Vue({
         this.fetchCategories();
         this.fetchLoggedInUser();
     },
-
     computed: {
         filteredUsers() {
             return this.users.filter(user => {
@@ -81,17 +78,13 @@ var vueLoggedUser = new Vue({
                     && this.search !== '';
             })
         }
-},
-
+    },
     methods: {
         fetchLoggedInUser() {
             if (getCookie("access_token")) {
                 getLoggedInUserRequest()
                     .then(function (response) {
                         this.user = response.data;
-                        this.signedInUsername = response.data.username;
-                        this.signedInUserId = response.data.id;
-                        this.avatar_link = response.data.avatarUrl;
                         // if response contains avatarUrl, avatar downloaded from bucket, which url is stored in user object
                         if (this.avatar_link === "")
                             this.avatar_link = "/img/user-icon-white.png";
@@ -135,20 +128,7 @@ var vueLoggedUser = new Vue({
             openCategory(name);
         }
     },
-
-
-
 });
-
-
-
-
-
-
-
-
-
-
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -157,10 +137,9 @@ function toggleSearch() {
 }
 
 
-$(document).mouseup(function(e) {
+$(document).mouseup(function (e) {
     var container = $("#search-dropdown");
-    var searchInput = $("#search-input");
-    if (!container.is(e.target) && container.has(e.target).length === 0);
+    if (!container.is(e.target) && container.has(e.target).length === 0) ;
     container.removeClass('showSearch')
 });
 

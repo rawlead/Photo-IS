@@ -154,5 +154,4 @@ function removePhotoFromFavoritesRequest(loggedInUser, photo, object) {
 }
 function signOutRequest() {
     return axios.get("/api/users/signout?" + accessToken());
-
 }

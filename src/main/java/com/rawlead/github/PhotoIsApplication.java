@@ -13,12 +13,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+
 @SpringBootApplication
-public class PhotoIsApplication {
+public class PhotoIsApplication  {
 
 	private PasswordEncoder passwordEncoder;
 	private PhotoCategoryServiceImpl categoryService;
@@ -29,6 +30,9 @@ public class PhotoIsApplication {
 		this.passwordEncoder = passwordEncoder;
 		this.categoryService = categoryService;
 	}
+
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(PhotoIsApplication.class, args);

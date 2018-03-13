@@ -7,9 +7,7 @@ $(document).ready(function(){
         document.getElementsByClassName('profileTabBtn')[0].click();
 });
 
-
 var currentProfileTab = '';
-
 
 function openProfileTab(evt, tabName) {
     localStorage.setItem("tabName", tabName);
@@ -24,9 +22,10 @@ function openProfileTab(evt, tabName) {
     }
     document.getElementById(tabName).style.display = "flex";
 
-    console.log("tab name " + tabName);
     evt.currentTarget.className += " active";
     currentProfileTab = tabName;
+    profilePage.statusMessage = '';
+    profilePage.hasError = false;
 }
 
 

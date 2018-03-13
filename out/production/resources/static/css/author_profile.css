@@ -1,17 +1,14 @@
 .author-header {
     background-color: #1E1E24;
-    padding: 20px 0;
+    padding: 5px 0;
     color: #F7EBE8;
 }
-
-
-
 
 .author-profile-avatar {
     display: inline-block;
     margin-right: 50px;
-    /*float: right;*/
     vertical-align: top;
+    margin-bottom: 15px;
 }
 
 .author-profile-avatar img {
@@ -30,12 +27,17 @@
 }
 
 @media screen and (min-width: 767px) {
+    .author-header {
+        padding: 20px 0;
+    }
     .author-profile-description h1 {
         font-size: 1.15em;
     }
-
     .author-profile-avatar img {
         width: 150px;
         height: 150px;
+    }
+    .author-profile-avatar {
+        margin-bottom: 0;
     }
 }

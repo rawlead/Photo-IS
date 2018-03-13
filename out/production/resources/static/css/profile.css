@@ -1,8 +1,6 @@
 #myProfileRoot {
     height: 100%;
-    padding-top: 60px;
 }
-
 
 /* Style the tab */
 .profile-tab {
@@ -11,7 +9,7 @@
     width: 85%;
     right: 0;
     position: fixed;
-    font-size: 0.875em;
+    font-size: 0.8em;
     font-weight: bold;
     z-index: 10;
 }
@@ -26,12 +24,10 @@
     padding: 8px 50px;
     transition: 0.3s;
     color: #F7EBE8;
-
 }
 
 /* Change background color of buttons on hover */
 .profile-tab .profileTabBtn:hover {
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
     color: #EEB902;
 }
 
@@ -43,7 +39,6 @@
     color: #EEB902;
 }
 
-
 /* Style the tab content */
 .profileTabContent {
     font-size: 0.875em;
@@ -51,18 +46,16 @@
     -webkit-animation: fadeEffect .7s;
     animation: fadeEffect .7s;
     position: relative;
-    z-index: 1 ;
+    z-index: 1;
     padding-top: 50px;
-
 }
-
 
 #Uploads {
     position: relative;
 }
+
 .photoUploadContainer {
     max-width: 600px;
-
 }
 
 .upload-photo-preview {
@@ -80,9 +73,6 @@
     resize: none;
     height: 85px;
     padding: 8px 20px;
-    /*z-index: -1;*/
-
-
 }
 
 #uploadPhotoCategory {
@@ -91,117 +81,7 @@
     -webkit-appearance: none;;
 }
 
-.photos-container {
-    margin-top: 10px;
-    display: grid;
-    /*grid-template-columns: repeat(auto-fill, 1fr);*/
-    grid-gap: 10px;
-
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    grid-template-rows: repeat(auto-fit, 300px);
-}
-
-.photo-grid-item {
-    position: relative;
-    cursor: zoom-in;
-    width: 100%;
-    height: 300px;
-}
-
-.photo-grid-item img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
-
-.grid-image {
-    opacity: 1;
-    display: block;
-    transition: .5s ease;
-    backface-visibility: hidden;
-}
-
-.middle {
-    transition: .1s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.photo-grid-item:hover .grid-image {
-    opacity: 0.2;
-}
-
-.photo-grid-item:hover .middle {
-    opacity: 1;
-}
-
-.text {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    padding: 16px 32px;
-}
-
-/*      modal*/
-.user-photo-modal {
-    font-size: 0.9em;
-}
-
-.user-photo-modal > .modal-dialog > .modal-content > h5 {
-    position: absolute;
-    top: 5px;
-}
-
-.user-photo-modal > .modal-dialog > .modal-content > h5 > a > img {
-    width: 35px;
-    height: 35px;
-    object-fit: cover;
-    border-radius: 3px;
-}
-
-.modal-footer {
-    justify-content: start;
-    border: none;
-
-}
-
-.user-photo-modal > .modal-dialog > .modal-content > a > img {
-    width: 100%;
-    border-radius: 5px 5px 0 0;
-    border: none;
-    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
-}
-
 /*FAVORITES     = = = == = = = === == = = = === = == ==== = =  = = == ====*/
-*::-webkit-scrollbar {
-    /*display: none;*/
-    background-color: #1E1E24;
-    width: 1px;
-
-    /*background-color: !e;*/
-}
-
-.favorite-column::-webkit-scrollbar-track {
-    /*background-color: #EEB902;*/
-
-}
-
-.favorite-column::-webkit-scrollbar-thumb {
-    background-color: #EEB902;
-    width: 1px;
-    /*display: none;*/
-    /*background-color: ;*/
-}
-
-
-
-
-
 #Favorites {
     position: relative;
     height: 100%;
@@ -209,7 +89,6 @@
 }
 
 .favorite-column {
-    /*background-color: #1E1E24;*/
     overflow: scroll;
     overflow-x: hidden;
     height: 80vh;
@@ -233,16 +112,14 @@
 }
 
 .favorite-photos ul {
-
     display: grid;
     grid-template-columns: repeat(auto-fill, 1fr);
     grid-gap: 10px;
-
 }
 
 .favorite-photos > ul > li > a > img {
     width: 100%;
-   height: 250px;
+    height: 250px;
     cursor: zoom-in;
     object-fit: cover;
 }
@@ -272,7 +149,6 @@
     margin: 5px 0;
     background-color: #1E1E24;
     color: #F7EBE8;
-
 }
 
 @media screen and (min-width: 767px) {
@@ -298,9 +174,9 @@
     height: 100%;
     color: #F7EBE8;
     background: linear-gradient(115deg, #26262d 20%, rgba(0, 0, 0, 0) 0%),
-                linear-gradient(115deg, #1E1E24 68%, rgba(0, 0, 0, 0) 0%),
-                linear-gradient(115deg, #26262d 70%, rgba(0, 0, 0, 0) 0%),
-                url("/img/night-city.jpg") center center;
+    linear-gradient(115deg, #1E1E24 68%, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 70%, rgba(0, 0, 0, 0) 0%),
+    url("/img/night-city.jpg") center center;
 }
 
 .profile-settings-form {
@@ -388,7 +264,6 @@
     .profileTabBtn {
         padding: 8px 16px;
     }
-
 }
 
 .slide-fade-enter-active {
@@ -399,9 +274,7 @@
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
-.slide-fade-enter, .slide-fade-leave-to
-    /* .slide-fade-leave-active below version 2.1.8 */
-{
+.slide-fade-enter, .slide-fade-leave-to {
     transform: translateX(10px);
     opacity: 0;
 }

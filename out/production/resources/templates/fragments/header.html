@@ -19,6 +19,7 @@
     <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/css/helpers.css" th:href="@{/css/helpers.css}" media="screen"/>
     <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" media="screen"/>
+    <link rel="stylesheet" href="/css/navs.css" th:href="@{/css/navs.css}" media="screen"/>
     <link rel="stylesheet" href="/css/profile.css" th:href="@{/css/profile.css}"/>
     <link rel="stylesheet" href="/css/forms.css" th:href="@{/css/forms.css}"/>
     <link rel="stylesheet" href="/css/authors.css" th:href="@{/css/authors.css}"/>
@@ -41,8 +42,7 @@
         <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right">SIGN OUT</a>
 
         <a v-show="isSignedIn()" href="/profile" id="top-nav-avatar" class="float-right ">
-            <!--{{logged_message}}-->
-            <img v-bind:src="avatar_link" alt="Avatar"/>
+            <img v-bind:src="user.avatarUrl" alt="Avatar"/>
         </a>
 
         <form class="search-field">

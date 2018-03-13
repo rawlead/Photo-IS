@@ -6,8 +6,6 @@
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
 
 <div class="container-fluid" id="myProfileRoot">
-    <!--<div class="row hor-sep-60"></div>-->
-
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
     <div class="profile-tab">
@@ -18,9 +16,6 @@
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Settings')"><i class="fas fa-cog"></i> SETTINGS
         </button>
     </div>
-
-    <!-- Tab content -->
-    <!--<div class="row hor-sep-37"></div>-->
 
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
@@ -66,7 +61,7 @@
             </div>
         </div>
     </div>
-
+    <!-- Tabs  -->
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
     <div id="Uploads" class="profileTabContent row"><!-- UPLOADS -->
         <div class="col-md-5 offset-md-2">
@@ -81,7 +76,7 @@
                        value="Choose file"/>
                 <label for="photo_input_file" class="btn btn-outline-dark" >
                     <span v-if="statusMessage" v-html="statusMessage">Uploading.. Please wait.. <i class="fas fa-sync fa-spin"></i></span>
-                    <span v-else=""><i class="fas fa-camera"></i> SELECT PHOTO</span>
+                    <span v-else-if="!statusMessage"><i class="fas fa-camera"></i> SELECT PHOTO</span>
                 </label>
             </div>
         </div>
@@ -95,7 +90,6 @@
 
                     <input maxlength="100" placeholder="Not required" class="data-input" v-model="uploadPhotoTitle"
                            id="uploadPhotoTitle" type="text"/>
-
                 </div>
                 <div class="form-group">
                     <label for="uploadPhotoDescription">Description</label>
@@ -132,8 +126,6 @@
         </div>
     </div>
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
-    <!--<div class="solid-color-background"></div>-->
-
 
     <div id="Favorites" class="profileTabContent row">
         <div class="col-md-6 col-8 col-xl-8 offset-md-2">                               <!--FAVORITES-->
@@ -153,7 +145,6 @@
                 <p><b><i class="fas fa-star"></i> AUTHORS</b></p>
                 <ul>
                     <li v-for="user in favoriteUsers">
-
                         <a v-bind:href="'/profile/' + user.username">
                             <img v-bind:src="user.avatarUrl" style="width: 50px" height="50px" alt=""/>
                             @{{user.username}}</a></li>
@@ -188,7 +179,6 @@
                     </button>
                     <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
                     </button>
-
                 </div>
             </transition>
 
@@ -204,7 +194,6 @@
                     </button>
                     <button v-on:click="updateData = ''" class="btn btn-danger"><i class="fas fa-times"></i> Cancel
                     </button>
-
                 </div>
             </transition>
             <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
@@ -229,11 +218,6 @@
                         class="fas fa-sync fa-spin"></i></h6>
             </div>
         </div>
-        <!--<div class="col-md-5  col-xl-4 offset-md-2">-->
-
-
-        <!--</div>-->
-        <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     </div>
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
@@ -372,6 +356,7 @@
                 setTimeout(function () {
                     $('.alert').fadeOut('slow');
                 }, 1500);
+                this.statusMessage = '';
             },
             fetchCategories() {
                 axios.get("/api/categories").then(function (response) {
@@ -446,6 +431,7 @@
             deletePhoto(photo) {
                 deletePhotoRequest(this.user, photo).then((res) => {
                     this.fetchUserPhotos();
+                    this.fetchFavoritePhotos()
                     $('.user-photo-modal').modal('hide');
                 }).catch(function (errors) {
                     alert(errors.response)
