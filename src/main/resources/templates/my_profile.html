@@ -259,6 +259,9 @@
             $('.alert').hide();
             this.fetchLoggedInUser();
         },
+        computed: {
+
+        },
         methods: {
             fetchLoggedInUser() {
                 if (getCookie("access_token")) {
@@ -317,7 +320,7 @@
                 this.statusMessage = "Uploading";
                 putAvatarRequest(this.user, formData).then(
                     function () {
-                        vueLoggedUser.avatar_link = this.avatarImage;
+                        vueLoggedUser.user.avatarUrl = this.avatarImage;
                         this.updateData = '';
                         this.statusMessage = "";
                     }.bind(this)
@@ -461,6 +464,7 @@
                         this.commentCounter = response.data.length;
                     }.bind(this))
             }
+
         }
     })
 </script>

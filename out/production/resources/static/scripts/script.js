@@ -2,9 +2,9 @@ $('#search-input').attr("placeholder", " search");
 
 // highlight active left nav link
 $(function () {
-    var current = location.pathname;
-    $('#left-nav li a').each(function () {
-        var $this = $(this);
+    let current = location.pathname;
+    $('#left-nav').find('li a').each(function () {
+        let $this = $(this);
         if ($this.attr('href').indexOf(current) !== -1) {
             $this.addClass('active');
         }
@@ -13,7 +13,7 @@ $(function () {
 
 // responsive mobile nav menu
 function openMobileMenu() {
-    var x = document.getElementById("left-nav");
+    let x = document.getElementById("left-nav");
     if (x.className === "nav flex-column") {
         x.className += " responsive";
     } else {
@@ -36,9 +36,9 @@ window.Event = new Vue({
 });
 
 function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
+    let value = "; " + document.cookie;
+    let parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
 function setCookie(name, value) {
@@ -50,7 +50,7 @@ function deleteCookie(name) {
 }
 
 var vueLoggedUser = new Vue({
-    el: '#loggedUser',
+    el: '#topNavRoot',
     data: {
         avatar_link: '',
         user: '',

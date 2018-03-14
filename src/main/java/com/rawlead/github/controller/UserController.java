@@ -75,6 +75,11 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/{userId}")
+    public boolean deleteUser(@PathVariable Long userId) {
+        return userService.deleteUser(userId);
+    }
+
     @GetMapping(value = "/signout")
     public void logout(@RequestParam(value = "access_token") String token) {
         tokenStore.removeAccessToken(tokenStore.readAccessToken(token));

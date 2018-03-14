@@ -38,4 +38,7 @@ public interface UserService {
     boolean deleteFavoriteUser(Long userId, Long favoriteUserId);
 
     User getFavoriteUser(Long userId, Long favoriteUserId);
+
+    boolean deleteUser(User user);
+    boolean deleteUser(Long userId);
 }

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head th:include="fragments/header :: head('About')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<div class="container-fluid" id="photoRoot">
+
+    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+
+    <div class="row">
+
+
+        <div class="col-md-5 single-photo">
+
+        </div>
+
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: scripts"></div>
+<script>
+
+</script>
+</body>
+</html>

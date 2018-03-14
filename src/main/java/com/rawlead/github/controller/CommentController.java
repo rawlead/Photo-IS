@@ -53,11 +53,8 @@ public class CommentController {
 
     @PostMapping(value = "/api/photos/{photoId}/comments")
     public Comment addComment(@PathVariable Long photoId, @RequestParam String content) {
-
         Long userId = getLoggedUser().getId();
         return this.commentService.addComment(photoId, userId, content);
-
-
     }
 
     @DeleteMapping(value = "/api/comments")
@@ -68,8 +65,11 @@ public class CommentController {
 
     @DeleteMapping(value = "/api/users/{userId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Long userId, @PathVariable Long commentId) {
+        System.out.println("before");
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        System.out.println("after");
+
         if (!this.commentService.deleteComment(userId, commentId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -60,7 +60,7 @@
             <div id="categories-nav" class="categories">
                 <div class="close-categories-btn"><p href="javascript:void(0)" onclick="closeCategoriesNav()"><i
                         class="fas fa-times"></i></p>
-                    <p style="font-size: 0.6em" v-on:click="fetchAllPhotos" href="#">All categories</p>
+                    <p style="font-size: 0.6em; text-decoration: underline" v-on:click="fetchAllPhotos" href="#">All categories</p>
                 </div>
                 <p v-for="category in categories" v-on:click="fetchPhotosByCategory(category)"
                    :class="{ active:activeCategory(category) }" href="#">{{category.name}}</p>

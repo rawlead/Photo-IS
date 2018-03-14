@@ -36,11 +36,8 @@ public class User {
     @NotNull
     private String password;
 
-    @JsonIgnore
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.MERGE
             })
     @JoinTable(name = "user_roles",

@@ -1,7 +1,7 @@
 .authors-container {
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 200px)); /* WIDTH */
+    grid-template-columns: repeat(auto-fit, 200px); /* WIDTH */
 }
 
 .authors-container a {
@@ -35,10 +35,11 @@
 .grid-item p {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
-    float: left;
     margin: 0;
-    position: absolute;
-    bottom: 0;
+    /*float: left;*/
+    /*margin: 0;*/
+    /*position: absolute;*/
+    /*bottom: 0;*/
     background-color: #1E1E24;
     width: 100%;
 }

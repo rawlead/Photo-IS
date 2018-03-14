@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head th:fragment="head(title)">
     <title th:text="${title}"></title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
-
     <meta charset="utf-8"/>
+    <!--Website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <!--Font Awesome CSS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
           th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet"/>
+    <!--Animate CSS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
           th:href="@{https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css}"/>
+    <!--NProgress CSS-->
     <link rel="stylesheet" href="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css"
           th:href="@{https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/nprogress.css}"/>
-    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="/css/helpers.css" th:href="@{/css/helpers.css}" media="screen"/>
-    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}" media="screen"/>
-    <link rel="stylesheet" href="/css/navs.css" th:href="@{/css/navs.css}" media="screen"/>
-    <link rel="stylesheet" href="/css/profile.css" th:href="@{/css/profile.css}"/>
-    <link rel="stylesheet" href="/css/forms.css" th:href="@{/css/forms.css}"/>
-    <link rel="stylesheet" href="/css/authors.css" th:href="@{/css/authors.css}"/>
-    <link rel="stylesheet" href="/css/author_profile.css" th:href="@{/css/author_profile.css}"/>
-    <link rel="stylesheet" href="/css/photo.css" th:href="@{/css/photo.css}"/>
-    <link rel="stylesheet" href="/css/photos.css" th:href="@{/css/photos.css}"/>
+    <!--Project CSS-->
+    <link rel="stylesheet" href="/static/css/helpers.css" th:href="@{/css/helpers.css}" media="screen"/>
+    <link rel="stylesheet" href="/static/css/style.css" th:href="@{/css/style.css}" media="screen"/>
+    <link rel="stylesheet" href="/static/css/navs.css" th:href="@{/css/navs.css}" media="screen"/>
+    <link rel="stylesheet" href="/static/css/profile.css" th:href="@{/css/profile.css}"/>
+    <link rel="stylesheet" href="/static/css/forms.css" th:href="@{/css/forms.css}"/>
+    <link rel="stylesheet" href="/static/css/authors.css" th:href="@{/css/authors.css}"/>
+    <link rel="stylesheet" href="/static/css/author_profile.css" th:href="@{/css/author_profile.css}"/>
+    <link rel="stylesheet" href="/static/css/photo.css" th:href="@{/css/photo.css}"/>
+    <link rel="stylesheet" href="/static/css/photos.css" th:href="@{/css/photos.css}"/>
 </head>
 <body>
-<header th:fragment="header" id="loggedUser">
+<header th:fragment="header" id="topNavRoot">
     <div id="top-nav">
 
         <a href="javascript:void(0);" class="icon" onclick="openMobileMenu()">&#9776;</a>
@@ -36,7 +40,6 @@
         <div class="main-logo  float-left">
             <a href="/photos"><img src="/img/photo-is-logo.png" alt=""/></a>
         </div>
-
 
         <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin">SIGN IN</a>
         <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right">SIGN OUT</a>

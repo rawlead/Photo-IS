@@ -58,9 +58,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public boolean deleteComment(Long userId, Long commentId) {
         Comment comment = commentRepository.findOne(commentId);
+        System.out.println(comment.toString());
         if (comment == null)
             return false;
         System.out.println("deleting");

@@ -5,9 +5,12 @@ import com.rawlead.github.entity.PhotoCategory;
 import com.rawlead.github.repository.PhotoCategoryRepository;
 import com.rawlead.github.repository.PhotoRepository;
 import com.rawlead.github.service.PhotoCategoryService;
+import javafx.collections.transformation.SortedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -23,7 +26,9 @@ public class PhotoCategoryServiceImpl implements PhotoCategoryService {
 
     @Override
     public List<PhotoCategory> listAllCategories() {
-        return categoryRepository.findAll();
+        List<PhotoCategory> categories = categoryRepository.findAll();
+        categories.sort(Comparator.comparing(PhotoCategory::getName));
+        return categories;
     }
 
     @Override
@@ -54,6 +59,6 @@ public class PhotoCategoryServiceImpl implements PhotoCategoryService {
 
     @Override
     public PhotoCategory getCategoryByName(String categoryName) {
-        return categoryRepository.findByNameOrderByName(categoryName);
+        return categoryRepository.findByName(categoryName);
     }
 }

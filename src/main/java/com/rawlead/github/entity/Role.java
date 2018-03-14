@@ -1,9 +1,13 @@
 package com.rawlead.github.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -15,13 +19,13 @@ public class Role {
     @NotNull
     private String name;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = {
-            CascadeType.PERSIST,
                 CascadeType.MERGE
         },
     mappedBy = "roles")
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
 
 
@@ -29,11 +33,12 @@ public class Role {
     }
 
 
-    public List<User> getUsers() {
+
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

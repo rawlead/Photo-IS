@@ -3,6 +3,7 @@ package com.rawlead.github;
 import com.rawlead.github.configuration.CustomUserDetails;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
+import com.rawlead.github.repository.RoleRepository;
 import com.rawlead.github.repository.UserRepository;
 import com.rawlead.github.service.impl.PhotoCategoryServiceImpl;
 import com.rawlead.github.service.impl.UserServiceImpl;
@@ -16,23 +17,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
-
 @SpringBootApplication
 public class PhotoIsApplication  {
-
 	private PasswordEncoder passwordEncoder;
 	private PhotoCategoryServiceImpl categoryService;
 
-
 	@Autowired
-	public PhotoIsApplication(PasswordEncoder passwordEncoder, PhotoCategoryServiceImpl categoryService) {
+	public PhotoIsApplication(PasswordEncoder passwordEncoder, PhotoCategoryServiceImpl categoryService ) {
 		this.passwordEncoder = passwordEncoder;
 		this.categoryService = categoryService;
 	}
-
-
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(PhotoIsApplication.class, args);
@@ -45,11 +39,16 @@ public class PhotoIsApplication  {
 	 * @throws Exception
 	 * */
 	@Autowired
-	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository, UserServiceImpl service) throws Exception {
+	public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository,RoleRepository roleRepository, UserServiceImpl service) throws Exception {
 		if (userRepository.count() == 0) {
-			service.save(new User("NameUser","LastNameUser","user@mail.com","user", passwordEncoder.encode("password"), Stream.of(new Role("USER"), new Role("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
-			service.save(new User("NameUserTwo","","usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Stream.of(new Role("USER"), new Role("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
-			service.save(new User("NameAdmin","LastNameAdmin","admin@mail.com","admin", passwordEncoder.encode("password"), Stream.of(new Role("USER"), new Role("ADMIN")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
+
+			roleRepository.save(new Role("USER"));
+			roleRepository.save(new Role("PHOTOGRAPHER"));
+			roleRepository.save(new Role("ADMIN"));
+
+			service.save(new User("NameUser","LastNameUser","user@mail.com","user", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
+			service.save(new User("NameUserTwo","","usertwo@mail.co,","usertwo", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
+			service.save(new User("NameAdmin","LastNameAdmin","admin@mail.com","admin", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("ADMIN")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
 
 
 			categoryService.addCategory("Nature");
@@ -57,7 +56,6 @@ public class PhotoIsApplication  {
 			categoryService.addCategory("Food");
 		}
 		builder.userDetailsService(userDetailsService(userRepository)).passwordEncoder(passwordEncoder);
-
 	}
 	/**
 	 * We return an istance of our CustomUserDetails.

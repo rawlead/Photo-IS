@@ -1,10 +1,10 @@
 package com.rawlead.github.service.impl;
 
-import com.rawlead.github.entity.Role;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.pojo.UserRegistrationForm;
 import com.rawlead.github.repository.UserRepository;
 import com.rawlead.github.service.AmazonClientService;
+import com.rawlead.github.service.RoleService;
 import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +21,13 @@ import java.util.stream.Stream;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private AmazonClientService amazonClientService;
+    private RoleService roleService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AmazonClientService amazonClientService) {
+    public UserServiceImpl(UserRepository userRepository, AmazonClientService amazonClientService, RoleService roleService) {
         this.userRepository = userRepository;
         this.amazonClientService = amazonClientService;
+        this.roleService = roleService;
     }
 
     @Override
@@ -83,7 +85,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userRegistrationForm.getEmail());
         user.setPassword(getPasswordEncoder().encode(userRegistrationForm.getPassword()));
         user.setUsername(userRegistrationForm.getUsername());
-        user.setRoles(Stream.of(new Role("USER"), new Role("PHOTOGRAPHER")).collect(Collectors.toSet()));
+        user.setRoles(Stream.of(roleService.getRole("USER"), roleService.getRole("PHOTOGRAPHER")).collect(Collectors.toSet()));
         user.setAvatarUrl("/img/user-icon-white.png");
         return userRepository.save(user);
     }
@@ -142,6 +144,18 @@ public class UserServiceImpl implements UserService {
         if (user.hasFavoriteUser(favoriteUser))
             return favoriteUser;
         return null;
+    }
+
+    @Override
+    public boolean deleteUser(User user) {
+        userRepository.delete(user);
+        return true;
+    }
+
+    @Override
+    public boolean deleteUser(Long userId) {
+        userRepository.delete(userId);
+        return true;
     }
 }
 
