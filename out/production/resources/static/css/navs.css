@@ -6,7 +6,13 @@
     top: 0;
     margin: 0;
     z-index: 100;
-    background-color: #1E1E24;
+    /*background-color: #1E1E24;*/
+
+    background: linear-gradient(115deg, #26262d 125px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 325px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 525px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+
     padding-right: 10px;
 }
 
@@ -46,14 +52,14 @@
     width: 150px;
     float: left;
     border: none;
-    border-bottom: 2px solid #1E1E24;
+    border-bottom: 2px solid transparent;
     font-size: 0.875em;
     padding: 3px 15px;
-    margin: 10px 15px;
-    height: 40px;
+    margin: 0px 15px;
+    height: 60px;
     -webkit-transition: width 0.2s ease-in-out;
     transition: width 0.2s ease-in-out;
-    background-color: #1E1E24;
+    background-color: transparent;
     color: #F7EBE8;
 }
 
@@ -105,12 +111,16 @@
     display: none;
     border-left: 2px solid #EEB902;
     border-right: 2px solid #EEB902;
-    border-bottom: 1px solid #EEB902;
-    top: 49px;
-    left: 15%;
+    /*border-bottom: 1px solid #EEB902;*/
+    top: 60px;
+    left: 207px;
     position: absolute;
-    background-color: #1E1E24;
-    width: 30%;
+    /*background-color: #1E1E24;*/
+    background:
+    linear-gradient(115deg, #1E1E24 110px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 310px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+    width: 40%;
     overflow: auto;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -119,11 +129,11 @@
 .dropdown-content a {
     color: #F7EBE8;
     font-size: 0.8em;
-    padding: 10px 10px 10px 10px;
+    padding: 10px 20px;
     text-decoration: none;
     display: block;
     position: relative;
-    z-index: 30;
+    z-index: 100;
 }
 
 .showSearch {
@@ -133,7 +143,11 @@
 /*LEFT SIDE VERTICAL NAVIGATION BAR*/
 #left-nav {
     list-style-type: none;
-    background-color: #1E1E24;
+    /*background-color: #1E1E24;*/
+    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
     position: fixed;
     display: block;
     box-sizing: border-box;
@@ -142,7 +156,7 @@
     left: 0;
     padding-top: 150px;
     font-size: 0.95em;
-    z-index: 100;
+    z-index: 50;
     border-right: #1E1E24 1px solid;
 }
 

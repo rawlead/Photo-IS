@@ -1,0 +1,159 @@
+.parallax {
+    background: no-repeat fixed center;
+    background-size: cover;
+}
+
+.parallax-one {
+
+    background-image: url('/img/night-city-about.jpg');
+    height: 100%;
+}
+
+.parallax-two {
+    background-image: url('/img/warsaw.jpg');
+    height: 55%;
+}
+
+.parallax-content-btngroup {
+    padding: 50px 0;
+}
+
+.parallax-content-btngroup a {
+    margin: 0 5px;
+}
+
+#parallax-content-one {
+    border-top: solid 2px #EEB902;
+    border-bottom: solid 2px #EEB902;
+    box-sizing: border-box;
+    height: 140px;
+    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+    font-size: 1em;
+    color: #F7EBE8;
+}
+
+#parallax-content-two {
+    padding-top: 60px;
+    border-top: solid 2px #EEB902;
+    /*background: linear-gradient(115deg, #1E1E24 325px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #26262d 525px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);*/
+    background-color: #1E1E24;
+    /*height: 100%;*/
+}
+
+.about-row {
+    padding: 25px;
+}
+
+.about-row  div{
+    /*background-color: #ebedee;*/
+}
+
+
+#parallax-content-two div {
+    color: #ebedee;
+}
+
+#parallax-content-two h1 {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#parallax-content-two h5 {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    margin-bottom: 30px
+}
+
+#parallax-content-two .about-img {
+    width: 100%;
+    object-fit: cover;
+    max-height: 300px;
+    /*margin-bottom: 50px;*/
+}
+
+#parallax-content-two .about-img-content {
+    object-fit: cover;
+    width: 100%;
+    /*max-height: 100px;*/
+    border-radius: 50%;
+}
+
+#parallax-content-two p {
+    width: 100%;
+    text-align: center;
+}
+
+
+.parallax .caption {
+    color: #ebedee;
+    text-align: center;
+}
+
+.parallax > .caption > .caption-content {
+    padding: 20px;
+    opacity: 0.85;
+    border-radius: 5px;
+}
+
+.caption-content img {
+    object-fit: scale-down;
+    width: 100%;
+    max-height: 20vh;
+}
+
+.caption-content h1 {
+    font-weight: bold;
+    padding: 10px 0;
+    letter-spacing: 15px;
+}
+
+.arrow {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.bounce {
+    -moz-animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
+}
+
+.arrow a {
+    color: #F7EBE8;
+    text-decoration: none;
+}
+
+.arrow a:hover {
+    color: #EEB902;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+#parallax-content-one #goto-content-one {
+    margin-top: -60px; /* Size of fixed header */
+    padding-bottom: 60px;
+    display: block;
+}

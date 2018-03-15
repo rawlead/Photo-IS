@@ -46,9 +46,17 @@ public class HomeController {
     }
 
     @GetMapping(value = "/photo/{photoId}")
-    public String singlePhoto() { return "photo"; }
+    public String singlePhoto() {
+        return "photo";
+    }
 
     @GetMapping(value = "/photos")
-    public String categories( ) {
-        return "photos"; }
+    public String categories() {
+        return "photos";
+    }
+
+    @GetMapping(value = "/about")
+    public String about() {
+        return "about";
+    }
 }

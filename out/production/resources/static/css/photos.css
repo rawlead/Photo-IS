@@ -1,3 +1,5 @@
+
+
 .categories {
     height: 100%;
     width: 0;
@@ -6,6 +8,7 @@
     top: 60px;
     left: 15%;
     background-color: #1E1E24;
+
     overflow-x: scroll;
     transition: 0.3s;
 }

@@ -85,7 +85,8 @@
 #Favorites {
     position: relative;
     height: 100%;
-    background-color: #1E1E24;
+    /*background-color: #1E1E24;*/
+
 }
 
 .favorite-column {
@@ -99,7 +100,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    background-color: #1E1E24;
+    /*background-color: #1E1E24;*/
     color: #EEB902;
     padding: 5px;
     border-radius: 2px;
@@ -173,9 +174,10 @@
     position: relative;
     height: 100%;
     color: #F7EBE8;
-    background: linear-gradient(115deg, #26262d 20%, rgba(0, 0, 0, 0) 0%),
+    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 68%, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #26262d 70%, rgba(0, 0, 0, 0) 0%),
     url("/img/night-city.jpg") center center;
 }
 
