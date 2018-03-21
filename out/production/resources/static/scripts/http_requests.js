@@ -109,6 +109,12 @@ function addUserToFavoritesRequest(loggedInUser, user) {
             favoriteUserId: user.id
         }
     }).then(function (response) {
+        MsgPop.closeAll();
+        MsgPop.open({
+            Type:"success",
+            Content:response.data,
+            CloseTimer: 1200
+        });
     }.bind(this)).catch(function (error) {
         alert(error.response);
     });
@@ -120,6 +126,12 @@ function removeUserFromFavoritesRequest(loggedInUser, user) {
         method: 'delete',
         url: '/api/users/' + loggedInUser.id + '/favorite/users/ ' + user.id + ' ?' + accessToken(),
     }).then(function (response) {
+        MsgPop.closeAll();
+        MsgPop.open({
+            Type:"warning",
+            Content:response.data,
+            CloseTimer: 1200
+        });
     }).catch(function (error) {
         alert(error.response.data);
     }.bind(this));
@@ -136,6 +148,12 @@ function addPhotoToFavoritesRequest(loggedInUser, photo, object) {
             favoritePhotoId: photo.id
         }
     }).then(function (response) {
+        MsgPop.closeAll();
+        MsgPop.open({
+            Type:"success",
+            Content:response.data,
+            CloseTimer: 1200
+        });
         console.log(response);
         object.fetchFavoritePhotos();
     }.bind(this)).catch(function (error) {
@@ -147,6 +165,12 @@ function removePhotoFromFavoritesRequest(loggedInUser, photo, object) {
         method: 'delete',
         url: '/api/users/' + loggedInUser.id + '/favorite/photos/ ' + photo.id + ' ?' + accessToken(),
     }).then(function (response) {
+        MsgPop.closeAll();
+        MsgPop.open({
+            Type:"warning",
+            Content:response.data,
+            CloseTimer: 1200
+        });
         object.fetchFavoritePhotos();
     }).catch(function (error) {
         alert("Something wrong with removephotofromfavorites")

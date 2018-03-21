@@ -64,7 +64,7 @@
 }
 
 .comments-header {
-    border-bottom: 1px solid #1E1E24;
+    /*border-bottom: 1px solid #1E1E24;*/
     padding-bottom: 6px;
 }
 
@@ -86,6 +86,14 @@
     overflow: scroll;
     overflow-x: hidden;
     max-height: 70vh;
+}
+
+.comments-body::-webkit-scrollbar {
+    display: none;
+}
+
+.comments-body::-webkit-scrollbar-thumb {
+    display: none;
 }
 
 .comments-body ul {

@@ -10,33 +10,33 @@
     <div class="row">
         <div class="col-md-5 col-xl-3 offset-md-2">
             <div class="signForm">
-                <h1>Sign Up</h1>
-                <a href="/signin">Or Sign In</a>
+                <h1>Create account</h1>
+                <a href="/signin">Or sign in</a>
                 <br/>
                 <div class="input-group float-left">
-                    <label for="firstName"><b>First Name</b></label>
-                    <input class="data-input" v-model="firstName" type="text"
-                           placeholder="First Name" id="firstName"/>
+                    <label for="firstName"><b>First name</b></label>
+                    <input class="data-input" v-model="firstName" maxlength="20" type="text"
+                           placeholder="First name" id="firstName"/>
                 </div>
                 <div class="input-group float-right">
-                    <label for="lastName"><b>Last Lame</b></label>
-                    <input class="data-input" v-model="lastName" type="text"
+                    <label for="lastName"><b>Last name</b></label>
+                    <input class="data-input" v-model="lastName" maxlength="20" type="text"
                            placeholder="Last name" id="lastName"/>
                 </div>
 
                 <label for="email"><b>Email</b></label>
-                <input class="data-input w-100" v-model="email" type="email" placeholder="Enter Email" id="email"/>
+                <input class="data-input w-100" v-model="email" maxlength="50" type="email" placeholder="Enter email" id="email"/>
 
                 <label for="username"><b>Username</b></label>
-                <input class="data-input w-100" v-model="username" type="text" placeholder="Enter Username"
+                <input class="data-input w-100" v-model="username" maxlength="20" type="text" placeholder="Enter username"
                        id="username"/>
 
                 <label for="password"><b>Password</b></label>
-                <input class="data-input w-100" v-model="password" type="password" placeholder="Enter Password"
+                <input class="data-input w-100" v-model="password" maxlength="30" type="password" placeholder="Enter password"
                        id="password"/>
 
                 <label for="passwordConfirm"><b>Confirm password</b></label>
-                <input class="data-input w-100" v-model="passwordConfirm" type="password" placeholder="Confirm Password"
+                <input class="data-input w-100" v-model="passwordConfirm" maxlength="30" type="password" placeholder="Enter password"
                        id="passwordConfirm"/>
                 <button type="button" class="submit-btn" v-on:click="signup">SUBMIT</button>
             </div>

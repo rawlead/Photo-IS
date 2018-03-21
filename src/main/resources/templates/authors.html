@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-10 offset-md-2">
             <div class="authors-container">
-                <div v-for="author in users" class="grid-item hvr-outline-in">
+                <div v-for="author in users" class="grid-item hvr-glow">
                     <a :href="getLink(author)">
                         <img v-bind:src="author.avatarUrl" alt=""/>
                         <p>@{{author.username}}<br/>
@@ -36,8 +36,7 @@
         methods: {
             fetchUsers() {
                 getUsersRequest().then(function (response) {
-                    console.log(response.data)
-                    this.users = response.data;
+                    this.users = response.data.reverse();
                 }.bind(this));
             },
             getLink(author) {

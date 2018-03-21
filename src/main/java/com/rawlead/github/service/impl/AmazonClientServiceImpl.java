@@ -19,17 +19,21 @@ import java.util.Date;
 @Service
 public class AmazonClientServiceImpl implements AmazonClientService {
     private AmazonS3 s3client;
-
-    @Value("${amazonProperties.endpointUrl}")
+//
+//    @Value("${amazonProperties.endpointUrl}")
+    @Value("${S3_ENDPOINT_URL}")
     private String endpointUrl;
 
-    @Value("${amazonProperties.accessKey}")
+//    @Value("${amazonProperties.accessKey}")
+    @Value("${S3_ACCESS_KEY}")
     private String accessKey;
 
-    @Value("${amazonProperties.secretKey}")
+//    @Value("${amazonProperties.secretKey}")
+    @Value("${S3_SECRET_KEY}")
     private String secretKey;
 
-    @Value("${amazonProperties.bucketName}")
+//    @Value("${amazonProperties.bucketName}")
+    @Value("${S3_BUCKET_NAME}")
     private String bucketName;
 
     @PostConstruct

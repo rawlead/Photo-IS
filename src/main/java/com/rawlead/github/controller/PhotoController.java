@@ -5,6 +5,7 @@ import com.rawlead.github.entity.Photo;
 import com.rawlead.github.entity.User;
 import com.rawlead.github.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,7 +63,7 @@ public class PhotoController {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         this.photoService.addPhoto(userId, photo, title, description, category);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(ResponseMessage.PHOTO_PUBLISHED, HttpStatus.OK);
     }
 
 
@@ -83,20 +84,20 @@ public class PhotoController {
     }
 
     @PostMapping(value = "/api/users/{userId}/favorite/photos")
-    public ResponseEntity<?> addFavoritePhoto(@PathVariable Long userId, @RequestParam Long favoritePhotoId) {
+    public ResponseEntity<?> addPhotoToFavorites(@PathVariable Long userId, @RequestParam Long favoritePhotoId) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (photoService.addFavoritePhoto(userId, favoritePhotoId))
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(ResponseMessage.PHOTO_FAVORITE_ADD, HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
     }
 
     @DeleteMapping(value = "/api/users/{userId}/favorite/photos/{favoritePhotoId}")
-    public ResponseEntity<?> deleteFavoritePhoto(@PathVariable Long userId, @PathVariable Long favoritePhotoId) {
+    public ResponseEntity<?> removePhotoFromFavorites(@PathVariable Long userId, @PathVariable Long favoritePhotoId) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (photoService.deleteFavoritePhoto(userId, favoritePhotoId))
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(ResponseMessage.PHOTO_FAVORITE_REMOVE, HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
 
     }

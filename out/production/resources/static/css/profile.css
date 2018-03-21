@@ -58,6 +58,21 @@
     max-width: 600px;
 }
 
+.uploadPhotoForm {
+    max-width: 500px;
+}
+
+@media screen and (max-width: 767px) {
+    .photoUploadContainer {
+        max-width: 100%;
+    }
+
+    .uploadPhotoForm {
+        max-width: 100%;
+    }
+}
+
+
 .upload-photo-preview {
     width: 100%;
     height: auto;
@@ -69,11 +84,17 @@
     width: 100%;
 }
 
-#uploadPhotoDescription {
+.uploadPhotoFormElement {
     resize: none;
-    height: 85px;
-    padding: 8px 20px;
+    width: 100%;
+    outline: none;
+    padding: 5px 10px;
+    border: 1px solid #1E1E24;
+    border-radius: 5px;
 }
+
+
+
 
 #uploadPhotoCategory {
     margin-bottom: 20px;
@@ -84,8 +105,11 @@
 /*FAVORITES     = = = == = = = === == = = = === = == ==== = =  = = == ====*/
 #Favorites {
     position: relative;
-    height: 100%;
-    /*background-color: #1E1E24;*/
+    min-height: 100%;
+    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
 
 }
 
@@ -99,8 +123,8 @@
     text-align: center;
     position: -webkit-sticky;
     position: sticky;
+    font-size: 0.85em;
     top: 0;
-    /*background-color: #1E1E24;*/
     color: #EEB902;
     padding: 5px;
     border-radius: 2px;
@@ -115,12 +139,13 @@
 .favorite-photos ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, 1fr);
-    grid-gap: 10px;
+    grid-template-rows: repeat(auto-fit, 150px);
+    grid-gap: 3px;
 }
 
 .favorite-photos > ul > li > a > img {
     width: 100%;
-    height: 250px;
+    height: 150px;
     cursor: zoom-in;
     object-fit: cover;
 }
@@ -141,6 +166,9 @@
 
 .favorite-users img {
     display: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     object-fit: cover;
 }
 
@@ -148,7 +176,6 @@
     height: 50px;
     border-radius: 2px;
     margin: 5px 0;
-    background-color: #1E1E24;
     color: #F7EBE8;
 }
 
@@ -162,17 +189,43 @@
     .favorite-photos ul {
         grid-template-columns: 1fr 1fr 1fr;
     }
-
+    
     .favorite-users img {
         display: inline-block;
     }
 
 }
 
+@media screen and (max-width: 767px) {
+    .favorite-column > p {
+        font-size: 0.75em;
+    }
+
+
+    .favorite-users > ul > li {
+        height: 25px;
+        font-size: 0.75em;
+    }
+    .favorite-users::-webkit-scrollbar {
+        display: none;
+    }
+
+    .favorite-users::-webkit-scrollbar-thumb {
+        display: none;
+    }
+    .favorite-photos::-webkit-scrollbar {
+        display: none;
+    }
+
+    .favorite-photos::-webkit-scrollbar-thumb {
+        display: none;
+    }
+}
+
 /*SETTINGS ======= ====== == == = = = = = = == = = = = = */
 #Settings {
     position: relative;
-    height: 100%;
+    min-height: 100%;
     color: #F7EBE8;
     background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
@@ -180,6 +233,24 @@
     linear-gradient(115deg, #1E1E24 68%, rgba(0, 0, 0, 0) 0%),
     url("/img/night-city.jpg") center center;
 }
+
+#Settings p {
+    font-size: 0.85em;
+}
+#Settings li {
+    font-size: 0.85em;
+
+}
+
+#Settings  h5 {
+    font-size: 1.2em;
+}
+#Settings  h5 a {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+
 
 .profile-settings-form {
     padding: 10px;
@@ -263,10 +334,26 @@
         width: 100%;
     }
 
-    .profileTabBtn {
-        padding: 8px 16px;
+    .btn-success {
+        width: 100%;
     }
+
+    .btn-danger {
+        margin-top: 5px;
+        width: 100%;
+    }
+    .profileTabBtn {
+        padding: 8px 5px;
+        font-size: 0.9em;
+        /*font-size: 0.5em;*/
+    }
+
 }
+
+
+
+
+/* COMMON STYLES */
 
 .slide-fade-enter-active {
     transition: all .3s ease;
@@ -279,4 +366,22 @@
 .slide-fade-enter, .slide-fade-leave-to {
     transform: translateX(10px);
     opacity: 0;
+}
+
+
+
+.uploadPhotoFormElement::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #1E1E24;
+}
+
+.uploadPhotoFormElement::-moz-placeholder { /* Firefox 19+ */
+    color: #1E1E24;
+}
+
+.uploadPhotoFormElement:-ms-input-placeholder { /* IE 10+ */
+    color: #1E1E24;
+}
+
+.uploadPhotoFormElement:-moz-placeholder { /* Firefox 18- */
+    color: #1E1E24;
 }

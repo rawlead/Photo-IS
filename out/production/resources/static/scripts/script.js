@@ -1,4 +1,7 @@
-$('#search-input').attr("placeholder", " search");
+$('#search-input').attr("placeholder", " search ");
+
+
+
 
 // highlight active left nav link
 $(function () {

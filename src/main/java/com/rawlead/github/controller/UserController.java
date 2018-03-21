@@ -95,7 +95,7 @@ public class UserController {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (userService.updateUserAvatar(userId, avatarImage) != null)
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(ResponseMessage.AVATAR_CHANGED, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
@@ -151,25 +151,25 @@ public class UserController {
 
 
     @PostMapping(value = "/{userId}/favorite/users")
-    public ResponseEntity<?> addFavoriteUser(@PathVariable Long userId, @RequestParam Long favoriteUserId) {
+    public ResponseEntity<?> addUserToFavorites(@PathVariable Long userId, @RequestParam Long favoriteUserId) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (userId.equals(favoriteUserId))
             return new ResponseEntity<>(ResponseMessage.FAVORITE_MYSELF, HttpStatus.CONFLICT);
         else if (userService.addFavoriteUser(userId, favoriteUserId))
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(ResponseMessage.USER_FAVORITE_ADD, HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.USER_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
     }
 
 
     @DeleteMapping(value = "/{userId}/favorite/users/{favoriteUserId}")
-    public ResponseEntity<?> deleteFavoriteUser(@PathVariable Long userId, @PathVariable Long favoriteUserId) {
+    public ResponseEntity<?> removeUserFromFavorites(@PathVariable Long userId, @PathVariable Long favoriteUserId) {
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if (userId.equals(favoriteUserId))
             return new ResponseEntity<>(ResponseMessage.FAVORITE_MYSELF, HttpStatus.CONFLICT);
         else if (userService.deleteFavoriteUser(userId, favoriteUserId))
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(ResponseMessage.USER_FAVORITE_REMOVE, HttpStatus.OK);
         return new ResponseEntity<>(ResponseMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 }

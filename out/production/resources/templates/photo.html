@@ -48,6 +48,7 @@
 
 
         <div class="col-md-5 single-photo">
+
             <div class="comments-container">
                 <div class="comments-header">
                     <h5><b>Comments</b></h5>
@@ -56,6 +57,7 @@
                                 v-on:click="writingComment = !writingComment">Leave a comment
                         </button>
                     </transition>
+
                     <span class="float-right" style="font-size: 0.7em"><i class="far fa-comment"></i> {{commentCounter}}</span>
                     <!-- ... the buttons ... -->
                     <transition name="flip" mode="in-out">
@@ -67,15 +69,16 @@
                             <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
                                     class="btn btn-outline-success">Send
                             </button>
-                            <span class="length-counter">{{charactersLeft}} left</span>
+                            <span class="length-counter">{{charactersLeft}} characters left</span>
 
                             <button class="btn btn-outline-danger float-right"
                                     v-on:click="writingComment = !writingComment">Cancel
                             </button>
-                            <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
-                                    v-html="statusMessage"></span></div>
+
                         </div>
                     </transition>
+                    <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
+                            v-html="statusMessage"></span></div>
 
                 </div>
 
@@ -129,8 +132,6 @@
             charactersLeft: function () {
                 return MAX_COMMENT_LENGTH - this.commentContent.length;
             },
-
-
         },
         methods: {
             getPhotoId() {

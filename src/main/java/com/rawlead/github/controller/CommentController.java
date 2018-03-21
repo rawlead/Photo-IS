@@ -26,7 +26,6 @@ public class CommentController {
     private boolean isNotLoggedInUserMakesRequest(Long userId) {
         return !userId.equals(getLoggedUser().getId());
     }
-
     private User getLoggedUser() {
         return userService.getUser(SecurityContextHolder.getContext().getAuthentication().getName());
     }
@@ -65,10 +64,8 @@ public class CommentController {
 
     @DeleteMapping(value = "/api/users/{userId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Long userId, @PathVariable Long commentId) {
-        System.out.println("before");
         if (isNotLoggedInUserMakesRequest(userId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        System.out.println("after");
 
         if (!this.commentService.deleteComment(userId, commentId))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

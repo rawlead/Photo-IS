@@ -1,64 +1,84 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.10.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
+
+
+plugins {
+    id 'org.springframework.boot' version '1.5.10.RELEASE'
+}
+
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
 
 group = 'com.ivanshyrai'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
+
+jar {
+//    zip64 = true
+    manifest {
+        attributes "Main-Class": "com.rawlead.github.PhotoIsApplication"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
+
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	runtime('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-tomcat')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    runtime('org.springframework.boot:spring-boot-devtools')
 
-	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
 
-	compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
 //	compile("com.h2database:h2")
 
-	runtime("mysql:mysql-connector-java")
+    runtime("mysql:mysql-connector-java")
 
 
-	testCompile("junit:junit")
+    testCompile("junit:junit")
 
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('org.springframework.security:spring-security-test')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
 
-
-	// https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2
-	compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'
+    // https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'
 
 // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
-	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.4'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.4'
 
-	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
-	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.282'
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.282'
 
-	compile('de.codecentric:spring-boot-admin-starter-client:1.5.6')
+//	compile('de.codecentric:spring-boot-admin-starter-client:1.5.6')
 //	compile('org.lightadmin:lightadmin:1.2.0.RC1')
 
-
-
-	//	Automated JSON API documentation for API's built with Spring
+    //	Automated JSON API documentation for API's built with Spring
 //	http://localhost:8080/swagger-ui.html
-	compile('io.springfox:springfox-swagger2:2.1.2')
-	compile('io.springfox:springfox-swagger-ui:2.1.2')
+    compile('io.springfox:springfox-swagger2:2.1.2')
+    compile('io.springfox:springfox-swagger-ui:2.1.2')
+
 
 }

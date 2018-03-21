@@ -66,13 +66,13 @@
 }
 
 #signInRoot {
-    height: 100%;
+    min-height: 100%;
     background: url("/img/signin-background.jpg") no-repeat center;
     background-size: cover;
 }
 
 #signupRoot {
-    height: 100%;
-    background: url("/img/signup-background.JPG") no-repeat center;
+    min-height: 100%;
+    background: url("/img/signup-background.jpg") no-repeat center;
     background-size: cover;
 }
