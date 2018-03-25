@@ -33,13 +33,13 @@
                         <span onclick="addPhotoToFavoritesRequest(photoVue.loggedInUser, photoVue.photo, photoVue)"
                               class="favorite-add" v-if="!isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount++"> <i
-                                class="fas fa-star"></i> add </span>
+                                class="far fa-star"></i> add </span>
                         <span onclick="removePhotoFromFavoritesRequest(photoVue.loggedInUser, photoVue.photo, photoVue)"
                               class="favorite-remove" v-else-if="isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount--"><i
-                                class="far fa-star"></i> remove </span>
+                                class="fas fa-star" style="color: #EEB902"></i> remove </span>
 
-                        <span class="float-right"><i class="far fa-star"></i> {{favoriteCount}}</span>
+                        <span class="float-right" style="color:#fff"><i class="far fa-star"></i> {{favoriteCount}}</span>
                     </p>
 
                 </div>
@@ -53,7 +53,7 @@
                 <div class="comments-header">
                     <h5><b>Comments</b></h5>
                     <transition name="flip" mode="out-in">
-                        <button v-show="!writingComment" class="btn btn-outline-dark"
+                        <button v-show="!writingComment" style="color:#EEB902; border: #EEB902 1px solid" class="btn btn-outline-dark"
                                 v-on:click="writingComment = !writingComment">Leave a comment
                         </button>
                     </transition>
@@ -67,11 +67,11 @@
                             <textarea maxlength="150" v-model="commentContent" type="text" rows="3"
                                       id="comment-textarea"></textarea>
                             <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
-                                    class="btn btn-outline-success">Send
+                                    class="btn btn-success">Send
                             </button>
                             <span class="length-counter">{{charactersLeft}} characters left</span>
 
-                            <button class="btn btn-outline-danger float-right"
+                            <button class="btn btn-danger float-right"
                                     v-on:click="writingComment = !writingComment">Cancel
                             </button>
 

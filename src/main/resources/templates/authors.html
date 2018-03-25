@@ -37,7 +37,9 @@
             fetchUsers() {
                 getUsersRequest().then(function (response) {
                     this.users = response.data.reverse();
-                }.bind(this));
+                }.bind(this)).catch(function (error) {
+                    console.log(error);
+                });
             },
             getLink(author) {
                 return '/profile/' + author.username;

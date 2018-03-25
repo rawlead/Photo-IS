@@ -50,6 +50,8 @@ public class UserController {
             return new ResponseEntity<>(ResponseMessage.DUPLICATE_USER, HttpStatus.CONFLICT);
         else if (userRegistrationForm.getUsername().length() <= 1)
             return new ResponseEntity<>(ResponseMessage.USERNAME_SIZE, HttpStatus.CONFLICT);
+        // Server wysyła ResponseEntity w HTTP odpowiedzu zawierającą opis blendu
+        // oraz kod 409 CONFLICT
         else if (userRegistrationForm.getPassword().length() < 6)
             return new ResponseEntity<>(ResponseMessage.PASSWORD_SIZE, HttpStatus.CONFLICT);
         else if (!userRegistrationForm.getPassword().equals(userRegistrationForm.getPasswordConfirm()))

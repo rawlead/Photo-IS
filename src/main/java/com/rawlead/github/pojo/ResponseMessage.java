@@ -1,7 +1,13 @@
 package com.rawlead.github.pojo;
 
+// ...
+// Interfejs z niestandardowymi komunikatami
+// dla opisu odpowiedzi.
 public interface ResponseMessage {
+    String PASSWORD_SIZE = "Password must be at least 6 characters";
     String DUPLICATE_USER = "User already exists";
+    String PHOTO_PUBLISHED = "Photo has been published";
+    // ...
     String PASSWORD_MISMATCH = "Passwords don't match";
     String WRONG_CREDENTIALS = "Wrong username or password";
     String EMPTY_FIELD = "Please fill all fields";
@@ -20,7 +26,6 @@ public interface ResponseMessage {
     String FAVORITE_MYSELF = "Cannot add or delete myself to or from favorite users";
     String FAVORITE_OWN_PHOTO = "Cannot add or delete own photo to or from favorite photos";
     String PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST = "Photo already in favorites or doesn't exist";
-    String PASSWORD_SIZE = "Password must be at least 6 characters";
     String USERNAME_SIZE = "Username should be at least 2 characters";
     String PHOTO_NOT_FOUND = "Photo not found";
 
@@ -30,5 +35,4 @@ public interface ResponseMessage {
     String USER_FAVORITE_ADD = "User has been added to favorites";
     String USER_FAVORITE_REMOVE = "User has been removed from favorites";
 
-    String PHOTO_PUBLISHED = "Photo has been published";
 }

@@ -26,15 +26,13 @@ public class PhotoServiceImpl implements PhotoService {
     private UserRepository userRepository;
     private PhotoCategoryRepository categoryRepository;
     private AmazonClientService amazonClientService;
-    private CommentRepository commentRepository;
 
     @Autowired
-    public PhotoServiceImpl(PhotoRepository photoRepository, UserRepository userRepository, PhotoCategoryRepository categoryRepository, AmazonClientService amazonClientService, CommentRepository commentRepository) {
+    public PhotoServiceImpl(PhotoRepository photoRepository, UserRepository userRepository, PhotoCategoryRepository categoryRepository, AmazonClientService amazonClientService) {
         this.photoRepository = photoRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.amazonClientService = amazonClientService;
-        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -50,13 +48,10 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     @Transactional
     public boolean deletePhoto(Long photoId) {
-
-        // TODO FIND ANOTHER WAY, ITS TOO SLOW. HIBERNATE?
         Photo photo = photoRepository.findOne(photoId);
         if (photo == null)
             return false;
         // delete comments to photo from every users comment list
-
         photo.getComments().forEach(comment -> comment.getUser().getComments().remove(comment));
 
         //delete photo from every users favorite photos
@@ -64,7 +59,6 @@ public class PhotoServiceImpl implements PhotoService {
 
         amazonClientService.deleteFileFromS3Bucket(photo.getUrl());
         photoRepository.delete(photo);
-//        commentRepository.deleteCommentByPhotoId(photoId);
         return true;
     }
 
@@ -87,8 +81,6 @@ public class PhotoServiceImpl implements PhotoService {
         newPhoto.setDateCreated(LocalDateTime.now());
 
         newPhoto.setUser(user);
-//        user.addPhoto(newPhoto);
-//        userRepository.save(user);
         return photoRepository.save(newPhoto);
 
     }

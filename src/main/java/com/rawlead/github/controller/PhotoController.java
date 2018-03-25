@@ -67,8 +67,6 @@ public class PhotoController {
     }
 
 
-
-
     @DeleteMapping(value = "/api/users/{userId}/photos/{photoId}")
     public ResponseEntity<?> deletePhoto(@PathVariable Long userId, @PathVariable Long photoId) {
         if (isNotLoggedInUserMakesRequest(userId))
@@ -101,6 +99,4 @@ public class PhotoController {
         return new ResponseEntity<>(ResponseMessage.PHOTO_ALREADY_FAVORITE_OR_DOESNT_EXIST, HttpStatus.CONFLICT);
 
     }
-
-
 }

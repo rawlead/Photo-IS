@@ -50,11 +50,7 @@ public class CommentServiceImpl implements CommentService {
             return null;
         if (!user.addComment(comment))
             return null;
-
-//        photoRepository.save(photo);
-//        userRepository.save(user);
         return commentRepository.save(comment);
-//        return comment;
     }
 
     @Override

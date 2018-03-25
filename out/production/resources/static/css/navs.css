@@ -63,7 +63,7 @@
 
 #top-nav input:focus {
     width: 100%;
-    color: #EEB902;
+    color: #F7EBE8;
     outline: none;
     border-bottom: 2px solid #EEB902;
 }
@@ -169,7 +169,7 @@
 
 #left-nav li a {
     display: inline-block;
-    color: #F7EBE8;
+    color: #d2c7c4;
     font-weight: bold;
     padding: 8px 16px;
     text-decoration: none;
