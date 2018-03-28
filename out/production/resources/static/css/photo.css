@@ -7,25 +7,28 @@
     height: 100%;
     z-index: -100;
     filter: grayscale(100%) blur(5px);
-
     object-fit: cover;
-    opacity: 1;
+    opacity: 0.8;
 }
 
 .photo-container {
-    /*color: #1E1E24;*/
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
     height: auto;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    /*background-color: #fff;*/
-    background-color: #26262d;
+    background-color: #1E1E24;
+    color: #d2c7c4;
+}
+
+.single-photo {
+    padding-right: 0;
+    padding-left: 0;
+    margin-top: 20px;
+}
+.single-photo h5 {
     color: #F7EBE8;
 }
 
 .single-photo > .photo-container > .photo > a > img {
     width: 100%;
-    max-height: 75vh;
+    max-height: 67vh;
     cursor: zoom-in;
     object-fit: cover;
 }
@@ -47,9 +50,7 @@
 
 .photo-description a {
     text-decoration: none;
-
-    /*color: #1E1E24;*/
-    color: #F7EBE8;
+    color: #d2c7c4;
 }
 
 .photo-description a:hover {
@@ -63,15 +64,11 @@
 
 /*COMMENTS*/
 .comments-container {
-
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-    color: #F7EBE8;
-
-    /*color: #1E1E24;*/
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    background-color: #26262d;
+    color: #d2c7c4;
+    display: block;
+    background-color: #1E1E24;
     padding: 15px;
+
 }
 
 .comments-header {
@@ -96,15 +93,7 @@
 .comments-body {
     overflow: scroll;
     overflow-x: hidden;
-    max-height: 70vh;
-}
-
-.comments-body::-webkit-scrollbar {
-    display: none;
-}
-
-.comments-body::-webkit-scrollbar-thumb {
-    display: none;
+    max-height: 69vh;
 }
 
 .comments-body ul {
@@ -115,13 +104,13 @@
 
 .comments-body > ul > li {
     margin: 10px 0;
-    font-size: 0.875em;
+    font-size: 0.775em;
 }
 
 .comments-body > ul > li > a {
     text-decoration: none;
-    /*color: #1E1E24;*/
-    color: #F7EBE8;
+    color: #d2c7c4;
+
 
 }
 
@@ -133,8 +122,14 @@
     .single-photo .comments-container {
         margin-top: 15px;
     }
+
 }
 
+@media screen and (min-width: 767px) {
+    .single-photo-col {
+        padding-left: 15%;
+    }
+}
 .bounce-enter-active {
     animation: bounce-in .5s;
 }
@@ -165,3 +160,4 @@
     transform: scaleY(0) translateZ(0);
     opacity: 0;
 }
+

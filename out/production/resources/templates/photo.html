@@ -3,7 +3,7 @@
 <head th:include="fragments/header :: head('Photo')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-<div class="container-fluid" id="photoRoot">
+<div class="container" id="photoRoot">
 
     <img v-bind:src="photo.url" class="blurred-background"/>
 
@@ -13,7 +13,7 @@
 
     <!--<div class="hor-sep-30"></div>-->
     <div class="row">
-        <div class="col-md-5 offset-md-2 single-photo">
+        <div class="col-md-7 single-photo-col  single-photo">
             <div class="photo-container">
                 <div class="photo-header">
 
@@ -39,7 +39,7 @@
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount--"><i
                                 class="fas fa-star" style="color: #EEB902"></i> remove </span>
 
-                        <span class="float-right" style="color:#fff"><i class="far fa-star"></i> {{favoriteCount}}</span>
+                        <span class="float-right" style="color:#d2c7c4"><i class="far fa-star"></i> {{favoriteCount}}</span>
                     </p>
 
                 </div>
@@ -47,9 +47,9 @@
         </div>
 
 
-        <div class="col-md-5 single-photo">
+        <div class="col-md-5 single-photo" style="background-color: #1E1E24">
 
-            <div class="comments-container">
+            <div class="comments-container" >
                 <div class="comments-header">
                     <h5><b>Comments</b></h5>
                     <transition name="flip" mode="out-in">
@@ -69,11 +69,12 @@
                             <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
                                     class="btn btn-success">Send
                             </button>
-                            <span class="length-counter">{{charactersLeft}} characters left</span>
 
-                            <button class="btn btn-danger float-right"
+                            <button class="btn btn-danger "
                                     v-on:click="writingComment = !writingComment">Cancel
                             </button>
+                            <span class="length-counter">{{charactersLeft}}</span>
+
 
                         </div>
                     </transition>
@@ -86,11 +87,12 @@
                     <ul>
                         <li v-show="comments.length === 0">No comments yet . . .</li>
                         <li v-for="comment in comments">
+
+                            <a v-bind:href="'/profile/' + comment.user.username"  style="color: #F7EBE8"><b>@{{comment.user.username}}</b></a> at
+                            <span style="font-size: 0.8em; font-style: italic">{{comment.dateCreated}}</span> wrote:
+                            <br/>
                             <span style="color:red; cursor: pointer" v-on:click="deleteComment(comment.id)"
-                                  v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span>
-                            <a v-bind:href="'/profile/' + comment.user.username"><b>@{{comment.user.username}}</b></a>:
-                            {{comment.content}} <br/>
-                            <span style="font-size: 0.7em; font-style: italic">{{comment.dateCreated}}</span>
+                                  v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span> {{comment.content}} <br/>
                         </li>
                         <br/>
                     </ul>
@@ -127,10 +129,10 @@
         },
         computed: {
             commentIsOutOfRange: function () {
-                return this.charactersLeft == MAX_COMMENT_LENGTH || !(this.charactersLeft >= 0);
+                return this.commentContent.length === MAX_COMMENT_LENGTH || !(this.commentContent.length > 0);
             },
             charactersLeft: function () {
-                return MAX_COMMENT_LENGTH - this.commentContent.length;
+                return this.commentContent.length + "/" + MAX_COMMENT_LENGTH;
             },
         },
         methods: {
@@ -147,6 +149,7 @@
                         this.fetchCommentsToPhoto();
                         this.fetchFavoriteOfUsers();
                     }).catch(function (error) {
+                        window.location.replace("/photos")
                 }.bind(this))
             },
             fetchLoggedInUser() {

@@ -96,7 +96,7 @@
                     <div class="form-group">
                         <label for="uploadPhotoTitle">Title</label>
                         <span class="float-right"
-                              style="font-size: 0.85em">{{titleCharactersLeft}} characters left</span>
+                              style="font-size: 0.85em">{{titleCharactersLeft}}</span>
                         <input maxlength="75" placeholder="Not required" class="uploadPhotoFormElement"
                                v-model="uploadPhotoTitle"
                                id="uploadPhotoTitle" type="text"/>
@@ -104,7 +104,7 @@
                     <div class="form-group">
                         <label for="uploadPhotoDescription">Description</label>
                         <span class="float-right"
-                              style="font-size: 0.85em">{{descCharactersLeft}} characters left</span>
+                              style="font-size: 0.85em">{{descCharactersLeft}}</span>
                         <textarea maxlength="150" placeholder="Not required" class="uploadPhotoFormElement"
                                   v-model="uploadPhotoDescription"
                                   id="uploadPhotoDescription"
@@ -286,10 +286,10 @@
                 return this.descCharactersLeft() == MAX_DESC_LENGTH || !(this.descCharactersLeft() >= 0);
             },
             descCharactersLeft: function () {
-                return MAX_DESC_LENGTH - this.uploadPhotoDescription.length;
+                return this.uploadPhotoDescription.length + "/" + MAX_DESC_LENGTH;
             },
             titleCharactersLeft: function () {
-                return MAX_TITLE_LENGTH - this.uploadPhotoTitle.length;
+                return this.uploadPhotoTitle.length + "/" + MAX_TITLE_LENGTH;
             },
         },
         methods: {
