@@ -3,7 +3,6 @@ package com.rawlead.github.service.impl;
 import com.rawlead.github.entity.Role;
 import com.rawlead.github.repository.RoleRepository;
 import com.rawlead.github.service.RoleService;
-import com.rawlead.github.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -5,11 +5,9 @@ import com.rawlead.github.entity.PhotoCategory;
 import com.rawlead.github.repository.PhotoCategoryRepository;
 import com.rawlead.github.repository.PhotoRepository;
 import com.rawlead.github.service.PhotoCategoryService;
-import javafx.collections.transformation.SortedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

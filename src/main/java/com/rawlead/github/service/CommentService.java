@@ -3,7 +3,6 @@ package com.rawlead.github.service;
 import com.rawlead.github.entity.Comment;
 
 import java.util.List;
-import java.util.Set;
 
 public interface CommentService {
     List<Comment> listAllComments();

@@ -1,9 +1,7 @@
 package com.rawlead.github.service.impl;
 
-import com.rawlead.github.entity.Comment;
 import com.rawlead.github.entity.Photo;
 import com.rawlead.github.entity.User;
-import com.rawlead.github.repository.CommentRepository;
 import com.rawlead.github.repository.PhotoCategoryRepository;
 import com.rawlead.github.repository.PhotoRepository;
 import com.rawlead.github.repository.UserRepository;
@@ -15,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

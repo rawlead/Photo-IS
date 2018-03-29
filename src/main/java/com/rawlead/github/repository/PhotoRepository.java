@@ -1,7 +1,6 @@
 package com.rawlead.github.repository;
 
 import com.rawlead.github.entity.Photo;
-import com.rawlead.github.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

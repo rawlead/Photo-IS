@@ -170,7 +170,9 @@
                     .catch(function (error) {
                         console.log(error)
                     });
+    
             },
+    
             fetchIsPhotoFavorite(photo) {
                 this.isPhotoFavorite = this.favoritePhotos.some(e => e.id === photo.id);
             },
