@@ -152,7 +152,7 @@
 
 .favorite-users {
     border: none;
-    scrollbar-base-color: #1E1E24;
+    /* scrollbar-base-color: #1E1E24; */
 }
 
 .favorite-users a {
@@ -200,7 +200,9 @@
     .favorite-column > p {
         font-size: 0.75em;
     }
-
+    .favorites-photos-col {
+        padding: 0;
+    }
 
     .favorite-users > ul > li {
         height: 25px;

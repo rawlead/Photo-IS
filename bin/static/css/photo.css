@@ -15,20 +15,32 @@
     height: auto;
     background-color: #1E1E24;
     color: #d2c7c4;
+    position: relative;
+    
+}
+
+.photo-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
 }
 
 .single-photo {
     padding-right: 0;
     padding-left: 0;
-    margin-top: 20px;
 }
 .single-photo h5 {
     color: #F7EBE8;
 }
 
 .single-photo > .photo-container > .photo > a > img {
-    width: 100%;
-    max-height: 67vh;
+    width: 100%;;
+    max-height: 85vh;    
     cursor: zoom-in;
     object-fit: cover;
 }
@@ -36,6 +48,7 @@
 .single-photo > .photo-container > .photo > a {
     text-decoration: none;
     color: #1E1E24;
+    text-align: left;
 }
 
 .single-photo p {
@@ -63,16 +76,52 @@
 }
 
 /*COMMENTS*/
-.comments-container {
+#comments-container {
     color: #d2c7c4;
-    display: block;
-    background-color: #1E1E24;
-    padding: 15px;
+    padding-top: 15px;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+    position:absolute;
+    top: 0;
+    right: 0;
+    bottom: 49px;
+    width: 250px;
+}
 
+#show-comments-btn {
+    color:#EEB902; 
+    margin-top:2px;
+    border: #EEB902 1px solid;
+    position: absolute;
+    bottom:51px;
+    right: 0;
+    width: 250px;
+    background-color: #1E1E24;
 }
 
 .comments-header {
-    padding-bottom: 6px;
+    position: absolute;
+    bottom: 2px;
+    right: 0px;
+    width: inherit;
+    z-index: 30;
+    text-align: center;
+
+}
+
+.comments-header button {
+    width: 100%;
+    
+}
+
+
+
+.comment-input-section {
+    background-color: #1E1E24;
+    padding-bottom: 5px;
 }
 
 .comments-header textarea {
@@ -80,10 +129,9 @@
     width: 100%;
     outline: none;
     padding: 5px 10px;
-    border: 1px solid #1E1E24;
-    border-radius: 5px;
     font-size: 0.875em;
     background-color: #d2c7c4;
+    border-radius: 3px;
 }
 
 .comments-header .length-counter {
@@ -92,8 +140,16 @@
 
 .comments-body {
     overflow: scroll;
-    overflow-x: hidden;
-    max-height: 69vh;
+    position: absolute;
+    bottom: 78px;
+    top:0px;
+    right: 0;
+    border-bottom-left-radius: 5px;
+    width: inherit;
+    background-color: #1E1E24;
+    opacity: 0.8;
+    padding: 7px;
+    color: #e9e9e9;
 }
 
 .comments-body ul {
@@ -109,20 +165,45 @@
 
 .comments-body > ul > li > a {
     text-decoration: none;
-    color: #d2c7c4;
+    color: #EEB902;
 
 
 }
 
 .comments-body > ul > li > a:hover {
-    color: #EEB902;
+    color: #d2c7c4;
 }
 
 @media screen and (max-width: 767px) {
-    .single-photo .comments-container {
-        margin-top: 15px;
+    #comments-container {
+        width: 100%;
     }
+    #show-comments-btn {
+        width: 100%;
+    }
+    .single-photo p {
+        font-size: 0.7em;
+    }    
 
+    #comments-container {
+        position: relative;
+        display: block;
+    }
+    .comments-container {
+        padding-top: 0;
+        z-index: 1;
+        /* margin-top: 100px; */
+        
+    }
+    .comments-body {
+        height: 500px;
+        margin-top: 83px;
+       
+    }
+    .comments-header {
+        position: absolute;
+        top: 0px;
+    }
 }
 
 @media screen and (min-width: 767px) {
@@ -146,14 +227,15 @@
     }
 }
 
+
+
+
 .flip-enter-active {
     transition: all .2s cubic-bezier(0.55, 0.085, 0.68, 0.53);
-/ / ease-in-quad
 }
 
 .flip-leave-active {
     transition: all .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-/ / ease-out-quad
 }
 
 .flip-enter, .flip-leave-to {
@@ -161,3 +243,9 @@
     opacity: 0;
 }
 
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }

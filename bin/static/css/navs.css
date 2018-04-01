@@ -50,13 +50,14 @@
     width: 150px;
     float: left;
     border: none;
+    box-sizing: border-box;
     border-bottom: 2px solid transparent;
     font-size: 0.875em;
     padding: 3px 15px;
-    margin: 0px 15px;
-    height: 60px;
-    -webkit-transition: width 0.2s ease-in-out;
-    transition: width 0.2s ease-in-out;
+    margin: 5px 15px;
+    height: 50px;
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
     background-color: transparent;
     color: #F7EBE8;
 }
@@ -65,8 +66,12 @@
     width: 100%;
     color: #F7EBE8;
     outline: none;
-    border-bottom: 2px solid #EEB902;
+    padding: 0px 13px;
+    border: 2px solid #EEB902;
+    background-color: #26262d;
+    border-radius: 5px;
 }
+
 
 /*MOBILE MENU*/
 #top-nav .icon {
@@ -111,11 +116,11 @@
 /*SEARCH SEARCH SEARCH SEARCH SEARCH SEARCH */
 .dropdown-content {
     display: none;
-    top: 60px;
+    top: 55px;
     left: 207px;
     position: absolute;
-    opacity: 0.97;
-    padding-bottom: 20px    ;
+    opacity: 0.98;
+    padding-bottom: 5px    ;
     background:
     linear-gradient(115deg, #1E1E24 110px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #26262d 310px, rgba(0, 0, 0, 0) 0%),
@@ -129,7 +134,7 @@
 .dropdown-content a {
     color: #F7EBE8;
     font-size: 0.8em;
-    padding: 3px 20px;
+    padding: 3px 15px;
     text-decoration: none;
     display: block;
     position: relative;

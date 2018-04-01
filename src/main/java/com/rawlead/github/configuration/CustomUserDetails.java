@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.*;
 
 //basic implementation of userdetails interface
-//@Service
+@SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     private String username;

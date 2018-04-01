@@ -57,7 +57,7 @@
         </a>
 
         <form class="search-field">
-            <input onclick="toggleSearch()" v-model="search" type="text" name="search" id="search-input"/>
+            <input onclick="toggleSearch()" onblur="this.placeholder = ' search'" onfocus="this.placeholder = ' author or category name'" v-model="search" type="text" name="search" id="search-input"/>
 
             <div id="search-dropdown" style="z-index: 100" class="dropdown-content">
                 <a v-show="filteredUsers.length !== 0" style="color: #EEB902; text-align: center" href="/authors">
@@ -70,7 +70,6 @@
                         class="fas fa-angle-double-down"></i> FOUND CATEGORIES <i
                         class="fas fa-angle-double-down"></i></a>
                 <a href="#" v-on:click="openCategory(category.name)" v-for="category in filteredCategories">{{category.name}}</a>
-
             </div>
         </form>
     </div>

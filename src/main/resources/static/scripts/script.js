@@ -1,6 +1,4 @@
-$('#search-input').attr("placeholder", " search ");
-
-
+$('#search-input').attr("placeholder", " search");
 
 
 // highlight active left nav link
@@ -133,7 +131,7 @@ var vueLoggedUser = new Vue({
     },
 });
 
-/* When the user clicks on the button,
+/* When the user clicks on the input,
 toggle between hiding and showing the dropdown content */
 function toggleSearch() {
     document.getElementById("search-dropdown").classList.toggle("showSearch");
@@ -145,5 +143,4 @@ $(document).mouseup(function (e) {
     if (!container.is(e.target) && container.has(e.target).length === 0) ;
     container.removeClass('showSearch')
 });
-
 

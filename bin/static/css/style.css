@@ -49,6 +49,12 @@ a {
     color: #d2c7c4;
 }
 
+.btn-success:hover {
+    background-color: #2e9161;
+    border-color: #2e9161;
+}
+
+
 .btn-danger {
     background-color: #5E0B15;
     border-color: #5E0B15;
@@ -140,6 +146,13 @@ option {
 }
 
 /*      Photos grid     */
+@media screen and (max-width: 767px) {
+    .grid-col {
+        padding: 0;
+    }
+}
+
+
 .photos-container {
     margin-top: 10px;
     display: grid;
@@ -179,6 +192,7 @@ option {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
+    font-size: 0.7em;
 }
 
 .photo-grid-item:hover .grid-image {
@@ -200,13 +214,16 @@ option {
 .user-photo-modal {
     font-size: 0.9em;
 }
+.user-photo-modal > .modal-dialog > .modal-content > .modal-body {
+    padding: 0;
+}
 
-.user-photo-modal > .modal-dialog > .modal-content > h5 {
+.user-photo-modal > .modal-dialog > .modal-content > .modal-body > h5 {
     position: absolute;
     top: 5px;
 }
 
-.user-photo-modal > .modal-dialog > .modal-content > h5 > a > img {
+.user-photo-modal > .modal-dialog > .modal-content > .modal-body > h5 > a > img {
     width: 35px;
     height: 35px;
     object-fit: cover;
@@ -216,15 +233,32 @@ option {
 .modal-footer {
     justify-content: start;
     border: none;
-
+    padding: 0.5rem;
 }
 
+.modal-footer .close {
+    margin-right: 0.5rem;
+    font-size: 2.2em;
+}
 
-.user-photo-modal > .modal-dialog > .modal-content > a > img {
+.modal-date-label {
+    position: absolute;
+    /* font-size: 0.8em; */
+    right: 0.5rem;
+    bottom: 0.5rem;
+    color: #fff;
+    text-shadow:
+        0.07em 0 black,
+        0 0.07em black,
+        -0.07em 0 black,
+        0 -0.07em black;
+}
+
+.user-photo-modal > .modal-dialog > .modal-content > .modal-body > a > img {
     width: 100%;
     border-radius: 5px 5px 0 0;
     border: none;
-}
+}   
 
 *::-webkit-scrollbar {
     background-color: #1E1E24;
@@ -279,7 +313,6 @@ option {
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px transparent;
     position: relative;
-    /*background: #EEB902;*/
     -webkit-transition-property: color;
     transition-property: color;
     -webkit-transition-duration: 0.3s;

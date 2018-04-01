@@ -1,9 +1,12 @@
 package com.rawlead.github.service.impl;
 
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
+// import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
 import com.rawlead.github.service.AmazonClientService;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,27 +22,24 @@ import java.util.Date;
 @Service
 public class AmazonClientServiceImpl implements AmazonClientService {
     private AmazonS3 s3client;
-//
-//    @Value("${amazonProperties.endpointUrl}")
+
     @Value("${S3_ENDPOINT_URL}")
     private String endpointUrl;
 
-//    @Value("${amazonProperties.accessKey}")
     @Value("${S3_ACCESS_KEY}")
     private String accessKey;
 
-//    @Value("${amazonProperties.secretKey}")
     @Value("${S3_SECRET_KEY}")
     private String secretKey;
 
-//    @Value("${amazonProperties.bucketName}")
     @Value("${S3_BUCKET_NAME}")
     private String bucketName;
 
     @PostConstruct
     private void initAmazonS3() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey,this.secretKey);
-        this.s3client = new AmazonS3Client(credentials);
+        // this.s3client = new AmazonS3Client(credentials);)
+        this.s3client = AmazonS3ClientBuilder.standard().withRegion(Regions.EU_CENTRAL_1).withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
     }
 
     // AWS upload requires File parameter

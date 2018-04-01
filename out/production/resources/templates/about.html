@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head th:include="fragments/header :: head('About')"></head>
+<body>
+<header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+
+<div class="container-fluid parallax parallax-one" id="photoRoot">
+    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+    <div class="caption">
+        <div class="caption-content row">
+            <div class="col-md-10 offset-md-2">
+                <img src="/img/photo-is-logo.png" alt=""/>
+                <h1>PHOTO PORTAL</h1>
+                <div class="arrow bounce">
+                    <a class="fa fa-arrow-down fa-2x" href="#goto-content-one"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div id="parallax-content-one" class="row">
+        <div class="col-md-3 col-6 offset-md-2">
+            <span id="goto-content-one"> &nbsp; </span>
+            <h4>Welcome</h4>
+            <h5>To Our Photo Portal</h5>
+            <h6><span style="color: #297045">Share </span> and <span
+                    style="color: #EEB902;">Explore</span></h6>
+        </div>
+        <div class="col-md-5 col-6 parallax-content-btngroup">
+            <a href="/signup" class="btn-outline-success btn">Create Account</a>
+            <a href="/signin" class="btn-outline-warning btn">Log In</a>
+        </div>
+    </div>
+</div>
+
+<div class="parallax parallax-two"></div>
+
+
+<div id="parallax-content-two" class="container-fluid">
+    <div class=" row">
+        <div class="col-md-10 offset-md-2">
+            <h1>About Us</h1>
+            <img class="about-img" src="/img/sunset-cat.jpg" alt=""/>
+            <h5>We help photographers from all over the world to create and design beautiful products</h5>
+        </div>
+    </div>
+    <div class="row about-row">
+        <div class="col-md-2 offset-md-4 col-4">
+            <img class="about-img-content" src="/img/camera-lens.jpg" alt=""/>
+        </div>
+        <div class="col-md-4 col-8">
+            <h3>Used technologies - Front End:</h3>
+            <h6>HTML5, CSS3, Bootstrap4, JavaScript, VueJS, JQuery, Axios, Font Awesome, Progress Bar 4, Animate
+                CSS </h6>
+        </div>
+    </div>
+    <div class="row about-row">
+        <div class="col-md-4 offset-md-4 col-8" style="vertical-align: middle">
+            <h3>Used technologies - Back End:</h3>
+            <h6>Java, Spring, Spring MVC, Spring Security, Spring Data,
+                Hibernate, MySQL Database, Amazon Web Services, OAuth2</h6>
+        </div>
+        <div class="col-md-2 col-4 ">
+            <img class="about-img-content" src="/img/camera-lens-hand.jpg" alt=""/>
+        </div>
+    </div>
+
+    <div class="row about-row">
+        <div class="col-md-2 offset-md-4 col-4">
+            <img class="about-img-content" src="/img/ivan_shyrai.jpg" alt=""/>
+        </div>
+        <div class="col-md-4 col-8">
+            <h3>Author:</h3>
+            <h6>Ivan Shyrai</h6>
+            <h6>Społeczna Akademia Nauk</h6>
+            <h6>Warsaw 2018</h6>
+        </div>
+    </div>
+
+    <div class="row about-row" style="padding-bottom: 20px; border-top: solid 2px #EEB902; font-size: 0.8em; text-align: center">
+        <div class="col-md-10 offset-md-2">
+            <a  rel="stylesheet" href="https://github.com/rawlead/Photo-IS">Source code</a>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="fragments/footer :: scripts"></div>
+<script>
+    AOS.init();
+</script>
+</body>
+</html>
