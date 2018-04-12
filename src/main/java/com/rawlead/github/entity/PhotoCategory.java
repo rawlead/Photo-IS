@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "photo_categories")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class PhotoCategory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,6 +21,8 @@ public class PhotoCategory {
     @JsonIgnore
     @OneToMany(mappedBy = "photoCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
+    // ... 
+    //omijane konstruktorzy, getters i setters
 
     public PhotoCategory() {
     }

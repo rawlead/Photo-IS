@@ -3,15 +3,7 @@
     margin: 25px 0 15px 0;
     display: block;
     font-size: 0.875em;
-}
-
-.alert {
-    border: none;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    text-align: center;
-    border-radius: 10px;
-    opacity: 0.9;
-    color: #F7EBE8;
+    position: relative;
 }
 
 .alert-warning {
@@ -22,14 +14,17 @@
     background-color: #297045;
 }
 
-.signForm h1 {
+.signForm h2 {
     text-align: center;
-
 }
 
-.signForm label {
-    color: #1E1E24;
-    opacity: 0.8;
+.form-control-placeholder {
+    position: absolute;
+    top: 0;
+    padding: 10px 15px 0 15px;
+    transition: all 200ms;
+    color: #CDD3CE;
+    cursor: text;
 }
 
 .signForm a {
@@ -39,30 +34,68 @@
     display: block;
 }
 
-.input-group {
-    width: 49%;
+.signForm a:hover {
+    color: #26262d;
 }
+
 
 .data-input {
     margin-bottom: 5px;
     width: 100%;
     outline: none;
-    padding: 3px 20px;
+    padding: 3px 15px;
     border-radius: 3px;
     border: none;
     height: 40px;
     background-color: #1E1E24;
-    color: #F7EBE8;
+    color: #CDD3CE;
     display: block;
+
+
 }
 
 .signForm input:focus {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #26262d;
+    color: #fff;
 }
 
 .signForm button:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    color: #EEB902;
+    color: #fff;
+    background-color: #26262d;
+    font-size: 110%;
+}
+
+.signForm input:hover {
+    background-color: #26262d;
+}
+
+
+.form-control-placeholder:hover {
+    color: #fff;
+}
+
+.alert {
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    border-radius: 10px;
+    opacity: 0.9;
+    color: #CDD3CE;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-control:focus + .form-control-placeholder,
+.form-control:valid + .form-control-placeholder {
+    font-size: 85%;
+    transform: translate3d(0, -100%, 0);
+    opacity: 1;
+    color: #1E1E24;
+    font-weight: bold;
 }
 
 #signInRoot {

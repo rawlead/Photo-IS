@@ -1,5 +1,11 @@
 $('#search-input').attr("placeholder", " search");
 
+// Lazy load
+Vue.use(VueLazyload, {
+    preLoad: 1.3,
+    loading: '/img/placeholder-image.png',
+    attempt: 1
+});
 
 // highlight active left nav link
 $(function () {
@@ -30,7 +36,6 @@ function openCategory(categoryName) {
 function accessToken() {
     return "access_token=" + getCookie("access_token")
 }
-
 
 window.Event = new Vue({
     data: {isSignedIn: false}
@@ -133,10 +138,9 @@ var vueLoggedUser = new Vue({
 
 /* When the user clicks on the input,
 toggle between hiding and showing the dropdown content */
-function toggleSearch() {
-    document.getElementById("search-dropdown").classList.toggle("showSearch");
-}
-
+// function toggleSearch() {
+//     document.getElementById("search-dropdown").classList.toggle("showSearch");
+// }
 
 $(document).mouseup(function (e) {
     var container = $("#search-dropdown");

@@ -17,9 +17,11 @@
     color: #CDD3CE;
     position: relative;
     margin-top: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
-.photo-info {
+#photo-info {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -27,6 +29,7 @@
     0 0.07em black,
     -0.07em 0 black,
     0 -0.07em black;
+    color: #CDD3CE;
 }
 
 .single-photo {
@@ -35,7 +38,7 @@
 }
 
 .single-photo h5 {
-    color: #CDD3CE;
+    color: #fff;
 }
 
 .single-photo > .photo-container > .photo > a > img {
@@ -46,7 +49,6 @@
 }
 
 .single-photo > .photo-container > .photo > a {
-    text-decoration: none;
     color: #1E1E24;
     text-align: left;
 }
@@ -61,7 +63,6 @@
 }
 
 .photo-description a {
-    text-decoration: none;
     color: #CDD3CE;
 }
 
@@ -98,6 +99,8 @@
     right: 0;
     width: 250px;
     background-color: #1E1E24;
+    opacity: 0.95;
+    font-size: 0.85em;
 }
 
 .comments-header {
@@ -107,16 +110,20 @@
     width: inherit;
     z-index: 30;
     text-align: center;
+    opacity: 0.95;
+
 }
 
 .comments-header button {
     width: 100%;
-
+    font-size: 0.85em;
 }
 
 .comment-input-section {
+    border-top: 1px solid #EEB902;
+    border-bottom: 1px solid #EEB902;
+    border-radius: 5px;
     background-color: #1E1E24;
-    padding-bottom: 5px;
 }
 
 .comments-header textarea {
@@ -134,32 +141,36 @@
 }
 
 .comments-body {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     position: absolute;
-    bottom: 78px;
+    bottom: 58px;
     top: 10px;
     right: 0;
     border-bottom-left-radius: 5px;
     width: inherit;
-    background-color: #1E1E24;
     opacity: 0.8;
-    padding: 7px;
+    padding: 0 5px;
     color: #CDD3CE;
+    background-color: #26262d;
+
 }
 
 .comments-body ul {
     padding: 0;
     list-style: none;
-    margin-top: 10px;
+    margin: 0;
 }
 
 .comments-body > ul > li {
-    margin: 10px 0;
+    margin: 5px 0;
     font-size: 0.775em;
+    background-color: #1E1E24;
+    border-radius: 5px;
+    padding: 5px 0 5px 5px;
 }
 
 .comments-body > ul > li > a {
-    text-decoration: none;
     color: #EEB902;
 }
 
@@ -168,6 +179,9 @@
 }
 
 @media screen and (max-width: 767px) {
+    .photo-container {
+        margin-top: 0;
+    }
     #comments-container {
         width: 100%;
     }
@@ -192,7 +206,7 @@
 
     .comments-body {
         height: 500px;
-        margin-top: 83px;
+        margin-top: 66px;
 
     }
 
@@ -200,6 +214,7 @@
         position: absolute;
         top: 0px;
     }
+
 }
 
 @media screen and (min-width: 767px) {

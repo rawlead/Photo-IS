@@ -48,8 +48,8 @@
                 <button type="button" class="submit-btn" v-on:click="signup">SUBMIT</button>
 
             </div>
-            <div v-if="hasError" class="alert alert-warning" role="alert">{{statusMessage}}</div>
-            <div v-else-if="!hasError" class="alert alert-success" role="alert"><span v-html="statusMessage"></span>
+            <div v-if="hasError" class="alert alert-warning" role="alert" v-cloak="v-cloak">{{statusMessage}}</div>
+            <div v-else-if="!hasError" class="alert alert-success" role="alert" v-cloak="v-cloak"><span v-html="statusMessage"></span>
             </div>
         </div>
     </div>

@@ -8,28 +8,28 @@
     <img v-bind:src="photo.url" class="blurred-background"/>
 
 
-
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 
 
     <div class="row">
-        <div class="col-md-12 single-photo-col  single-photo">
+        <div class="col-md-12 single-photo-col single-photo">
             <div class="photo-container">
 
-                    <div class="photo-info">
+                <div id="photo-info" v-bind:style="{ width: commentsShown }" v-cloak="v-cloak">
 
                     <h3><b>{{photo.title}}</b></h3>
                     <h6>{{photo.description}}</h6>
-                    
+
                 </div>
                 <div class="photo">
                     <a v-bind:href="photo.url"><img v-bind:src="photo.url" alt=""/></a>
                 </div>
-                <div class="photo-description" v-if="photo.user">
+                <div class="photo-description" v-if="photo.user" v-cloak="v-cloak">
                     <p>
                         <a v-bind:href="'/profile/' + photo.user.username"><b>@{{photo.user.username}} </b></a>
                         | <a href="#"
-                             onclick="openCategory(photoVue.photo.photoCategory.name)">{{photo.photoCategory.name}}</a> |
+                             onclick="openCategory(photoVue.photo.photoCategory.name)">{{photo.photoCategory.name}}</a>
+                        |
                         <span onclick="addPhotoToFavoritesRequest(photoVue.loggedInUser, photoVue.photo, photoVue)"
                               class="favorite-add" v-if="!isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount++"> <i
@@ -38,14 +38,14 @@
                               class="favorite-remove" v-else-if="isPhotoFavorite"
                               v-on:click="isPhotoFavorite = !isPhotoFavorite; favoriteCount--"><i
                                 class="fas fa-star" style="color: #EEB902"></i> remove </span>
-                               
-                                <span style=" font-style: italic;"
-                                class="float-right"><i class="far fa-calendar-alt"></i> {{photo.dateCreated}}  </span>
-                                <span class="float-right" style="color:#d2c7c4; margin-right:12px; margin-left:12px"><i class="far fa-star"></i> {{favoriteCount}}</span>
-                    <span class="float-right"><i class="far fa-comment"></i> {{commentCounter}}</span>
-                                
-                      
-                       
+
+                        <span style=" font-style: italic;"
+                              class="float-right"><i class="far fa-calendar-alt"></i> {{photo.dateCreated}}  </span>
+                        <span class="float-right" style=" margin-right:12px; margin-left:12px"><i
+                                class="far fa-star"></i> {{favoriteCount}}</span>
+                        <span class="float-right"><i class="far fa-comment"></i> {{commentCounter}}</span>
+
+
                     </p>
 
                 </div>
@@ -53,67 +53,69 @@
 
             <!-- <transition name="fade"> -->
 
-                    <button v-show="!showComments" class="btn btn-outline-dark " onclick="#comments-container" id="show-comments-btn" 
-                    v-on:click="showComments = !showComments"><i class="fas fa-eye"></i> Show comments
-                    </button>
-                    <!-- </transition> -->
+            <button v-show="!showComments" class="btn btn-outline-dark " onclick="#comments-container"
+                    id="show-comments-btn"
+                    v-on:click="showComments = !showComments" v-cloak="v-cloak"><i class="fas fa-eye"></i> Show comments
+            </button>
+            <!-- </transition> -->
 
-                    <!-- <transition name="fade"> -->
-            <div id="comments-container" v-show="showComments">
-                
+            <!-- <transition name="fade"> -->
+            <div id="comments-container" v-show="showComments" v-cloak="v-cloak">
+
 
                 <div class="comments-body">
                     <ul>
                         <li v-show="comments.length === 0">No comments yet . . .</li>
                         <li v-for="comment in comments">
 
-                            <a v-bind:href="'/profile/' + comment.user.username"  style=""><b>@{{comment.user.username}}</b></a> at
-                            <span  style="font-size: 0.8em; font-style: italic">{{comment.dateCreated}}</span> wrote:
+                            <a v-bind:href="'/profile/' + comment.user.username"
+                               style=""><b>@{{comment.user.username}}</b></a> at
+                            <span style="font-size: 0.8em; font-style: italic">{{comment.dateCreated}}</span> wrote:
                             <br/>
                             <span style="color:red; cursor: pointer" v-on:click="deleteComment(comment.id)"
-                                  v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span> {{comment.content}} <br/>
+                                  v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span>
+                            {{comment.content}} <br/>
                         </li>
-                        <br/>
                     </ul>
                 </div>
                 <div class="comments-header">
-                        <!-- <h5><b>Comments</b></h5> -->
-                        <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
+                    <!-- <h5><b>Comments</b></h5> -->
+                    <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
                             v-html="statusMessage"></span></div>
-                        <!-- <transition name="fade"> -->
-                            <button v-show="!writingComment" onclick="return false" style="color:#EEB902;background-color: #1E1E24; margin-top:2px;border: #EEB902 1px solid;" class="btn btn-outline-dark comment-btn"
-                                    v-on:click="writingComment = !writingComment"><i class="fas fa-comment"></i> Leave a comment
-                            </button>
-                        <!-- </transition> -->
-                        <!-- <transition name="fade"> -->
-                                <button v-show="!writingComment" onclick="return false" style="color:#EEB902;background-color: #1E1E24; margin-top:2px; border: #EEB902 1px solid;" class="btn btn-outline-dark comment-btn"
-                                        v-on:click="showComments = !showComments"><i class="fas fa-eye-slash"></i> Hide comments
-                                </button>
-                            <!-- </transition> -->
-    
-           
+                    <!-- <transition name="fade"> -->
+                    <button v-show="!writingComment" onclick="return false"
+                            style="color:#EEB902;background-color: #1E1E24; margin-top:2px;border: #EEB902 1px solid;"
+                            class="btn btn-outline-dark comment-btn"
+                            v-on:click="writingComment = !writingComment"><i class="fas fa-comment"></i> Leave a comment
+                    </button>
+                    <!-- </transition> -->
+                    <!-- <transition name="fade"> -->
+                    <button v-show="!writingComment" onclick="return false"
+                            style="color:#EEB902;background-color: #1E1E24; margin-top:2px; border: #EEB902 1px solid;"
+                            class="btn btn-outline-dark comment-btn"
+                            v-on:click="showComments = !showComments"><i class="fas fa-eye-slash"></i> Hide comments
+                    </button>
+                    <!-- </transition> -->
 
-                          
-    
-                            <div v-show="writingComment" class="comment-input-section">
-                                    <span class="length-counter">{{charactersLeft}}</span>
-                                <textarea maxlength="150" v-model="commentContent" type="text" rows="3"
-                                          id="comment-textarea"></textarea>
-                                <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
-                                        class="btn btn-success"><i
-                                        class="fas fa-chevron-circle-up"></i> Send
-                                </button>
-    
-                                <button class="btn btn-danger "
-                                        v-on:click="writingComment = !writingComment" style="margin-top:5px;"><i
-                                        class="fas fa-times"></i> Cancel
-                                </button>
-                              
-                            </div>
 
-                     
-    
+                    <div v-show="writingComment" class="comment-input-section">
+                        <span class="length-counter">{{charactersLeft}}</span>
+                        <textarea maxlength="150" v-model="commentContent" type="text" rows="3"
+                                  id="comment-textarea"></textarea>
+                        <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
+                                class="btn btn-success"><i
+                                class="fas fa-chevron-circle-up"></i> Send
+                        </button>
+
+                        <button class="btn btn-danger "
+                                v-on:click="writingComment = !writingComment" style="margin-top:5px;"><i
+                                class="fas fa-times"></i> Cancel
+                        </button>
+
                     </div>
+
+
+                </div>
             </div>
             <!-- </transition> -->
         </div>
@@ -123,17 +125,6 @@
 <div th:replace="fragments/footer :: scripts"></div>
 <script>
     const MAX_COMMENT_LENGTH = 150;
-
-    // function showComments() {
-    //     document.getElementById("comments-container").style.display = "block";
-    //     document.getElementById("show-comments-btn").style.display = "none";
-    // }
-
-    // function hideComments() {
-    //     document.getElementById("comments-container").style.display = "none";
-    //     document.getElementById("show-comments-btn").style.display = "block";
-        
-    // }
 
     var photoVue = new Vue({
         el: '#photoRoot',
@@ -154,7 +145,6 @@
         },
         mounted() {
             this.fetchPhotoById();
-            // this.showComments = window.innerWidth > 767;
         },
         computed: {
             commentIsOutOfRange: function () {
@@ -163,6 +153,15 @@
             charactersLeft: function () {
                 return this.commentContent.length + "/" + MAX_COMMENT_LENGTH;
             },
+            commentsShown: function () {
+
+                if (!(window.innerHeight > 736))
+                    return "auto";
+                else if (this.showComments === true)
+                    return "50%";
+                return "auto";
+            }
+
         },
         methods: {
             getPhotoId() {
@@ -178,7 +177,7 @@
                         this.fetchCommentsToPhoto();
                         this.fetchFavoriteOfUsers();
                     }).catch(function (error) {
-                        window.location.replace("/photos")
+                    window.location.replace("/photos")
                 }.bind(this))
             },
             fetchLoggedInUser() {

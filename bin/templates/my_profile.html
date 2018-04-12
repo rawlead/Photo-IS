@@ -23,50 +23,51 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style=" border: none">
                 <div class="modal-body">
-                        
-                <h5 style="left: 5px;" v-if="modalPhoto.user">
-                    <a v-bind:href="'/profile/' + modalPhoto.user.username" class="badge badge-dark">
-                        <img src="" v-bind:src="modalPhoto.user.avatarUrl" alt=""/>
-                        @{{modalPhoto.user.username}}</a>
-                </h5>
-                <h5 style="right:5px;" v-if="modalPhoto.photoCategory">
-                    <a onclick="openCategory(profilePage.modalPhoto.photoCategory.name)" href="#" style="color: white; font-size:0.6em;"
-                       class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
-                        {{modalPhoto.photoCategory.name}}</a>
-                </h5>
-                <a v-bind:href="'/photo/' + modalPhoto.id">
-                    <img v-bind:src="modalPhoto.url" alt=""/>
-                </a>
-                <div class="modal-date-label"  v-if="modalPhoto.dateCreated">
+
+                    <h5 style="left: 5px;" v-if="modalPhoto.user">
+                        <a v-bind:href="'/profile/' + modalPhoto.user.username" class="badge badge-dark">
+                            <img src="" v-bind:src="modalPhoto.user.avatarUrl" alt=""/>
+                            @{{modalPhoto.user.username}}</a>
+                    </h5>
+                    <h5 style="right:5px;" v-if="modalPhoto.photoCategory">
+                        <a onclick="openCategory(profilePage.modalPhoto.photoCategory.name)" href="#"
+                           style="color: white; font-size:0.6em;"
+                           class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
+                            {{modalPhoto.photoCategory.name}}</a>
+                    </h5>
+                    <a v-bind:href="'/photo/' + modalPhoto.id">
+                        <img v-bind:src="modalPhoto.url" alt=""/>
+                    </a>
+                    <div class="modal-date-label" v-if="modalPhoto.dateCreated">
                         <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
-                </div>  
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="container-fluid" style="padding:0;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
-                            <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
+                                <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
-                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
-                                    class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
-                            <div class="btn-group" role="group">
-                                <button id="btnMoreGroup" type="button" class="btn btn-outline-dark dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-info-circle"></i> More
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnMoreGroup">
-                                    <a class="dropdown-item btn btn-outline-danger"
-                                       v-on:click="deletePhoto(modalPhoto);" onclick="return false"
-                                       href="#"><i class="fas fa-trash"></i> Delete</a>
+                                <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
+                                        class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
+                                <div class="btn-group" role="group">
+                                    <button id="btnMoreGroup" type="button" class="btn btn-outline-dark dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-info-circle"></i> More
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnMoreGroup">
+                                        <a class="dropdown-item btn btn-outline-danger"
+                                           v-on:click="deletePhoto(modalPhoto);" onclick="return false"
+                                           href="#"><i class="fas fa-trash"></i> Delete</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
@@ -76,11 +77,10 @@
     <div id="Uploads" class="profileTabContent row"><!-- UPLOADS -->
         <div class="col-md-6 col-xl-5 offset-md-2">
             <div v-if="updateData != 'photo'">
-                <h3>Welcome, {{user.firstName}}!</h3>
-                <p>On this page you can upload new photos (up to 20mb size)</p>
+                <h3>Welcome, @{{user.firstName}}!</h3>
+                <p>On this page you can upload photos (up to 20mb size)</p>
             </div>
             <div class="photoUploadContainer">
-
                 <img v-if="updateData === 'photo'" :src="uploadPhotoPreview" class="upload-photo-preview"/>
 
                 <input accept="image/*" :disabled="statusMessage !== ''" type="file" v-on:change="onFileChange"
@@ -89,48 +89,55 @@
                 <label for="photo_input_file" class="btn btn-outline-dark">
                     <span v-if="statusMessage" v-html="statusMessage">Uploading.. Please wait.. <i
                             class="fas fa-sync fa-spin"></i></span>
-                    <span v-else-if="!statusMessage"><i class="fas fa-camera"></i> CHOOSE PHOTO TO UPLOAD</span>
+                    <span v-else-if="!statusMessage"><i class="fas fa-camera"></i> Choose photo</span>
                 </label>
+                <h5 style="text-align: center" v-show="userPhotos.length === 0">
+                    Upload your first photo<br/> <i style="color: #fff;" class="fas fa-arrow-up"></i>
+                    by clicking the button above
+                    <i style="color: #fff" class="fas fa-arrow-up"></i></h5>
             </div>
         </div>
 
         <div class="col-md-4 col-xl-5">
             <transition name="slide-fade">
+                <div v-if="updateData === 'photo'">
+                    <h6 v-html="statusMessage" style="text-align: center"></h6>
+                    <div class="uploadPhotoForm">
+                        <div class="form-group">
+                            <label for="uploadPhotoTitle">Title</label>
+                            <span class="float-right"
+                                  style="font-size: 0.85em">{{titleCharactersLeft}}</span>
+                            <input maxlength="75" placeholder="Not required" class="uploadPhotoFormElement"
+                                   v-model="uploadPhotoTitle"
+                                   id="uploadPhotoTitle" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="uploadPhotoDescription">Description</label>
+                            <span class="float-right"
+                                  style="font-size: 0.85em">{{descCharactersLeft}}</span>
+                            <textarea maxlength="150" placeholder="Not required" class="uploadPhotoFormElement"
+                                      v-model="uploadPhotoDescription"
+                                      id="uploadPhotoDescription"
+                                      rows="3"></textarea>
+                        </div>
+                        <select v-model="uploadPhotoCategory" class="uploadPhotoFormElement" id="uploadPhotoCategory">
+                            <option disabled="disabled" value="">Select category (Required)</option>
+                            <option v-for="category in categories">{{category.name}}</option>
+                        </select>
 
-            <div v-if="updateData === 'photo'">
-                <h6 v-html="statusMessage" style="text-align: center"></h6>
-                <div class="uploadPhotoForm">
-                    <div class="form-group">
-                        <label for="uploadPhotoTitle">Title</label>
-                        <span class="float-right"
-                              style="font-size: 0.85em">{{titleCharactersLeft}}</span>
-                        <input maxlength="75" placeholder="Not required" class="uploadPhotoFormElement"
-                               v-model="uploadPhotoTitle"
-                               id="uploadPhotoTitle" type="text"/>
+                        <button v-on:click="uploadPhoto" class="btn btn-outline-success"><i
+                                class="fas fa-chevron-circle-up"></i> Upload
+                        </button>
+                        <button v-on:click="cancelPhotoUploading" class="btn btn-outline-danger"><i
+                                class="fas fa-times"></i>
+                            Cancel
+                        </button>
+                        <h6 style="margin: 10px 0 0 10px" v-show="userPhotos.length === 0">
+                            <i style="color: #2e9161; " class="fas fa-arrow-up"></i> When ready, click the
+                            <span style="color: #2e9161;
+                            border: 1px solid #2e9161; padding: 3px">Upload</span> button </h6>
                     </div>
-                    <div class="form-group">
-                        <label for="uploadPhotoDescription">Description</label>
-                        <span class="float-right"
-                              style="font-size: 0.85em">{{descCharactersLeft}}</span>
-                        <textarea maxlength="150" placeholder="Not required" class="uploadPhotoFormElement"
-                                  v-model="uploadPhotoDescription"
-                                  id="uploadPhotoDescription"
-                                  rows="3"></textarea>
-                    </div>
-                    <select v-model="uploadPhotoCategory" class="uploadPhotoFormElement" id="uploadPhotoCategory">
-                        <option disabled="disabled" value="">Select category (Required)</option>
-                        <option v-for="category in categories">{{category.name}}</option>
-                    </select>
-
-                    <button v-on:click="uploadPhoto" class="btn btn-outline-success"><i
-                            class="fas fa-chevron-circle-up"></i> Upload
-                    </button>
-                    <button v-on:click="cancelPhotoUploading" class="btn btn-outline-danger"><i
-                            class="fas fa-times"></i>
-                        Cancel
-                    </button>
                 </div>
-            </div>
             </transition>
         </div>
 
@@ -148,17 +155,24 @@
                     </div>
 
                 </div>
+
             </div>
+
         </div>
     </div>
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
 
     <div id="Favorites" class="profileTabContent row">
-        <div class="col-md-6 col-9 col-xl-8 offset-md-2 favorites-photos-col">                               <!--FAVORITES-->
+        <div class="col-md-6 col-9 col-xl-8 offset-md-2 favorites-photos-col">
+            <!--FAVORITES-->
             <div class="favorite-photos favorite-column">
                 <p><b><i class="fas fa-star"></i> PHOTOS</b></p>
+                <a v-show="favoritePhotos.length === 0" style="color: #fff; text-decoration: underline" href="/photos">
+                    Click here to discover photos</a>
                 <ul>
+
                     <li v-for="photo in favoritePhotos">
+
                         <a v-bind:href="'/photo/' + photo.id">
                             <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
                         </a>
@@ -169,6 +183,8 @@
         <div class="col-md-4 col-3 col-xl-2">
             <div class="favorite-users favorite-column">
                 <p><b><i class="fas fa-star"></i> AUTHORS</b></p>
+                <a v-show="favoriteUsers.length === 0" style="color: #fff; text-decoration: underline" href="/authors">
+                    Click here to discover authors</a>
                 <ul>
                     <li v-for="user in favoriteUsers">
                         <a v-bind:href="'/profile/' + user.username">
@@ -182,7 +198,7 @@
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     <div id="Settings" class="profileTabContent row">                                           <!--   SETTING  -->
         <div class="col-md-5 col-xl-4 offset-md-2 col 6">
-            <h3>Welcome, {{user.firstName}}!</h3>
+            <h3>Welcome, @{{user.firstName}}!</h3>
             <p>On this page you can:</p>
             <ol>
                 <li>Change your profile picture.</li>
@@ -190,9 +206,9 @@
                 <li>Change your password</li>
             </ol>
 
-            
+
             <p>Date of registration: {{user.registrationDate}}</p>
-            <p>Email: {{user.email}}</p>            
+            <p>Email: {{user.email}}</p>
             <h5><a class="badge badge-dark" v-on:click="updateData = 'email'" href="#">Change
                 email</a>
                 <a v-on:click="updateData = 'password'" class="badge badge-dark" href="#">Change password</a></h5>
@@ -285,7 +301,7 @@
 
             uploadPhotoTitle: '',
             uploadPhotoDescription: '',
-            uploadPhotoCategory: '',
+            uploadPhotoCategory: ''
         },
         mounted() {
             $('.alert').hide();
@@ -434,26 +450,39 @@
                         Content: "Please select a category",
                         CloseTimer: 1700
                     });
-
                     return;
                 }
 
-                var formData = new FormData();
-                formData.append("photo", uploadingFile);
-                formData.append("title", this.uploadPhotoTitle);
-                formData.append("description", this.uploadPhotoDescription);
-                formData.append("category", this.uploadPhotoCategory);
+                var data = new FormData();
+                data.append("photo", uploadingFile);
+                data.append("title", this.uploadPhotoTitle);
+                data.append("description", this.uploadPhotoDescription);
+                data.append("category", this.uploadPhotoCategory);
 
                 this.statusMessage = 'Uploading.. Please wait.. ' + '<i class="fas fa-sync fa-spin"></i>';
                 this.updateData = '';
 
                 this.cleanFileInput("#photo_input_file");
+// postPhotoRequest(this.user.id, formData)
 
-                postPhotoRequest(this.user.id, formData)
+                // const config = {
+                //     onUploadProgress: function(progressEvent) {
+                //         this.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
+                //         console.log(this.percentCompleted)
+                //     }
+                // }
+
+                // axios({
+                //     method: 'post',
+                //     url: '/api/users/' + this.user.id + '/photos?' + accessToken(),
+                //     data: formData,
+                //     config : config
+                // })
+                // axios.post('/api/users/' + this.user.id + '/photos?' + accessToken(), data, config)
+                postPhotoRequest(this.user.id, data)
                     .then((response) => {
                         this.uploadPhotoTitle = '';
                         this.uploadPhotoDescription = '';
-
                         this.statusMessage = "";
                         this.hasError = false;
                         this.updateData = '';

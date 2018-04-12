@@ -14,16 +14,27 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Set;
 
+// Kontroler zwracający obiekty w
+// tle odpowidzi
 @RestController
 public class PhotoController {
     private PhotoService photoService;
-    private UserService userService;
+    // Wszystkie HTTP zapytania z metodą GET 
+    // oraz śczieżką /api/users/{userId}/photos
+    // będą przekierowane kontrolerem do danej metody
+    @GetMapping(value = "/api/users/{userId}/photos")
+    public List<Photo> getPhotosByUser(@PathVariable Long userId) {
+        return photoService.findByUser(userId);
+    }
+    // ...
+
 
     @Autowired
     public PhotoController(PhotoService photoService, UserService userService ) {
         this.photoService = photoService;
         this.userService = userService;
     }
+    private UserService userService;
 
     private boolean isNotLoggedInUserMakesRequest(Long userId) {
         return !userId.equals(getLoggedUser().getId());
@@ -48,10 +59,7 @@ public class PhotoController {
         return photoService.listFavoriteOfUsers(photoId);
     }
 
-    @GetMapping(value = "/api/users/{userId}/photos")
-    public List<Photo> getPhotosByUser(@PathVariable Long userId) {
-        return photoService.findByUser(userId);
-    }
+    
 
     @PostMapping(value = "/api/users/{userId}/photos")
     public ResponseEntity<?> addPhoto(@RequestPart MultipartFile photo,

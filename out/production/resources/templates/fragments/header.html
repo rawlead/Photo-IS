@@ -46,20 +46,20 @@
         <a href="javascript:void(0);" class="icon" onclick="openMobileMenu()">&#9776;</a>
 
         <div class="main-logo  float-left">
-            <a href="/photos"><img src="/img/photo-is-logo.png" alt=""/></a>
+            <a href="/photos"><img src="/img/photo-is-logo.png" alt="" v-cloak="v-cloak"/></a>
         </div>
 
-        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin">Sign in</a>
-        <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right">Sign out</a>
+        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin" v-cloak="v-cloak">Sign in</a>
+        <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right" v-cloak="v-cloak">Sign out</a>
 
         <a v-show="isSignedIn()" href="/profile" id="top-nav-avatar" class="float-right ">
-            <img v-bind:src="user.avatarUrl" alt="Avatar"/>
+            <img v-bind:src="user.avatarUrl" alt="Avatar" v-cloak="v-cloak"/>
         </a>
 
         <form class="search-field">
             <input onclick="toggleSearch()" onblur="this.placeholder = ' search'" onfocus="this.placeholder = ' author or category name'" v-model="search" type="text" name="search" id="search-input"/>
 
-            <div id="search-dropdown" style="z-index: 100" class="dropdown-content">
+            <div id="search-dropdown" style="z-index: 100" class="dropdown-content" v-cloak="v-cloak">
                 <a v-show="filteredUsers.length !== 0" style="color: #EEB902; text-align: center" href="/authors">
                     <i class="fas fa-angle-double-down"></i> FOUND AUTHORS <i class="fas fa-angle-double-down"></i></a>
 

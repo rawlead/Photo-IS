@@ -87,7 +87,7 @@
     </div>
 
     <!--USER UPLOADED PHOTOS GRID -->
-    <div class="col-md-10 offset-md-2">
+    <div class="col-md-10 offset-md-2 grid-col">
         <div class="photos-container row">
             <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
                 <img v-bind:src="photo.url"

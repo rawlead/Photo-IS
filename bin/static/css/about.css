@@ -31,11 +31,10 @@
     linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
     font-size: 1em;
-    color: #F7EBE8;
+    color: #CDD3CE;
 }
 
 #parallax-content-two {
-    /*padding-top: 30px;*/
     border-top: solid 2px #EEB902;
     background-color: #1E1E24;
 }
@@ -46,7 +45,7 @@
 }
 
 #parallax-content-two div {
-    color: #ebedee;
+    color: #CDD3CE;
 }
 
 #parallax-content-two h1 {
@@ -95,7 +94,7 @@
 
 #parallax-content-two a {
     text-align: right;
-    color: #F7EBE8;
+    color: #CDD3CE;
 }
 
 #parallax-content-two a:hover {
@@ -103,7 +102,7 @@
 }
 
 .parallax .caption {
-    color: #ebedee;
+    color: #CDD3CE;
     text-align: center;
 }
 
@@ -137,7 +136,7 @@
 }
 
 .arrow a {
-    color: #F7EBE8;
+    color: #CDD3CE;
     text-decoration: none;
 }
 

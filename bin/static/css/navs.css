@@ -28,15 +28,15 @@
 
 #top-nav .top-nav-link {
     display: block;
-    color: #F7EBE8;
+    color: #CDD3CE;
     text-decoration: none;
     font-size: 0.875em;
     padding: 19px 10px;
 }
 
 .main-logo img {
-    margin: 5px;
-    height: 50px;
+    /*margin: 5px;*/
+    height: 60px;
 }
 
 #top-nav .search-field {
@@ -52,33 +52,43 @@
     border: none;
     box-sizing: border-box;
     border-bottom: 2px solid transparent;
-    font-size: 0.875em;
+    font-size: 0.82em;
     padding: 3px 15px;
     margin: 5px 15px;
     height: 50px;
     -webkit-transition: width 0.5s ease-in-out;
     transition: width 0.5s ease-in-out;
     background-color: transparent;
-    color: #F7EBE8;
+    color: #CDD3CE;
 }
 
 #top-nav input:focus {
     width: 100%;
-    color: #F7EBE8;
+    color: #fff;
     outline: none;
     padding: 0px 13px;
     border: 2px solid #EEB902;
     background-color: #26262d;
     border-radius: 5px;
+    font-size: 85%;
 }
 
+#top-nav input:hover {
+    font-size: 85%;
+}
+
+
+#top-nav a:hover {
+    cursor: pointer;
+    color: #EEB902;
+}
 
 /*MOBILE MENU*/
 #top-nav .icon {
     font-size: 1.7em;
     padding: 10px 15px;
     display: none;
-    color: #F7EBE8;
+    color: #CDD3CE;
 }
 
 @media screen and (max-width: 767px) {
@@ -117,7 +127,7 @@
 .dropdown-content {
     display: none;
     top: 55px;
-    left: 207px;
+    left: 235px;
     position: absolute;
     opacity: 0.98;
     padding-bottom: 5px    ;
@@ -132,7 +142,7 @@
 }
 
 .dropdown-content a {
-    color: #F7EBE8;
+    color: #CDD3CE;
     font-size: 0.8em;
     padding: 3px 15px;
     text-decoration: none;
@@ -170,11 +180,13 @@
 
 #left-nav li {
     cursor: pointer;
+    /*-webkit-transform: rotate(-45deg);*/
+    /*transform: rotate(-45deg);*/
 }
 
 #left-nav li a {
     display: inline-block;
-    color: #d2c7c4;
+    color: #CDD3CE;
     font-weight: bold;
     padding: 8px 16px;
     text-decoration: none;
@@ -184,6 +196,8 @@
 
 #left-nav li a.active {
     color: #EEB902;
+    -webkit-transform: skew(-10deg);
+    transform: skew(-10deg);
 }
 
 #left-nav li a:hover {

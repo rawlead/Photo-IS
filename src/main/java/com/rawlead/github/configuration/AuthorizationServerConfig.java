@@ -21,12 +21,10 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;
-//    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthorizationServerConfig(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-//        this.passwordEncoder = passwordEncoder;
     }
 
     /**

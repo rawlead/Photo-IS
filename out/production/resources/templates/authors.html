@@ -6,14 +6,14 @@
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
 <div class="container-fluid" id="authorsRoot">
     <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-    <br/>
+    <!--<br/>-->
     <div class="row">
-        <div class="col-md-10 offset-md-2">
-            <div class="authors-container">
+        <div class="col-md-10 offset-md-2 grid-col">
+            <div class="authors-container ">
                 <div v-for="author in users" class="grid-item hvr-glow">
                     <a :href="getLink(author)">
-                        <img v-bind:src="author.avatarUrl" alt=""/>
-                        <p>@{{author.username}}<br/>
+                        <img v-lazy="author.avatarUrl" width="140" height="180" alt=""/>
+                        <p v-cloak="v-cloak">@{{author.username}}<br/>
                             {{author.firstName}}</p>
                     </a>
 

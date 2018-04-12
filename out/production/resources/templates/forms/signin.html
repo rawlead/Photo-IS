@@ -23,7 +23,7 @@
                 </div>
                 <button class="submit-btn" type="button"  v-on:click="signin">Submit</button>
             </form>
-            <div v-show="statusMessage" class="alert alert-warning" role="alert">{{statusMessage}}</div>
+            <div v-show="statusMessage" class="alert alert-warning" role="alert" v-cloak="v-cloak">{{statusMessage}}</div>
             </div>
         </div>
     </div>

@@ -72,8 +72,9 @@
             </div>
 
             <div class="col-md-10 offset-md-2 grid-col">
-                <span class="open-categories-btn" onclick="openCategoriesNav()"><i class="fas fa-bars"></i> Select category</span>
-                <span v-show="category" >| Category - <b>{{category.name}}</b> - {{photos.length}} photos</span>
+                <span class=" open-categories-btn" onclick="openCategoriesNav()"><i class="fas fa-bars"></i> Select category
+                    <span v-show="category" >| <b>{{category.name}}</b> | {{photos.length}} photos</span></span>
+
                 <div class="photos-container row">
                     <div v-for="photo in photos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
                         <img v-bind:src="photo.url"

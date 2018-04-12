@@ -77,8 +77,8 @@
     <div id="Uploads" class="profileTabContent row"><!-- UPLOADS -->
         <div class="col-md-6 col-xl-5 offset-md-2">
             <div v-if="updateData != 'photo'">
-                <h3>Welcome, @{{user.firstName}}!</h3>
-                <p>On this page you can upload photos (up to 20mb size)</p>
+                <h3>Welcome, {{user.firstName}}!</h3>
+                <p>On this page you can upload photos (up to ~5mb size)</p>
             </div>
             <div class="photoUploadContainer">
                 <img v-if="updateData === 'photo'" :src="uploadPhotoPreview" class="upload-photo-preview"/>
@@ -91,7 +91,7 @@
                             class="fas fa-sync fa-spin"></i></span>
                     <span v-else-if="!statusMessage"><i class="fas fa-camera"></i> Choose photo</span>
                 </label>
-                <h5 style="text-align: center" v-show="userPhotos.length === 0">
+                <h5 style="text-align: center" v-show="userPhotos.length === 0" >
                     Upload your first photo<br/> <i style="color: #fff;" class="fas fa-arrow-up"></i>
                     by clicking the button above
                     <i style="color: #fff" class="fas fa-arrow-up"></i></h5>
@@ -147,8 +147,10 @@
             <div class="photos-container">
 
                 <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                    <img v-bind:src="photo.url"
+                    <img v-lazy="photo.url"
                          class="grid-image openImageDialog"
+                         width="200"
+                         height="200"
                          alt=""/>
                     <div class="middle">
                         <h5><b>{{photo.title}}</b></h5>
@@ -174,7 +176,7 @@
                     <li v-for="photo in favoritePhotos">
 
                         <a v-bind:href="'/photo/' + photo.id">
-                            <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
+                            <img style="cursor: pointer" v-lazy="photo.url" alt=""/>
                         </a>
                     </li>
                 </ul>
@@ -198,7 +200,7 @@
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     <div id="Settings" class="profileTabContent row">                                           <!--   SETTING  -->
         <div class="col-md-5 col-xl-4 offset-md-2 col 6">
-            <h3>Welcome, @{{user.firstName}}!</h3>
+            <h3>Welcome, {{user.firstName}}!</h3>
             <p>On this page you can:</p>
             <ol>
                 <li>Change your profile picture.</li>
@@ -346,7 +348,6 @@
             },
             createImage(file) {
                 var reader = new FileReader();
-
                 if (currentProfileTab === 'Settings') {
                     reader.onload = (e) => {
                         this.updateData = 'avatar';
@@ -454,7 +455,6 @@
                 }
 
                 var data = new FormData();
-                data.append("photo", uploadingFile);
                 data.append("title", this.uploadPhotoTitle);
                 data.append("description", this.uploadPhotoDescription);
                 data.append("category", this.uploadPhotoCategory);
@@ -463,42 +463,32 @@
                 this.updateData = '';
 
                 this.cleanFileInput("#photo_input_file");
-// postPhotoRequest(this.user.id, formData)
 
-                // const config = {
-                //     onUploadProgress: function(progressEvent) {
-                //         this.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
-                //         console.log(this.percentCompleted)
-                //     }
-                // }
+                new ImageCompressor(uploadingFile, {
+                    quality: .6,
+                    success(result) {
+                        data.append("photo", result, result.name);
+                        postPhotoRequest(profilePage.user.id, data)
+                            .then((response) => {
+                                profilePage.uploadPhotoTitle = '';
+                                profilePage.uploadPhotoDescription = '';
+                                profilePage.statusMessage = "";
+                                profilePage.hasError = false;
 
-                // axios({
-                //     method: 'post',
-                //     url: '/api/users/' + this.user.id + '/photos?' + accessToken(),
-                //     data: formData,
-                //     config : config
-                // })
-                // axios.post('/api/users/' + this.user.id + '/photos?' + accessToken(), data, config)
-                postPhotoRequest(this.user.id, data)
-                    .then((response) => {
-                        this.uploadPhotoTitle = '';
-                        this.uploadPhotoDescription = '';
-                        this.statusMessage = "";
-                        this.hasError = false;
-                        this.updateData = '';
-                        this.fetchUserPhotos();
+                                profilePage.fetchUserPhotos();
 
-                        MsgPop.closeAll();
-                        MsgPop.open({
-                            Type: "message",
-                            Content: response.data,
-                            CloseTimer: 1700
-                        });
-                    }).catch(function (error) {
-
-
-                    this.hasError = true;
-                }.bind(this));
+                                MsgPop.closeAll();
+                                MsgPop.open({
+                                    Type: "message",
+                                    Content: response.data,
+                                    CloseTimer: 1700
+                                });
+                            }).catch(function (error) {
+                            profilePage.hasError = true;
+                        }.bind(profilePage));
+                    }
+                })
+                this.updateData = '';
             },
             isUploadingFileTypeOfImage(file) {
                 return file.name.match(/.(jpg|jpeg|png|gif)$/i);
@@ -509,19 +499,14 @@
                 }.bind(this));
             },
             openModalPhoto(photo) {
-                this.modalPhoto = '';
                 this.modalPhoto = photo;
                 this.fetchCommentsToPhoto(photo);
-                console.log(photo);
                 $('.user-photo-modal').modal('show')
-            },
-            getCategoryName() {
-                return this.modalPhoto.photoCategory.name;
             },
             deletePhoto(photo) {
                 deletePhotoRequest(this.user, photo).then((res) => {
                     this.fetchUserPhotos();
-                    this.fetchFavoritePhotos()
+                    this.fetchFavoritePhotos();
                     $('.user-photo-modal').modal('hide');
                     MsgPop.closeAll();
                     MsgPop.open({

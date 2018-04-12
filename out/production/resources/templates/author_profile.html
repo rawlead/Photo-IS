@@ -11,17 +11,17 @@
             <div class="author-profile-avatar animated rotateIn">
                 <img v-bind:src="user.avatarUrl" alt=""/>
             </div>
-            <div class="author-profile-description">
-                <h1><b>{{user.firstName}}</b></h1>
-                <h1><b>{{user.lastName}}</b></h1>
-                <h1>@{{user.username}}</h1>
-                <div v-show="user.id !== loggedInUser.id">
+            <div class="author-profile-description" >
+                <h1 v-cloak="v-cloak"><b>{{user.firstName}}</b></h1>
+                <h1 v-cloak="v-cloak"><b>{{user.lastName}}</b></h1>
+                <h1 v-cloak="v-cloak">@{{user.username}}</h1>
+                <div v-cloak="v-cloak" v-show="user.id !== loggedInUser.id">
                     <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
                             onclick="addUserToFavoritesRequest(author.loggedInUser, author.user)"
                             class="btn submit-btn hvr-rectangle-in"><i
                             class="fas fa-star"></i> Add to favorites
                     </button>
-                    <button v-else-if="isUserFavorite" v-on:click="isUserFavorite = !isUserFavorite"
+                    <button v-cloak="v-cloak" v-else-if="isUserFavorite" v-on:click="isUserFavorite = !isUserFavorite"
                             onclick="removeUserFromFavoritesRequest(author.loggedInUser, author.user)"
                             class="btn submit-btn hvr-rectangle-in">
                         <i class="far fa-star"></i> Remove from favorites
@@ -30,8 +30,8 @@
             </div>
         </div>
         <div class="col-md-2">
-            <h6><b>Photos: {{userPhotos.length}}</b></h6>
-            <p style="font-size: 0.75em">{{user.registrationDate}}</p>
+            <h6 v-cloak="v-cloak"><b>Photos: {{userPhotos.length}}</b></h6>
+            <p v-cloak="v-cloak" style="font-size: 0.75em">{{user.registrationDate}}</p>
         </div>
     </div>
 
@@ -87,10 +87,12 @@
     </div>
 
     <!--USER UPLOADED PHOTOS GRID -->
-    <div class="col-md-10 offset-md-2">
+    <div class="col-md-10 offset-md-2 grid-col">
         <div class="photos-container row">
             <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                <img v-bind:src="photo.url"
+                <img v-lazy="photo.url"
+                     width="200"
+                     height="200"
                      class="grid-image openImageDialog"
                      alt=""/>
                 <div class="middle">

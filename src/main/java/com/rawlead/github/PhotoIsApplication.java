@@ -77,7 +77,6 @@ public class PhotoIsApplication {
      * @return UserDetailsService
      */
     private UserDetailsService userDetailsService(final UserRepository userRepository) {
-
         return username -> new CustomUserDetails(userRepository.findByUsername(username));
     }
 }

@@ -14,8 +14,8 @@
     padding: 0 20px 0 8px;
     text-decoration: none;
     font-size: 0.85em;
-    color: #F7EBE8;
-    margin: 0;
+    color: #CDD3CE;
+    margin: 7px 0;
     cursor: pointer;
     display: block;
     text-align: right;
@@ -45,7 +45,8 @@
 }
 
 .open-categories-btn:hover {
-    color: #EEB902;
+    /*color: #EEB902;*/
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 767px) {

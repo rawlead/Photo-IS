@@ -125,9 +125,8 @@
 
 /*SEARCH SEARCH SEARCH SEARCH SEARCH SEARCH */
 .dropdown-content {
-    display: none;
     top: 55px;
-    left: 207px;
+    left: 235px;
     position: absolute;
     opacity: 0.98;
     padding-bottom: 5px    ;
@@ -141,6 +140,7 @@
     border-bottom-left-radius: 5px;
 }
 
+
 .dropdown-content a {
     color: #CDD3CE;
     font-size: 0.8em;
@@ -152,7 +152,8 @@
 }
 
 .showSearch {
-    display: block;
+    /*display: block;*/
+    /*visibility: visible;*/
 }
 
 /*LEFT SIDE VERTICAL NAVIGATION BAR*/

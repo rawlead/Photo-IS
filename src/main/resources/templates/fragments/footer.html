@@ -11,57 +11,74 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"
             type="text/javascript"></script>
 
-    <!--Popper bootstrap-->
+
+    <!--&lt;!&ndash;Lazy Load Images&ndash;&gt;-->
+    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js"-->
+            <!--th:src="@{http://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.0.0/jquery.lazyloadxt.min.js}"-->
+            <!--type="text/javascript">-->
+    <!--</script>-->
+
+    <!--Lazy Load Images-->
+    <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"
+            th:src="@{https://unpkg.com/vue-lazyload/vue-lazyload.js}"
+            type="text/javascript">
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}"
-            type="text/javascript">
+    th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}"
+    type="text/javascript">
+    <!--Popper bootstrap-->
     </script>
 
-    <!--Bootstrap-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}"
-            type="text/javascript">
+    th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}"
+    type="text/javascript">
+    <!--Bootstrap-->
     </script>
 
-    <!--Axios-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"
-            th:src="@{https://unpkg.com/axios/dist/axios.min.js}"
-            type="text/javascript">
+    th:src="@{https://unpkg.com/axios/dist/axios.min.js}"
+    type="text/javascript">
+    <!--Axios-->
     </script>
 
-    <!--Animate On Scroll AOS-->
     <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"
-            th:src="@{https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js}">
+    th:src="@{https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js}">
+    <!--Animate On Scroll AOS-->
     </script>
 
+    <script src="/static/scripts/image-compressor.min.js"
+    th:src="@{/scripts/image-compressor.min.js}"
+    type="text/javascript">
+    <!--Image Compressor-->
+    </script>
 
-
-    <!--Progress bar-->
     <script src="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js"
-            th:src="@{https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js}"
-            type="text/javascript">
+    th:src="@{https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js}"
+    type="text/javascript">
+    <!--Progress bar-->
     </script>
 
-    <!--VueJS-->
     <script src="https://vuejs.org/js/vue.js"
-            th:src="@{https://vuejs.org/js/vue.js}"
-            type="text/javascript">
+    th:src="@{https://vuejs.org/js/vue.js}"
+    type="text/javascript">
+    <!--VueJS-->
     </script>
 
     <script src="/static/scripts/http_requests.js"
-            th:src="@{/scripts/http_requests.js}"
-            type="text/javascript">
+    th:src="@{/scripts/http_requests.js}"
+    type="text/javascript">
     </script>
 
     <script src="/static/scripts/script.js"
-            th:src="@{/scripts/script.js}"
-            type="text/javascript">
+    th:src="@{/scripts/script.js}"
+    type="text/javascript">
     </script>
 
-    <!--Message Pop-->
     <script src="/static/scripts/msgPop.js"
-            th:src="@{/scripts/msgPop.js}"
-            type="text/javascript">
+    th:src="@{/scripts/msgPop.js}"
+    type="text/javascript">
+    <!--Message Pop-->
     </script>
 
 
