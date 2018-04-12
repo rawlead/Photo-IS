@@ -47,18 +47,11 @@ function getPhotoRequest(id) {
 }
 
 function postPhotoRequest(id, formData) {
-
-
-            return axios({
-                method: 'post',
-                url: '/api/users/' + id + '/photos?' + accessToken(),
-                data: formData,
-            })
-
-
-
-
-
+    return axios({
+        method: 'post',
+        url: '/api/users/' + id + '/photos?' + accessToken(),
+        data: formData,
+    })
 }
 
 function postCommentRequest(photoId, content) {

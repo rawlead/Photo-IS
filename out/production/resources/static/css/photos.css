@@ -1,3 +1,8 @@
+
+#photosRoot {
+    padding-top: 95px;
+}
+
 .categories {
     height: 100%;
     width: 0;
@@ -40,17 +45,28 @@
     position: sticky;
 }
 
-.open-categories-btn {
+#select-category-btn {
+    font-size: 0.9em;
     cursor: pointer;
+    width: 100%;
+    padding: 7px 7px 7px 16%;
+    background-color: #1E1E24;
+    color: #CDD3CE;
+    z-index: 5;
+    position: fixed;
+    top: 60px;
+    transition: top 0.3s;
 }
 
-.open-categories-btn:hover {
-    /*color: #EEB902;*/
+#select-category-btn:hover {
     text-decoration: underline;
 }
 
 @media screen and (max-width: 767px) {
     .categories {
         left: 0;
+    }
+    #select-category-btn {
+        padding-left: 15px;
     }
 }

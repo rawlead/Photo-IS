@@ -41,7 +41,6 @@
 
 .about-row {
     padding: 25px;
-    /*border-top: 2px solid #EEB902;*/
 }
 
 #parallax-content-two div {
@@ -187,20 +186,20 @@
         font-size: 1.4em;
         top: 25px;
     }
+
     #parallax-content-two h5 {
         font-size: 0.9em;
         top: 80px;
     }
+
     #parallax-content-two h6 {
         font-size: 0.6em;
     }
+
     #parallax-content-two h3 {
         font-size: 0.7em;
     }
-
-
-
-    }
+}
 
 
 

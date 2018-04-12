@@ -3,10 +3,8 @@
 <head th:include="fragments/header :: head('Photos')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-<div class="container-fluid" id="photosRoot">
-
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-
+<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+<div id="photosRoot">
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
          aria-labelledby="user-photo-modal" aria-hidden="true">
@@ -33,7 +31,6 @@
                     <div class="modal-date-label" v-if="modalPhoto.dateCreated">
                         <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <div class="container-fluid" style="padding:0;">
@@ -59,44 +56,50 @@
             </div>
         </div>
     </div>
+    <!--END OF MODAL-->
 
-
-    <div class="container-fluid photos-container">
-        <div class="row">
-            <div id="categories-nav" class="categories">
-                <div class="close-categories-btn"><p href="javascript:void(0)" onclick="closeCategoriesNav()"><i
-                        class="fas fa-times"></i></p>
-                    <p style="font-size: 0.6em; text-decoration: underline" v-on:click="fetchAllPhotos" href="#">All
-                        categories</p>
-                </div>
-                <p v-for="category in categories" v-on:click="fetchPhotosByCategory(category)"
-                   :class="{ active:activeCategory(category) }" href="#">{{category.name}}</p>
-            </div>
-
-            <div class="col-md-10 offset-md-2 grid-col">
-                <span class=" open-categories-btn" onclick="openCategoriesNav()" v-cloak="v-cloak"><i class="fas fa-bars"></i> Select category
-                    <span v-show="category">| <b>{{category.name}}</b> | {{photos.length}} photos</span></span>
-
-                <div class="photos-container row">
-                    <div v-for="photo in photos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                        <img
-                                v-lazy="photo.url"
-                                class="grid-image openImageDialog"
-
-                                alt=""
-                        />
-                        <div class="middle">
-                            <h5><b>{{photo.title}}</b></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div id="categories-nav" class="categories">
+        <div class="close-categories-btn"><p href="javascript:void(0)" onclick="closeCategoriesNav()"><i
+                class="fas fa-times"></i></p>
+            <p style="font-size: 0.6em; text-decoration: underline" v-on:click="fetchAllPhotos" href="#">All
+                categories</p>
         </div>
+        <p v-for="category in categories" v-on:click="fetchPhotosByCategory(category)"
+           :class="{ active:activeCategory(category) }" href="#">{{category.name}}</p>
+    </div>
+
+    <div id="select-category-btn" onclick="openCategoriesNav()" v-cloak="v-cloak"><i
+            class="fas fa-bars"></i> Select a category
+        <span v-show="category">| <b>{{category.name}}</b> | {{photos.length}} photos</span>
+    </div>
+
+    <!--PHOTO GRID-->
+    <div class="photos-container">
+        <!--Masonry library-->
+        <masonry :cols="{default: 4, 1000: 3, 767: 2, 400: 1}"
+                 :gutter="6">
+            <div class="photo-grid-item hvr-glow" v-for="photo in photos" v-on:click="openModalPhoto(photo)">
+                <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
+                <div class="middle">
+                    <h5><b>{{photo.title}}</b></h5>
+                </div>
+            </div>
+        </masonry>
     </div>
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
 <script th:inline="javascript">
-    // $(".photo-grid-item").lazyLoadXT();
+    // Hide category select menu on scroll down
+    var prevScrollpos = window.pageYOffset;
+    window.onscroll = function () {
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos)
+            document.getElementById("select-category-btn").style.top = "60px";
+        else
+            document.getElementById("select-category-btn").style.top = "-60px";
+        prevScrollpos = currentScrollPos;
+    };
+
 
     function openCategoriesNav() {
         document.getElementById("categories-nav").style.width = "185px";

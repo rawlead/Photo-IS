@@ -4,36 +4,8 @@
 <head th:include="fragments/header :: head('Profile')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-<div class="container-fluid" id="profileRoot">
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-    <div class="row author-header">
-        <div class="col-md-7 offset-md-3">
-            <div class="author-profile-avatar animated rotateIn">
-                <img v-bind:src="user.avatarUrl" alt=""/>
-            </div>
-            <div class="author-profile-description" >
-                <h1 v-cloak="v-cloak"><b>{{user.firstName}}</b></h1>
-                <h1 v-cloak="v-cloak"><b>{{user.lastName}}</b></h1>
-                <h1 v-cloak="v-cloak">@{{user.username}}</h1>
-                <div v-cloak="v-cloak" v-show="user.id !== loggedInUser.id">
-                    <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
-                            onclick="addUserToFavoritesRequest(author.loggedInUser, author.user)"
-                            class="btn submit-btn hvr-rectangle-in"><i
-                            class="fas fa-star"></i> Add to favorites
-                    </button>
-                    <button v-cloak="v-cloak" v-else-if="isUserFavorite" v-on:click="isUserFavorite = !isUserFavorite"
-                            onclick="removeUserFromFavoritesRequest(author.loggedInUser, author.user)"
-                            class="btn submit-btn hvr-rectangle-in">
-                        <i class="far fa-star"></i> Remove from favorites
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <h6 v-cloak="v-cloak"><b>Photos: {{userPhotos.length}}</b></h6>
-            <p v-cloak="v-cloak" style="font-size: 0.75em">{{user.registrationDate}}</p>
-        </div>
-    </div>
+<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
+<div id="profileRoot">
 
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
@@ -41,65 +13,97 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style=" border: none">
                 <div class="modal-body">
-                <h5 style="left: 5px;" v-if="modalPhoto.user">
-                    <a v-bind:href="'/profile/' + modalPhoto.user.username" class="badge badge-dark">
-                        <img src="" v-bind:src="modalPhoto.user.avatarUrl" alt=""/>
-                        @{{modalPhoto.user.username}}</a>
-                </h5>
+                    <h5 style="left: 5px;" v-if="modalPhoto.user">
+                        <a v-bind:href="'/profile/' + modalPhoto.user.username" class="badge badge-dark">
+                            <img src="" v-bind:src="modalPhoto.user.avatarUrl" alt=""/>
+                            @{{modalPhoto.user.username}}</a>
+                    </h5>
 
-                <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
-                    <a onclick="openCategory(author.modalPhoto.photoCategory.name)" href="#" style="color: white;"
-                       class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
-                        {{modalPhoto.photoCategory.name}}</a>
-                </h5>
-                <a v-bind:href="'/photo/' + modalPhoto.id">
+                    <h5 style="right: 5px;" v-if="modalPhoto.photoCategory">
+                        <a onclick="openCategory(author.modalPhoto.photoCategory.name)" href="#" style="color: white;"
+                           class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
+                            {{modalPhoto.photoCategory.name}}</a>
+                    </h5>
+                    <a v-bind:href="'/photo/' + modalPhoto.id">
 
-                    <img v-bind:src="modalPhoto.url" alt=""/>
-                </a>
-                    <div class="modal-date-label"  v-if="modalPhoto.dateCreated">
-                            <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
-                    </div>   
-               
-            </div>
+                        <img v-bind:src="modalPhoto.url" alt=""/>
+                    </a>
+                    <div class="modal-date-label" v-if="modalPhoto.dateCreated">
+                        <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
+                    </div>
+
+                </div>
                 <div class="modal-footer">
-                        <div class="container-fluid" style="padding:0;">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
-                            <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
-                            <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
-                                    class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
-                            <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto, author); return false"
-                               class="btn btn-outline-dark" href="#"><i class="fas fa-star"></i> Add</a>
-                            <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
-                               onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto, author); return false"
-                               class="btn btn-outline-dark" href="#"><i class="far fa-star"></i> Remove</a>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="container-fluid" style="padding:0;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
+                                <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
+                                <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
+                                        class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
+                                <a v-if="!isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
+                                   onclick="addPhotoToFavoritesRequest(author.loggedInUser, author.modalPhoto, author); return false"
+                                   class="btn btn-outline-dark" href="#"><i class="fas fa-star"></i> Add</a>
+                                <a v-else-if="isPhotoFavorite" v-on:click="isPhotoFavorite = !isPhotoFavorite;"
+                                   onclick="removePhotoFromFavoritesRequest(author.loggedInUser, author.modalPhoto, author); return false"
+                                   class="btn btn-outline-dark" href="#"><i class="far fa-star"></i> Remove</a>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                            </button>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--END OF MODAL-->
 
-    <!--USER UPLOADED PHOTOS GRID -->
-    <div class="col-md-10 offset-md-2 grid-col">
-        <div class="photos-container row">
-            <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                <img v-lazy="photo.url"
-                     width="200"
-                     height="200"
-                     class="grid-image openImageDialog"
-                     alt=""/>
+    <div class="container-fluid">
+        <div class="row author-header">
+            <div class="col-md-7 offset-md-3">
+                <div class="author-profile-avatar animated rotateIn">
+                    <img v-bind:src="user.avatarUrl" alt=""/>
+                </div>
+                <div class="author-profile-description">
+                    <h1 v-cloak="v-cloak"><b>{{user.firstName}}</b></h1>
+                    <h1 v-cloak="v-cloak"><b>{{user.lastName}}</b></h1>
+                    <h1 v-cloak="v-cloak">@{{user.username}}</h1>
+                    <div v-cloak="v-cloak" v-show="user.id !== loggedInUser.id">
+                        <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
+                                onclick="addUserToFavoritesRequest(author.loggedInUser, author.user)"
+                                class="btn submit-btn hvr-rectangle-in"><i
+                                class="fas fa-star"></i> Add to favorites
+                        </button>
+                        <button v-cloak="v-cloak" v-else-if="isUserFavorite"
+                                v-on:click="isUserFavorite = !isUserFavorite"
+                                onclick="removeUserFromFavoritesRequest(author.loggedInUser, author.user)"
+                                class="btn submit-btn hvr-rectangle-in">
+                            <i class="far fa-star"></i> Remove from favorites
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <h6 v-cloak="v-cloak"><b>Photos: {{userPhotos.length}}</b></h6>
+                <p v-cloak="v-cloak" style="font-size: 0.75em">{{user.registrationDate}}</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!--PHOTO GRID-->
+    <div class="photos-container">
+        <!--Masonry library-->
+        <masonry :cols="{default: 4, 1000: 3, 767: 2, 400: 1}"
+                 :gutter="6">
+            <div class="photo-grid-item hvr-glow" v-for="photo in userPhotos" v-on:click="openModalPhoto(photo)">
+                <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
                 <div class="middle">
                     <h5><b>{{photo.title}}</b></h5>
                 </div>
             </div>
-        </div>
+        </masonry>
     </div>
 </div>
 <div th:replace="fragments/footer :: scripts"></div>
@@ -178,9 +182,9 @@
                     .catch(function (error) {
                         console.log(error)
                     });
-    
+
             },
-    
+
             fetchIsPhotoFavorite(photo) {
                 this.isPhotoFavorite = this.favoritePhotos.some(e => e.id === photo.id);
             },

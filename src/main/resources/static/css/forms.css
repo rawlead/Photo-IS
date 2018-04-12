@@ -38,7 +38,6 @@
     color: #26262d;
 }
 
-
 .data-input {
     margin-bottom: 5px;
     width: 100%;
@@ -50,8 +49,6 @@
     background-color: #1E1E24;
     color: #CDD3CE;
     display: block;
-
-
 }
 
 .signForm input:focus {
@@ -70,7 +67,6 @@
 .signForm input:hover {
     background-color: #26262d;
 }
-
 
 .form-control-placeholder:hover {
     color: #fff;

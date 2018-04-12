@@ -4,10 +4,8 @@
 <head th:include="fragments/header :: head('My Profile')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-
+<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 <div class="container-fluid" id="myProfileRoot">
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-
     <div class="profile-tab">
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Uploads')"><i class="fas fa-images"></i> UPLOADS
         </button>
@@ -16,7 +14,6 @@
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Settings')"><i class="fas fa-cog"></i> SETTINGS
         </button>
     </div>
-
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
          aria-labelledby="user-photo-modal" aria-hidden="true">
@@ -72,6 +69,8 @@
             </div>
         </div>
     </div>
+    <!--End of MODAL-->
+
     <!-- Tabs  -->
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
     <div id="Uploads" class="profileTabContent row"><!-- UPLOADS -->
@@ -91,7 +90,7 @@
                             class="fas fa-sync fa-spin"></i></span>
                     <span v-else-if="!statusMessage"><i class="fas fa-camera"></i> Choose photo</span>
                 </label>
-                <h5 style="text-align: center" v-show="userPhotos.length === 0" >
+                <h5 style="text-align: center" v-show="userPhotos.length === 0">
                     Upload your first photo<br/> <i style="color: #fff;" class="fas fa-arrow-up"></i>
                     by clicking the button above
                     <i style="color: #fff" class="fas fa-arrow-up"></i></h5>
@@ -101,7 +100,6 @@
         <div class="col-md-4 col-xl-5">
             <transition name="slide-fade">
                 <div v-if="updateData === 'photo'">
-                    <h6 v-html="statusMessage" style="text-align: center"></h6>
                     <div class="uploadPhotoForm">
                         <div class="form-group">
                             <label for="uploadPhotoTitle">Title</label>
@@ -142,24 +140,17 @@
         </div>
 
         <!--USER UPLOADED PHOTOS GRID -->
-        <div class="col-md-10 offset-md-2 grid-col">
-
-            <div class="photos-container">
-
-                <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                    <img v-lazy="photo.url"
-                         class="grid-image openImageDialog"
-                         width="200"
-                         height="200"
-                         alt=""/>
+        <div class="photos-container">
+            <!--Masonry library-->
+            <masonry :cols="{default: 4, 1000: 3, 767: 2, 400: 1}"
+                     :gutter="6">
+                <div class="photo-grid-item hvr-glow" v-for="photo in userPhotos" v-on:click="openModalPhoto(photo)">
+                    <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
                     <div class="middle">
                         <h5><b>{{photo.title}}</b></h5>
                     </div>
-
                 </div>
-
-            </div>
-
+            </masonry>
         </div>
     </div>
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
@@ -172,9 +163,7 @@
                 <a v-show="favoritePhotos.length === 0" style="color: #fff; text-decoration: underline" href="/photos">
                     Click here to discover photos</a>
                 <ul>
-
                     <li v-for="photo in favoritePhotos">
-
                         <a v-bind:href="'/photo/' + photo.id">
                             <img style="cursor: pointer" v-lazy="photo.url" alt=""/>
                         </a>
@@ -207,7 +196,6 @@
                 <li>Change your email</li>
                 <li>Change your password</li>
             </ol>
-
 
             <p>Date of registration: {{user.registrationDate}}</p>
             <p>Email: {{user.email}}</p>
@@ -464,10 +452,12 @@
 
                 this.cleanFileInput("#photo_input_file");
 
+                // Compressing photo before uploading
                 new ImageCompressor(uploadingFile, {
                     quality: .6,
                     success(result) {
                         data.append("photo", result, result.name);
+                        // Uploading photo
                         postPhotoRequest(profilePage.user.id, data)
                             .then((response) => {
                                 profilePage.uploadPhotoTitle = '';
@@ -487,7 +477,7 @@
                             profilePage.hasError = true;
                         }.bind(profilePage));
                     }
-                })
+                });
                 this.updateData = '';
             },
             isUploadingFileTypeOfImage(file) {
@@ -542,7 +532,6 @@
                         this.commentCounter = response.data.length;
                     }.bind(this))
             }
-
         }
     })
 </script>

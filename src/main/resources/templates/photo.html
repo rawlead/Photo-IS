@@ -3,23 +3,17 @@
 <head th:include="fragments/header :: head('Photo')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 <div class="container" id="photoRoot">
-
+    <!--blurred background black and white image-->
     <img v-bind:src="photo.url" class="blurred-background"/>
-
-
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-
-
     <div class="row">
         <div class="col-md-12 single-photo-col single-photo">
             <div class="photo-container">
 
                 <div id="photo-info" v-bind:style="{ width: commentsShown }" v-cloak="v-cloak">
-
                     <h3><b>{{photo.title}}</b></h3>
                     <h6>{{photo.description}}</h6>
-
                 </div>
                 <div class="photo">
                     <a v-bind:href="photo.url"><img v-bind:src="photo.url" alt=""/></a>
@@ -47,27 +41,19 @@
 
 
                     </p>
-
                 </div>
             </div>
-
-            <!-- <transition name="fade"> -->
 
             <button v-show="!showComments" class="btn btn-outline-dark " onclick="#comments-container"
                     id="show-comments-btn"
                     v-on:click="showComments = !showComments" v-cloak="v-cloak"><i class="fas fa-eye"></i> Show comments
             </button>
-            <!-- </transition> -->
 
-            <!-- <transition name="fade"> -->
             <div id="comments-container" v-show="showComments" v-cloak="v-cloak">
-
-
                 <div class="comments-body">
                     <ul>
                         <li v-show="comments.length === 0">No comments yet . . .</li>
                         <li v-for="comment in comments">
-
                             <a v-bind:href="'/profile/' + comment.user.username"
                                style=""><b>@{{comment.user.username}}</b></a> at
                             <span style="font-size: 0.8em; font-style: italic">{{comment.dateCreated}}</span> wrote:
@@ -79,24 +65,18 @@
                     </ul>
                 </div>
                 <div class="comments-header">
-                    <!-- <h5><b>Comments</b></h5> -->
                     <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
                             v-html="statusMessage"></span></div>
-                    <!-- <transition name="fade"> -->
                     <button v-show="!writingComment" onclick="return false"
                             style="color:#EEB902;background-color: #1E1E24; margin-top:2px;border: #EEB902 1px solid;"
                             class="btn btn-outline-dark comment-btn"
                             v-on:click="writingComment = !writingComment"><i class="fas fa-comment"></i> Leave a comment
                     </button>
-                    <!-- </transition> -->
-                    <!-- <transition name="fade"> -->
                     <button v-show="!writingComment" onclick="return false"
                             style="color:#EEB902;background-color: #1E1E24; margin-top:2px; border: #EEB902 1px solid;"
                             class="btn btn-outline-dark comment-btn"
                             v-on:click="showComments = !showComments"><i class="fas fa-eye-slash"></i> Hide comments
                     </button>
-                    <!-- </transition> -->
-
 
                     <div v-show="writingComment" class="comment-input-section">
                         <span class="length-counter">{{charactersLeft}}</span>
@@ -111,13 +91,9 @@
                                 v-on:click="writingComment = !writingComment" style="margin-top:5px;"><i
                                 class="fas fa-times"></i> Cancel
                         </button>
-
                     </div>
-
-
                 </div>
             </div>
-            <!-- </transition> -->
         </div>
 
     </div>
@@ -141,7 +117,6 @@
             favoriteOfUsers: [],
             favoriteCount: 0,
             showComments: true
-
         },
         mounted() {
             this.fetchPhotoById();
@@ -154,14 +129,12 @@
                 return this.commentContent.length + "/" + MAX_COMMENT_LENGTH;
             },
             commentsShown: function () {
-
                 if (!(window.innerHeight > 736))
                     return "auto";
                 else if (this.showComments === true)
                     return "50%";
                 return "auto";
             }
-
         },
         methods: {
             getPhotoId() {

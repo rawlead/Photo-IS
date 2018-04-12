@@ -67,12 +67,11 @@
     .photoUploadContainer {
         max-width: 100%;
     }
-
     .uploadPhotoForm {
         max-width: 100%;
+        margin-bottom: 10px;
     }
 }
-
 
 .upload-photo-preview {
     width: 100%;
@@ -93,9 +92,6 @@
     border: 1px solid #1E1E24;
     border-radius: 5px;
 }
-
-
-
 
 #uploadPhotoCategory {
     margin-bottom: 20px;
@@ -143,11 +139,11 @@
     grid-template-rows: repeat(auto-fit, 150px);
     grid-gap: 3px;
 }
+
 .favorite-photos ul li {
     overflow: hidden;
 
 }
-
 
 .favorite-photos > ul > li > a > img {
     width: 100%;
@@ -161,9 +157,9 @@
 
     transform: scale(1.05);
 }
+
 .favorite-users {
     border: none;
-    /* scrollbar-base-color: #1E1E24; */
 }
 
 .favorite-users a {
@@ -200,7 +196,7 @@
     .favorite-photos ul {
         grid-template-columns: 1fr 1fr 1fr;
     }
-    
+
     .favorite-users img {
         display: inline-block;
     }
@@ -211,6 +207,7 @@
     .favorite-column > p {
         font-size: 0.75em;
     }
+
     .favorites-photos-col {
         padding: 0;
     }
@@ -219,6 +216,7 @@
         height: 25px;
         font-size: 0.75em;
     }
+
     .favorite-users::-webkit-scrollbar {
         display: none;
     }
@@ -226,6 +224,7 @@
     .favorite-users::-webkit-scrollbar-thumb {
         display: none;
     }
+
     .favorite-photos::-webkit-scrollbar {
         display: none;
     }
@@ -250,20 +249,19 @@
 #Settings p {
     font-size: 0.85em;
 }
+
 #Settings li {
     font-size: 0.85em;
-
 }
 
-#Settings  h5 {
+#Settings h5 {
     font-size: 1.2em;
 }
-#Settings  h5 a {
+
+#Settings h5 a {
     margin-top: 10px;
     padding: 10px;
 }
-
-
 
 .profile-settings-form {
     padding: 10px;
@@ -339,14 +337,10 @@
     }
 }
 
-@media screen and (min-width: 1200px) {
-}
-
 @media screen and (max-width: 767px) {
     .profile-tab {
         width: 100%;
     }
-
     .btn-success {
         width: 100%;
     }
@@ -355,16 +349,13 @@
         margin-top: 5px;
         width: 100%;
     }
+
     .profileTabBtn {
         padding: 8px 5px;
         font-size: 0.9em;
-        /*font-size: 0.5em;*/
     }
 
 }
-
-
-
 
 /* COMMON STYLES */
 .slide-fade-enter-active {
@@ -379,8 +370,6 @@
     transform: translateX(10px);
     opacity: 0;
 }
-
-
 
 .uploadPhotoFormElement::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #1E1E24;
