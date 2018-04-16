@@ -42,28 +42,29 @@
         <a href="javascript:void(0);" class="icon" onclick="openMobileMenu()">&#9776;</a>
 
         <!--Main logo-->
-        <div class="main-logo  float-left">
-            <a href="/photos"><img src="/img/photo-is-logo.png" alt="" v-cloak="v-cloak"/></a>
+        <div class="main-logo  float-left hvr-glow" v-cloak="v-cloak">
+            <a href="/photos"><img src="/img/photo-is-logo.png" alt=""/></a>
         </div>
 
         <!--Sign in & Sign out buttons-->
-        <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin" v-cloak="v-cloak">Sign in</a>
-        <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right" v-cloak="v-cloak">Sign out</a>
-
+        <div v-cloak="v-cloak">
+            <a v-show="!isSignedIn()" class="float-right top-nav-link" href="/signin">Sign in</a>
+            <a v-show="isSignedIn()" v-on:click="signout" class="top-nav-link float-right">Sign out</a>
+        </div>
         <!--User avatar-->
-        <a v-show="isSignedIn()" href="/profile" id="top-nav-avatar" class="float-right ">
-            <img v-bind:src="user.avatarUrl" alt="Avatar" v-cloak="v-cloak"/>
+        <a v-show="isSignedIn()" href="/profile" id="top-nav-avatar" class="float-right " v-cloak="v-cloak">
+            <img v-bind:src="user.avatarUrl" class="hvr-grow" alt="Avatar"/>
         </a>
 
         <!--Search input field-->
-        <form class="search-field">
+        <form class="search-field" v-cloak="v-cloak">
             <input onclick="toggleSearch()" onblur="this.placeholder = ' search'"
                    onfocus="this.placeholder = ' author or category name'"
                    v-model="search" type="text" name="search" id="search-input"/>
 
             <!--Dropdown with search results-->
-            <div id="search-dropdown" style="z-index: 100" class="dropdown-content" v-cloak="v-cloak">
-                <a v-show="filteredUsers.length !== 0" style="color: #EEB902; text-align: center" href="/authors">
+            <div id="search-dropdown" style="z-index: 100" class="dropdown-content">
+                <a v-show="filteredUsers.length !== 0" style="text-align: center" href="/authors">
                     <i class="fas fa-angle-double-down"></i> FOUND AUTHORS
                     <i class="fas fa-angle-double-down"></i></a>
 
@@ -71,7 +72,7 @@
                 <a v-bind:href="'/profile/' + user.username" v-for="user in filteredUsers">@{{user.username}}
                     <span style=""><span style="color: #EEB902"> | </span>{{user.firstName}}</span></a>
                 <!--Found categories section-->
-                <a v-show="filteredCategories.length !== 0" style=" color: #EEB902; text-align: center"
+                <a v-show="filteredCategories.length !== 0" style="text-align: center"
                    href="/photos"><i
                         class="fas fa-angle-double-down"></i> FOUND CATEGORIES <i
                         class="fas fa-angle-double-down"></i></a>

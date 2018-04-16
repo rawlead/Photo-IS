@@ -28,15 +28,15 @@
 
 /* Change background color of buttons on hover */
 .profile-tab .profileTabBtn:hover {
-    color: #EEB902;
+    color: #fff;
 }
 
 /* Create an active/current tablink class */
 .profile-tab .profileTabBtn.active {
-    border-bottom: 2px solid #EEB902;
+    border-bottom: 4px solid #EEB902;
     height: 37px;
     outline: none;
-    color: #EEB902;
+    color: #fff;
 }
 
 /* Style the tab content */
@@ -59,6 +59,10 @@
     max-width: 600px;
 }
 
+.uploadPhotoForm button:hover  {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .uploadPhotoForm {
     max-width: 500px;
 }
@@ -78,11 +82,21 @@
     height: auto;
     border-radius: 4px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
+
+.upload-photo-preview:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
 .photoUploadContainer label {
     width: 100%;
 }
+.photoUploadContainer label:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
 .uploadPhotoFormElement {
     resize: none;
@@ -92,6 +106,15 @@
     border: 1px solid #1E1E24;
     border-radius: 5px;
 }
+
+.uploadPhotoFormElement:focus {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.uploadPhotoFormElement:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 
 #uploadPhotoCategory {
     margin-bottom: 20px;
@@ -117,15 +140,22 @@
 }
 
 .favorite-column > p {
-    text-align: center;
     position: -webkit-sticky;
     position: sticky;
     font-size: 0.85em;
     top: 0;
-    color: #EEB902;
+    color: #CDD3CE;
     padding: 5px;
-    border-radius: 2px;
+    text-shadow: 0.03em 0 black,
+    0 0.03em black,
+    -0.03em 0 black,
+    0 -0.03em black;
 }
+
+.favorite-column > p:hover  i {
+    color: #EEB902;
+}
+
 
 .favorite-column ul {
     list-style: none;
@@ -142,7 +172,6 @@
 
 .favorite-photos ul li {
     overflow: hidden;
-
 }
 
 .favorite-photos > ul > li > a > img {
@@ -165,10 +194,11 @@
 .favorite-users a {
     text-decoration: none;
     color: #CDD3CE;
+    font-size: 0.9em;
 }
 
 .favorite-users a:hover {
-    color: #EEB902;
+    color: #fff;
 }
 
 .favorite-users img {
@@ -180,11 +210,15 @@
 }
 
 .favorite-users > ul > li {
-    height: 50px;
+    height: 30px;
     border-radius: 2px;
     margin: 5px 0;
     color: #CDD3CE;
 }
+.favorite-users > ul > li:hover {
+    background-color: #26262d;
+}
+
 
 @media screen and (min-width: 767px) {
     .favorite-photos ul {
@@ -214,7 +248,8 @@
 
     .favorite-users > ul > li {
         height: 25px;
-        font-size: 0.75em;
+        padding-left: 5px;
+        font-size: 0.9em;
     }
 
     .favorite-users::-webkit-scrollbar {
@@ -292,7 +327,7 @@
 
 .avatar-middle-overlay {
     transition: .5s ease;
-    opacity: 0;
+    opacity: 0.25;
     position: absolute;
     top: 50%;
     left: 50%;

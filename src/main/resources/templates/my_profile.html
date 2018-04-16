@@ -156,7 +156,7 @@
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
 
     <div id="Favorites" class="profileTabContent row">
-        <div class="col-md-6 col-9 col-xl-8 offset-md-2 favorites-photos-col">
+        <div class="col-md-6 col-9 col-xl-8 offset-md-2 favorites-photos-col" style="padding-left: 0">
             <!--FAVORITES-->
             <div class="favorite-photos favorite-column">
                 <p><b><i class="fas fa-star"></i> PHOTOS</b></p>
@@ -171,7 +171,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-4 col-3 col-xl-2">
+        <div class="col-md-4 col-3 col-xl-2" style="padding: 0">
             <div class="favorite-users favorite-column">
                 <p><b><i class="fas fa-star"></i> AUTHORS</b></p>
                 <a v-show="favoriteUsers.length === 0" style="color: #fff; text-decoration: underline" href="/authors">
@@ -234,7 +234,7 @@
             <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
         </div>
 
-        <!-- change password form-->
+        <!--  avatar form-->
         <div class="col-md-3 col-avatar col-5" style="max-width: 280px;">
             <div class="avatarContainer">
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
@@ -243,7 +243,7 @@
                     <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile"
                            id="avatar_input_file"
                            value="Choose file"/>
-                    <label for="avatar_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i>
+                    <label for="avatar_input_file" class="btn btn-dark"><i class="fas fa-camera"></i>
                         Choose</label>
                 </div>
             </div>

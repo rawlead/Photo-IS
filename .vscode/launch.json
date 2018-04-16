@@ -16,5 +16,6 @@
             "projectName": "PhotoIS",
             "args": "",
             "vmArgs": "-Dspring.profiles.active=dev"
-        },
+        }
     ]
+}

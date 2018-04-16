@@ -39,12 +39,12 @@
                                 class="far fa-star"></i> {{favoriteCount}}</span>
                         <span class="float-right"><i class="far fa-comment"></i> {{commentCounter}}</span>
 
-
                     </p>
                 </div>
             </div>
 
-            <button v-show="!showComments" class="btn btn-outline-dark " onclick="#comments-container"
+            <button v-show="!showComments" class="btn comment-btn btn-outline-dark hvr-rectangle-in"
+                    onclick="#comments-container"
                     id="show-comments-btn"
                     v-on:click="showComments = !showComments" v-cloak="v-cloak"><i class="fas fa-eye"></i> Show comments
             </button>
@@ -53,14 +53,15 @@
                 <div class="comments-body">
                     <ul>
                         <li v-show="comments.length === 0">No comments yet . . .</li>
-                        <li v-for="comment in comments">
+                        <li v-for="comment in comments"
+                            v-on:click="commentContent += '@' + comment.user.username + ' '">
                             <a v-bind:href="'/profile/' + comment.user.username"
                                style=""><b>@{{comment.user.username}}</b></a> at
                             <span style="font-size: 0.8em; font-style: italic">{{comment.dateCreated}}</span> wrote:
                             <br/>
                             <span style="color:red; cursor: pointer" v-on:click="deleteComment(comment.id)"
                                   v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span>
-                            {{comment.content}} <br/>
+                            {{comment.content}}
                         </li>
                     </ul>
                 </div>
@@ -68,26 +69,27 @@
                     <div v-show="statusMessage" class="alert alert-warning" role="alert"><span
                             v-html="statusMessage"></span></div>
                     <button v-show="!writingComment" onclick="return false"
-                            style="color:#EEB902;background-color: #1E1E24; margin-top:2px;border: #EEB902 1px solid;"
-                            class="btn btn-outline-dark comment-btn"
-                            v-on:click="writingComment = !writingComment"><i class="fas fa-comment"></i> Leave a comment
+                            style=" margin-top:2px;"
+                            class="btn btn-outline-dark comment-btn hvr-rectangle-in"
+                            v-on:click="writingComment = !writingComment; commentContent = ''"><i
+                            class="fas fa-comment"></i> Leave a comment
                     </button>
                     <button v-show="!writingComment" onclick="return false"
-                            style="color:#EEB902;background-color: #1E1E24; margin-top:2px; border: #EEB902 1px solid;"
-                            class="btn btn-outline-dark comment-btn"
+                            style="margin-top:2px;"
+                            class="btn btn-outline-dark comment-btn hvr-rectangle-in"
                             v-on:click="showComments = !showComments"><i class="fas fa-eye-slash"></i> Hide comments
                     </button>
 
                     <div v-show="writingComment" class="comment-input-section">
                         <span class="length-counter">{{charactersLeft}}</span>
-                        <textarea maxlength="150" v-model="commentContent" type="text" rows="3"
+                        <textarea autofocus="autofocus" maxlength="150" v-model="commentContent" type="text" rows="3"
                                   id="comment-textarea"></textarea>
                         <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
                                 class="btn btn-success"><i
                                 class="fas fa-chevron-circle-up"></i> Send
                         </button>
 
-                        <button class="btn btn-danger "
+                        <button class="btn btn-danger"
                                 v-on:click="writingComment = !writingComment" style="margin-top:5px;"><i
                                 class="fas fa-times"></i> Cancel
                         </button>

@@ -141,6 +141,12 @@ var vueLoggedUser = new Vue({
     },
 });
 
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function toggleSearch() {
+    document.getElementById("search-dropdown").classList.toggle("showSearch");
+}
+
 $(document).mouseup(function (e) {
     var container = $("#search-dropdown");
     if (!container.is(e.target) && container.has(e.target).length === 0) ;

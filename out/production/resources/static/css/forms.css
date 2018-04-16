@@ -46,26 +46,29 @@
     border-radius: 3px;
     border: none;
     height: 40px;
-    background-color: #1E1E24;
+    background-color: #26262d;
     color: #CDD3CE;
     display: block;
 }
 
-.signForm input:focus {
+
+
+.data-input:focus {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #26262d;
+    background-color: #1E1E24;
     color: #fff;
 }
+
+
 
 .signForm button:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     color: #fff;
-    background-color: #26262d;
-    font-size: 110%;
+    background-color: #1E1E24;
 }
 
-.signForm input:hover {
-    background-color: #26262d;
+.data-input:hover {
+    background-color: #1E1E24;
 }
 
 .form-control-placeholder:hover {

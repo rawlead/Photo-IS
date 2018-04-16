@@ -60,22 +60,22 @@
     <!--END OF MODAL-->
 
     <div class="container-fluid">
-        <div class="row author-header">
+        <div class="row author-header"  v-cloak="v-cloak">
             <div class="col-md-7 offset-md-3">
-                <div class="author-profile-avatar animated rotateIn">
-                    <img v-bind:src="user.avatarUrl" alt=""/>
+                <div class="author-profile-avatar animated rotateIn hvr-glow">
+                    <img v-bind:src="user.avatarUrl" class="hvr-grow" alt=""/>
                 </div>
                 <div class="author-profile-description">
                     <h1 v-cloak="v-cloak"><b>{{user.firstName}}</b></h1>
                     <h1 v-cloak="v-cloak"><b>{{user.lastName}}</b></h1>
                     <h1 v-cloak="v-cloak">@{{user.username}}</h1>
-                    <div v-cloak="v-cloak" v-show="user.id !== loggedInUser.id">
+                    <div v-show="user.id !== loggedInUser.id">
                         <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
                                 onclick="addUserToFavoritesRequest(author.loggedInUser, author.user)"
                                 class="btn submit-btn hvr-rectangle-in"><i
                                 class="fas fa-star"></i> Add to favorites
                         </button>
-                        <button v-cloak="v-cloak" v-else-if="isUserFavorite"
+                        <button v-else-if="isUserFavorite"
                                 v-on:click="isUserFavorite = !isUserFavorite"
                                 onclick="removeUserFromFavoritesRequest(author.loggedInUser, author.user)"
                                 class="btn submit-btn hvr-rectangle-in">
@@ -85,8 +85,8 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <h6 v-cloak="v-cloak"><b>Photos: {{userPhotos.length}}</b></h6>
-                <p v-cloak="v-cloak" style="font-size: 0.75em">{{user.registrationDate}}</p>
+                <h6><b>Photos: {{userPhotos.length}}</b></h6>
+                <p style="font-size: 0.75em">{{user.registrationDate}}</p>
             </div>
         </div>
     </div>

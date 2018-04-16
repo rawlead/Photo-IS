@@ -79,7 +79,7 @@
         <masonry :cols="{default: 4, 1000: 3, 767: 2, 400: 1}"
                  :gutter="6">
             <div class="photo-grid-item hvr-glow" v-for="photo in photos" v-on:click="openModalPhoto(photo)">
-                <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
+                <img class="grid-image hvr-grow" v-lazy="photo.url" alt="" v-cloak="v-cloak"/>
                 <div class="middle">
                     <h5><b>{{photo.title}}</b></h5>
                 </div>
@@ -163,10 +163,10 @@
                 })
             },
             openModalPhoto(photo) {
+                $('.user-photo-modal').modal('show')
                 this.modalPhoto = photo;
                 this.fetchIsPhotoFavorite(photo);
                 this.fetchCommentsToPhoto(photo);
-                $('.user-photo-modal').modal('show')
             },
             fetchFavoritePhotos() {
                 getFavoritePhotosRequest(this.loggedInUser)
