@@ -1,9 +1,9 @@
 .blurred-background {
     position: fixed;
     top: 0;
-    right: 0;
     bottom: 0;
-    width: 100%;
+    left: 15%;
+    width: 85%;
     height: 100%;
     z-index: -100;
     filter: grayscale(100%) blur(5px);
@@ -18,7 +18,7 @@
     position: relative;
     margin-top: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+    border-radius: 5px;
 }
 
 #photo-info {
@@ -29,10 +29,17 @@
     0 0.07em black,
     -0.07em 0 black,
     0 -0.07em black;
-    /*color: #fff;*/
     color: #CDD3CE;
-
 }
+
+#photo-info h3:hover {
+    color: #fff;
+}
+
+#photo-info h6:hover {
+    color: #fff;
+}
+
 
 .single-photo {
     padding-right: 0;
@@ -48,6 +55,8 @@
     max-height: 85vh;
     cursor: zoom-in;
     object-fit: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .single-photo > .photo-container > .photo > a {
@@ -69,56 +78,58 @@
 }
 
 .photo-description a:hover {
-    color: #EEB902;
+    color: #fff;
 }
 
 .favorite-add:hover, .favorite-remove:hover {
-    color: #EEB902;
+    color: #fff;
     cursor: pointer;
 }
 
 /*COMMENTS*/
 #comments-container {
     color: #CDD3CE;
-    padding-top: 15px;
     text-shadow: 0.07em 0 black,
     0 0.07em black,
     -0.07em 0 black,
     0 -0.07em black;
     position: absolute;
-    top: 0;
+    top: 10px;
     right: 0;
     bottom: 49px;
     width: 250px;
+    border-top-right-radius: 5px;   
 }
 
 #show-comments-btn {
-    color: #EEB902;
     margin-top: 2px;
-    border: #EEB902 1px solid;
+    border: none;
     position: absolute;
     bottom: 51px;
     right: 0;
     width: 250px;
-    background-color: #1E1E24;
     opacity: 0.95;
+    font-size: 0.85em;
+}
 
+.comment-btn {
+    color: #CDD3CE;
 }
 
 .comments-header {
     position: absolute;
-    bottom: 2px;
+    bottom: 1px;
     right: 0px;
     width: inherit;
     z-index: 30;
     text-align: center;
     opacity: 0.95;
-
 }
 
 .comments-header button {
     width: 100%;
-
+    font-size: 0.85em;
+    color: #CDD3CE;
 }
 
 .comment-input-section {
@@ -126,18 +137,15 @@
     border-bottom: 1px solid #EEB902;
     border-radius: 5px;
     background-color: #1E1E24;
-    /*padding-bottom: 5px;*/
-
 }
 
 .comments-header textarea {
     resize: none;
     width: 100%;
     outline: none;
-    padding: 5px 10px;
-    font-size: 0.875em;
+    padding: 5px 5px;
+    font-size: 0.775em;
     background-color: #CDD3CE;
-    border-radius: 3px;
 }
 
 .comments-header .length-counter {
@@ -148,8 +156,8 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     overflow: scroll;
     position: absolute;
-    bottom: 67px;
-    top: 10px;
+    bottom: 73px;
+    top: 0;
     right: 0;
     border-bottom-left-radius: 5px;
     width: inherit;
@@ -157,7 +165,6 @@
     padding: 0 5px;
     color: #CDD3CE;
     background-color: #26262d;
-
 }
 
 .comments-body ul {
@@ -174,6 +181,11 @@
     padding: 5px 0 5px 5px;
 }
 
+.comments-body > ul > li:hover {
+    background-color: #111111;
+    color: #fff;
+}
+
 .comments-body > ul > li > a {
     color: #EEB902;
 }
@@ -183,12 +195,20 @@
 }
 
 @media screen and (max-width: 767px) {
-    .photo-container {
-        margin-top: 0;
+    .blurred-background {
+        left: 0;
+        width: 100%;
     }
+
+    .photo-container {
+        margin-top: 5px;
+    }
+
     #comments-container {
         width: 100%;
-        /*margin-top: 8px;*/
+        position: relative;
+        display: block;
+        top: 0;
     }
 
     #show-comments-btn {
@@ -199,11 +219,6 @@
         font-size: 0.7em;
     }
 
-    #comments-container {
-        position: relative;
-        display: block;
-    }
-
     .comments-container {
         padding-top: 0;
         z-index: 1;
@@ -211,15 +226,13 @@
 
     .comments-body {
         height: 500px;
-        margin-top: 72px;
-
+        margin-top: 74px;
     }
 
     .comments-header {
         position: absolute;
-        top: 0px;
+        top: 0;
     }
-
 }
 
 @media screen and (min-width: 767px) {
@@ -261,7 +274,6 @@
     transition: opacity .5s;
 }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
-{
+.fade-enter, .fade-leave-to {
     opacity: 0;
 }

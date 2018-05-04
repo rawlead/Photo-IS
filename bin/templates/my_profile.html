@@ -4,10 +4,8 @@
 <head th:include="fragments/header :: head('My Profile')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-
+<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 <div class="container-fluid" id="myProfileRoot">
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
-
     <div class="profile-tab">
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Uploads')"><i class="fas fa-images"></i> UPLOADS
         </button>
@@ -16,7 +14,6 @@
         <button class="profileTabBtn" onclick="openProfileTab(event, 'Settings')"><i class="fas fa-cog"></i> SETTINGS
         </button>
     </div>
-
     <!-- Modal -->
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
          aria-labelledby="user-photo-modal" aria-hidden="true">
@@ -72,13 +69,15 @@
             </div>
         </div>
     </div>
+    <!--End of MODAL-->
+
     <!-- Tabs  -->
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
     <div id="Uploads" class="profileTabContent row"><!-- UPLOADS -->
         <div class="col-md-6 col-xl-5 offset-md-2">
             <div v-if="updateData != 'photo'">
-                <h3>Welcome, @{{user.firstName}}!</h3>
-                <p>On this page you can upload photos (up to 20mb size)</p>
+                <h3>Welcome, {{user.firstName}}!</h3>
+                <p>On this page you can upload photos (up to ~5mb size)</p>
             </div>
             <div class="photoUploadContainer">
                 <img v-if="updateData === 'photo'" :src="uploadPhotoPreview" class="upload-photo-preview"/>
@@ -92,8 +91,8 @@
                     <span v-else-if="!statusMessage"><i class="fas fa-camera"></i> Choose photo</span>
                 </label>
                 <h5 style="text-align: center" v-show="userPhotos.length === 0">
-                    Upload your first photo<br/> <i style="color: #fff;" class="fas fa-arrow-up"></i>
-                    by clicking the button above
+                    To upload your first photo<br/> <i style="color: #fff;" class="fas fa-arrow-up"></i>
+                    please click the button above
                     <i style="color: #fff" class="fas fa-arrow-up"></i></h5>
             </div>
         </div>
@@ -101,7 +100,6 @@
         <div class="col-md-4 col-xl-5">
             <transition name="slide-fade">
                 <div v-if="updateData === 'photo'">
-                    <h6 v-html="statusMessage" style="text-align: center"></h6>
                     <div class="uploadPhotoForm">
                         <div class="form-group">
                             <label for="uploadPhotoTitle">Title</label>
@@ -142,45 +140,38 @@
         </div>
 
         <!--USER UPLOADED PHOTOS GRID -->
-        <div class="col-md-10 offset-md-2 grid-col">
-
-            <div class="photos-container">
-
-                <div v-for="photo in userPhotos" class="photo-grid-item" v-on:click="openModalPhoto(photo)">
-                    <img v-bind:src="photo.url"
-                         class="grid-image openImageDialog"
-                         alt=""/>
+        <div class="photos-container">
+            <!--Masonry library-->
+            <masonry :cols="{default: 4, 1000: 3, 767: 2, 400: 1}"
+                     :gutter="6">
+                <div class="photo-grid-item hvr-glow" v-for="photo in userPhotos" v-on:click="openModalPhoto(photo)">
+                    <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
                     <div class="middle">
                         <h5><b>{{photo.title}}</b></h5>
                     </div>
-
                 </div>
-
-            </div>
-
+            </masonry>
         </div>
     </div>
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = = = = =  =  = = ==== = == == = = = = = = = = = = = = ======   = = == =-->
 
     <div id="Favorites" class="profileTabContent row">
-        <div class="col-md-6 col-9 col-xl-8 offset-md-2 favorites-photos-col">
+        <div class="col-md-6 col-9 col-xl-8 offset-md-2 favorites-photos-col" style="padding-left: 0">
             <!--FAVORITES-->
             <div class="favorite-photos favorite-column">
                 <p><b><i class="fas fa-star"></i> PHOTOS</b></p>
                 <a v-show="favoritePhotos.length === 0" style="color: #fff; text-decoration: underline" href="/photos">
                     Click here to discover photos</a>
                 <ul>
-
                     <li v-for="photo in favoritePhotos">
-
                         <a v-bind:href="'/photo/' + photo.id">
-                            <img style="cursor: pointer" v-bind:src="photo.url" alt=""/>
+                            <img style="cursor: pointer" v-lazy="photo.url" alt=""/>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="col-md-4 col-3 col-xl-2">
+        <div class="col-md-4 col-3 col-xl-2" style="padding: 0">
             <div class="favorite-users favorite-column">
                 <p><b><i class="fas fa-star"></i> AUTHORS</b></p>
                 <a v-show="favoriteUsers.length === 0" style="color: #fff; text-decoration: underline" href="/authors">
@@ -198,14 +189,13 @@
     <!--== ===== = == =  == = = = = = = = = = = === = = = = = = = = ======= = = = = = = = = = === == = = = = = ==  =  = == =   = = = =  = = =  =  = = =  = = == =-->
     <div id="Settings" class="profileTabContent row">                                           <!--   SETTING  -->
         <div class="col-md-5 col-xl-4 offset-md-2 col 6">
-            <h3>Welcome, @{{user.firstName}}!</h3>
+            <h3>Welcome, {{user.firstName}}!</h3>
             <p>On this page you can:</p>
             <ol>
                 <li>Change your profile picture.</li>
                 <li>Change your email</li>
                 <li>Change your password</li>
             </ol>
-
 
             <p>Date of registration: {{user.registrationDate}}</p>
             <p>Email: {{user.email}}</p>
@@ -244,7 +234,7 @@
             <div v-else="" class="alert alert-success" role="alert">{{statusMessage}}</div>
         </div>
 
-        <!-- change password form-->
+        <!--  avatar form-->
         <div class="col-md-3 col-avatar col-5" style="max-width: 280px;">
             <div class="avatarContainer">
                 <img :src="avatarImage" alt="Avatar" class="profile-tab-avatar"/>
@@ -253,7 +243,7 @@
                     <input accept="image/*" type="file" v-on:change="onFileChange" class="inputFile"
                            id="avatar_input_file"
                            value="Choose file"/>
-                    <label for="avatar_input_file" class="btn btn-outline-dark"><i class="fas fa-camera"></i>
+                    <label for="avatar_input_file" class="btn btn-dark"><i class="fas fa-camera"></i>
                         Choose</label>
                 </div>
             </div>
@@ -346,7 +336,6 @@
             },
             createImage(file) {
                 var reader = new FileReader();
-
                 if (currentProfileTab === 'Settings') {
                     reader.onload = (e) => {
                         this.updateData = 'avatar';
@@ -454,7 +443,6 @@
                 }
 
                 var data = new FormData();
-                data.append("photo", uploadingFile);
                 data.append("title", this.uploadPhotoTitle);
                 data.append("description", this.uploadPhotoDescription);
                 data.append("category", this.uploadPhotoCategory);
@@ -463,42 +451,34 @@
                 this.updateData = '';
 
                 this.cleanFileInput("#photo_input_file");
-// postPhotoRequest(this.user.id, formData)
 
-                // const config = {
-                //     onUploadProgress: function(progressEvent) {
-                //         this.percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
-                //         console.log(this.percentCompleted)
-                //     }
-                // }
+                // Compressing photo before uploading
+                new ImageCompressor(uploadingFile, {
+                    quality: .6,
+                    success(result) {
+                        data.append("photo", result, result.name);
+                        // Uploading photo
+                        postPhotoRequest(profilePage.user.id, data)
+                            .then((response) => {
+                                profilePage.uploadPhotoTitle = '';
+                                profilePage.uploadPhotoDescription = '';
+                                profilePage.statusMessage = "";
+                                profilePage.hasError = false;
 
-                // axios({
-                //     method: 'post',
-                //     url: '/api/users/' + this.user.id + '/photos?' + accessToken(),
-                //     data: formData,
-                //     config : config
-                // })
-                // axios.post('/api/users/' + this.user.id + '/photos?' + accessToken(), data, config)
-                postPhotoRequest(this.user.id, data)
-                    .then((response) => {
-                        this.uploadPhotoTitle = '';
-                        this.uploadPhotoDescription = '';
-                        this.statusMessage = "";
-                        this.hasError = false;
-                        this.updateData = '';
-                        this.fetchUserPhotos();
+                                profilePage.fetchUserPhotos();
 
-                        MsgPop.closeAll();
-                        MsgPop.open({
-                            Type: "message",
-                            Content: response.data,
-                            CloseTimer: 1700
-                        });
-                    }).catch(function (error) {
-
-
-                    this.hasError = true;
-                }.bind(this));
+                                MsgPop.closeAll();
+                                MsgPop.open({
+                                    Type: "message",
+                                    Content: response.data,
+                                    CloseTimer: 1700
+                                });
+                            }).catch(function (error) {
+                            profilePage.hasError = true;
+                        }.bind(profilePage));
+                    }
+                });
+                this.updateData = '';
             },
             isUploadingFileTypeOfImage(file) {
                 return file.name.match(/.(jpg|jpeg|png|gif)$/i);
@@ -509,19 +489,14 @@
                 }.bind(this));
             },
             openModalPhoto(photo) {
-                this.modalPhoto = '';
                 this.modalPhoto = photo;
                 this.fetchCommentsToPhoto(photo);
-                console.log(photo);
                 $('.user-photo-modal').modal('show')
-            },
-            getCategoryName() {
-                return this.modalPhoto.photoCategory.name;
             },
             deletePhoto(photo) {
                 deletePhotoRequest(this.user, photo).then((res) => {
                     this.fetchUserPhotos();
-                    this.fetchFavoritePhotos()
+                    this.fetchFavoritePhotos();
                     $('.user-photo-modal').modal('hide');
                     MsgPop.closeAll();
                     MsgPop.open({
@@ -557,7 +532,6 @@
                         this.commentCounter = response.data.length;
                     }.bind(this))
             }
-
         }
     })
 </script>

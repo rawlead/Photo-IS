@@ -4,9 +4,11 @@
 <head th:include="fragments/header :: head('Sign In')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
+<ul th:replace="fragments/nav :: leftNav"></ul>
+
 <div class="container-fluid" id="signInRoot">
     <div class="row hor-sep-60"></div>
-    <ul th:replace="fragments/nav :: leftNav"></ul>
+
     <div class="row">
         <div class="col-md-5 col-xl-3 offset-md-2">
             <form class="signForm">
@@ -23,7 +25,7 @@
                 </div>
                 <button class="submit-btn" type="button"  v-on:click="signin">Submit</button>
             </form>
-            <div v-show="statusMessage" class="alert alert-warning" role="alert">{{statusMessage}}</div>
+            <div v-show="statusMessage" class="alert alert-warning" role="alert" v-cloak="v-cloak">{{statusMessage}}</div>
             </div>
         </div>
     </div>

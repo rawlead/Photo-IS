@@ -26,10 +26,16 @@
     color: #CDD3CE;
 }
 
-/* Change background color of buttons on hover */
+/* Change color of buttons text on hover */
 .profile-tab .profileTabBtn:hover {
     color: #fff;
 }
+
+.profileTabBtn:hover i {
+    color: #EEB902;
+}
+
+
 
 /* Create an active/current tablink class */
 .profile-tab .profileTabBtn.active {
@@ -37,6 +43,10 @@
     height: 37px;
     outline: none;
     color: #fff;
+}
+
+.profileTabBtn.active i {
+    color: #EEB902;
 }
 
 /* Style the tab content */

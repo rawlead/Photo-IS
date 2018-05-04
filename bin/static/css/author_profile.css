@@ -12,7 +12,16 @@
     margin-right: 50px;
     vertical-align: top;
     margin-bottom: 15px;
+    background-color: #26262d;
+    border-radius: 50%;
+    border: 1px solid #EEB902;
+    overflow: hidden;
+
 }
+.author-profile-avatar:hover {
+    background-color: #1E1E24;
+}
+
 
 .author-profile-avatar img {
     width: 100px;
@@ -21,9 +30,13 @@
     border-radius: 50%;
 }
 
+
+
 .author-profile-description {
     display: inline-block;
 }
+
+
 
 .author-profile-description h1 {
     font-size: 1em;

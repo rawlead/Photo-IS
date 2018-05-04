@@ -3,9 +3,8 @@
 <head th:include="fragments/header :: head('About')"></head>
 <body>
 <header th:replace="fragments/header :: header">TOP NAVIGATION</header>
-
+<ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
 <div class="container-fluid parallax parallax-one" id="photoRoot">
-    <ul th:replace="fragments/nav :: leftNav">LEFT SIDE NAVIGATION</ul>
     <div class="caption">
         <div class="caption-content row">
             <div class="col-md-10 offset-md-2">
@@ -87,8 +86,5 @@
 
 
 <div th:replace="fragments/footer :: scripts"></div>
-<script>
-    AOS.init();
-</script>
 </body>
 </html>

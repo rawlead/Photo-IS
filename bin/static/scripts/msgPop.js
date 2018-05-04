@@ -7,6 +7,7 @@ var MsgPop = initMsgPop();
 function initMsgPop()
 {
 	MsgPop = {};
+	
 
 	//Public properties
 	MsgPop.effectSpeed = 350;

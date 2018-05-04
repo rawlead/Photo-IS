@@ -56,6 +56,8 @@ a {
     color: #1E1E24;
 }
 
+/* adwad */
+
 .btn-success {
     background-color: #297045;
     border-color: #297045;
@@ -289,8 +291,8 @@ option {
 }
 
 .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    -webkit-transform: scale(1.01);
+    transform: scale(1.01);
 }
 
 /* Rectangle In */

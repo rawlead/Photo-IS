@@ -77,6 +77,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+int awd = 3;
+
     @Override
     public User save(UserRegistrationForm userRegistrationForm) {
         User user = new User();
@@ -135,7 +137,11 @@ public class UserServiceImpl implements UserService {
             return false;
         userRepository.save(user);
         return true;
+
     }
+
+    String nazwa_referencji_1 = "Ciąg znaków 1";
+    String nazwa_referencji_2 = "Ciąg znaków 2";
 
     @Override
     public User getFavoriteUser(Long userId, Long favoriteUserId) {

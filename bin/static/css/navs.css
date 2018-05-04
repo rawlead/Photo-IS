@@ -10,8 +10,11 @@
     linear-gradient(115deg, #1E1E24 325px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #26262d 525px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
-
     padding-right: 10px;
+}
+
+#top-nav, .categories, .dropdown-content {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #top-nav-avatar {
@@ -26,6 +29,7 @@
     object-fit: cover;
 }
 
+
 #top-nav .top-nav-link {
     display: block;
     color: #CDD3CE;
@@ -34,9 +38,16 @@
     padding: 19px 10px;
 }
 
+
 .main-logo img {
-    /*margin: 5px;*/
     height: 60px;
+}
+
+
+.main-logo:hover {
+    /*background-color: #1E1E24;*/
+    webkit-filter: brightness(1.2);
+    filter: brightness(1.2);
 }
 
 #top-nav .search-field {
@@ -51,7 +62,6 @@
     float: left;
     border: none;
     box-sizing: border-box;
-    border-bottom: 2px solid transparent;
     font-size: 0.82em;
     padding: 3px 15px;
     margin: 5px 15px;
@@ -60,6 +70,7 @@
     transition: width 0.5s ease-in-out;
     background-color: transparent;
     color: #CDD3CE;
+    border-radius: 5px;
 }
 
 #top-nav input:focus {
@@ -69,18 +80,23 @@
     padding: 0px 13px;
     border: 2px solid #EEB902;
     background-color: #26262d;
-    border-radius: 5px;
     font-size: 85%;
 }
 
 #top-nav input:hover {
-    font-size: 85%;
+    background-color: #1E1E24;
+    border: 2px solid #EEB902;
+
 }
 
 
+#top-nav input:hover {
+    color: #fff;
+}
+
 #top-nav a:hover {
     cursor: pointer;
-    color: #EEB902;
+    color: #fff;
 }
 
 /*MOBILE MENU*/
@@ -98,6 +114,117 @@
     }
     #top-nav .top-nav-link {
         padding: 19px 0;
+    }
+}
+
+
+
+/*SEARCH SEARCH SEARCH SEARCH SEARCH SEARCH */
+.dropdown-content {
+    top: 55px;
+    left: 235px;
+    position: absolute;
+    opacity: 0.96;
+    padding-bottom: 5px    ;
+    background:
+    linear-gradient(115deg, #1E1E24 89px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 289px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+    width: 40%;
+    overflow: auto;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    visibility: hidden;
+}
+
+.dropdown-content a {
+    color: #CDD3CE;
+    font-size: 0.8em;
+    padding: 3px 15px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+.showSearch {
+    visibility: visible;
+}
+
+.dropdown-content i {
+    color: #EEB902;
+}
+
+.dropdown-content:hover {
+    opacity: 0.98;
+}
+
+/*LEFT SIDE VERTICAL NAVIGATION BAR*/
+#left-nav {
+    list-style-type: none;
+    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+    position: fixed;
+    display: block;
+    box-sizing: border-box;
+    height: 100%;
+    width: 15%;
+    left: 0;
+    top: 60px;
+    padding-top: 150px;
+    font-size: 0.9em;
+    z-index: 50;
+}
+
+#left-nav li {
+    text-align: right;
+}
+
+#left-nav li {
+    cursor: pointer;
+}
+
+#left-nav li a {
+    display: inline-block;
+    color: #CDD3CE;
+    font-weight: bold;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 0.975em;
+    transition: color 200ms;
+    box-sizing: border-box;
+}
+
+#left-nav li a.active {
+    color: #fff;
+}
+
+#left-nav li a:hover {
+    color: #fff;
+
+}
+
+#left-nav .creator {
+    position: fixed;
+    bottom: 5px;
+    margin: 0;
+    left: 10px;
+    right: 86%;
+    font-size: 0.7em;
+    color: #CDD3CE;
+    z-index: 50;
+    cursor: default;
+}
+
+#left-nav, .profile-tab, .author-header {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 768px){
+    #left-nav li a.active {
+        border-right: 4px solid #EEB902;
     }
 
 }
@@ -121,99 +248,6 @@
     .main-logo.main-logo-mobile {
         display: block;
     }
-}
-
-/*SEARCH SEARCH SEARCH SEARCH SEARCH SEARCH */
-.dropdown-content {
-    display: none;
-    top: 55px;
-    left: 235px;
-    position: absolute;
-    opacity: 0.98;
-    padding-bottom: 5px    ;
-    background:
-    linear-gradient(115deg, #1E1E24 110px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #26262d 310px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
-    width: 40%;
-    overflow: auto;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-.dropdown-content a {
-    color: #CDD3CE;
-    font-size: 0.8em;
-    padding: 3px 15px;
-    text-decoration: none;
-    display: block;
-    position: relative;
-    z-index: 100;
-}
-
-.showSearch {
-    display: block;
-}
-
-/*LEFT SIDE VERTICAL NAVIGATION BAR*/
-#left-nav {
-    list-style-type: none;
-    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
-    position: fixed;
-    display: block;
-    box-sizing: border-box;
-    height: 100%;
-    width: 15%;
-    left: 0;
-    padding-top: 150px;
-    font-size: 0.9em;
-    z-index: 50;
-    border-right: #1E1E24 1px solid;
-}
-
-#left-nav li {
-    text-align: right;
-}
-
-#left-nav li {
-    cursor: pointer;
-    /*-webkit-transform: rotate(-45deg);*/
-    /*transform: rotate(-45deg);*/
-}
-
-#left-nav li a {
-    display: inline-block;
-    color: #CDD3CE;
-    font-weight: bold;
-    padding: 8px 16px;
-    text-decoration: none;
-    font-size: 0.975em;
-    transition: color 200ms;
-}
-
-#left-nav li a.active {
-    color: #EEB902;
-    -webkit-transform: skew(-10deg);
-    transform: skew(-10deg);
-}
-
-#left-nav li a:hover {
-    color: #EEB902;
-}
-
-#left-nav .creator {
-    position: fixed;
-    bottom: 5px;
-    margin: 0;
-    left: 10px;
-    right: 86%;
-    font-size: 0.7em;
-    color: #CDD3CE;
-    z-index: 50;
-    cursor: default;
 }
 
 /*END OF LEFT SIDE VERTICAL NAVIGATION BAR*/

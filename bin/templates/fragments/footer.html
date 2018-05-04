@@ -11,6 +11,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"
             type="text/javascript"></script>
 
+    <!--Lazy Load Images-->
+    <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"
+            th:src="@{https://unpkg.com/vue-lazyload/vue-lazyload.js}"
+            type="text/javascript">
+    </script>
+
     <!--Popper bootstrap-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}"
@@ -29,12 +35,11 @@
             type="text/javascript">
     </script>
 
-    <!--Animate On Scroll AOS-->
-    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"
-            th:src="@{https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js}">
+    <!--Image Compressor-->
+    <script src="/static/scripts/image-compressor.min.js"
+            th:src="@{/scripts/image-compressor.min.js}"
+            type="text/javascript">
     </script>
-
-
 
     <!--Progress bar-->
     <script src="https://cdn.rawgit.com/rikmms/progress-bar-4-axios/0a3acf92/dist/index.js"
@@ -48,23 +53,28 @@
             type="text/javascript">
     </script>
 
+    <!--MASONRY GRID-->
+    <script src="https://unpkg.com/vue-masonry-css"
+            th:src="@{https://unpkg.com/vue-masonry-css}">
+    </script>
+
+    <!--HTTP requests-->
     <script src="/static/scripts/http_requests.js"
             th:src="@{/scripts/http_requests.js}"
             type="text/javascript">
     </script>
 
+    <!--Main Javacript-->
     <script src="/static/scripts/script.js"
             th:src="@{/scripts/script.js}"
             type="text/javascript">
     </script>
 
-    <!--Message Pop-->
+    <!--Message Pop library-->
     <script src="/static/scripts/msgPop.js"
             th:src="@{/scripts/msgPop.js}"
             type="text/javascript">
     </script>
-
-
 </div>
 </body>
 </html>
