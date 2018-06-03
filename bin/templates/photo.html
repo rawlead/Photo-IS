@@ -83,7 +83,7 @@
                     <div v-show="writingComment" class="comment-input-section">
                         <span class="length-counter">{{charactersLeft}}</span>
                         <textarea autofocus="autofocus" maxlength="150" v-model="commentContent" type="text" rows="3"
-                                  id="comment-textarea"></textarea>
+                                  id="comment-textarea" v-on:keyup.enter="postCommentToPhoto" ></textarea>
                         <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
                                 class="btn btn-success"><i
                                 class="fas fa-chevron-circle-up"></i> Send

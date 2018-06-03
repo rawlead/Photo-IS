@@ -37,7 +37,7 @@
                     <div class="container-fluid" style="padding:0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
+                                <div v-show="modalPhoto.title"><h5><b>{{modalPhoto.title}}</b></h5></div>
                                 <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
                                 <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
                                         class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
@@ -86,7 +86,13 @@
             </div>
             <div class="col-md-2">
                 <h6><b>Photos: {{userPhotos.length}}</b></h6>
-                <p style="font-size: 0.75em">{{user.registrationDate}}</p>
+                <p style="font-size: 0.75em">{{user.registrationDate}} <button
+                        style="width: 100px; position: absolute; right: 0; bottom: 0"
+                        v-show="loggedInUser.id === 1" v-on:click="isUserFavorite = !isUserFavorite"
+                        onclick="deleteUser(author.user.id)"
+                        class="btn submit-btn hvr-rectangle-in"> DELETE
+                </button></p>
+
             </div>
         </div>
     </div>

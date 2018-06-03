@@ -36,7 +36,7 @@
                     <div class="container-fluid" style="padding:0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
+                                <div v-show="modalPhoto.title"><h5><b>{{modalPhoto.title}}</b></h5></div>
                                 <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
                                 <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
                                         class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
@@ -68,9 +68,9 @@
            :class="{ active:activeCategory(category) }" href="#">{{category.name}}</p>
     </div>
 
-    <div id="select-category-btn" onclick="openCategoriesNav()" v-cloak="v-cloak"><i
+    <div id="select-category-btn" onclick="openCategoriesNav()" v-cloak="v-cloak"><i style="color: #EEB902"
             class="fas fa-bars"></i> Select a category
-        <span v-show="category">| <b>{{category.name}}</b> | {{photos.length}} photos</span>
+        <span v-show="category">| <span style="color: #EEB902">{{category.name}}</span> | {{photos.length}} photos</span>
     </div>
 
     <!--PHOTO GRID-->
@@ -85,6 +85,7 @@
                 </div>
             </div>
         </masonry>
+        <!-- wdadw -->
     </div>
 </div>
 <div th:replace="fragments/footer :: scripts"></div>

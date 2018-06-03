@@ -42,7 +42,7 @@
         <a href="javascript:void(0);" class="icon" onclick="openMobileMenu()">&#9776;</a>
 
         <!--Main logo-->
-        <div class="main-logo  float-left hvr-glow" v-cloak="v-cloak">
+        <div class="main-logo  float-left" v-cloak="v-cloak">
             <a href="/photos"><img src="/img/photo-is-logo.png" alt=""/></a>
         </div>
 
@@ -58,17 +58,19 @@
 
         <!--Search input field-->
         <form class="search-field" v-cloak="v-cloak">
-            <input onclick="toggleSearch()" onblur="this.placeholder = ' search'"
-                   onfocus="this.placeholder = ' author or category name'"
+            <input onclick="toggleSearch(event)" onblur="this.placeholder = ' search'"
                    v-model="search" type="text" name="search" id="search-input"/>
 
             <!--Dropdown with search results-->
             <div id="search-dropdown" style="z-index: 100" class="dropdown-content">
+                <!--If no results found-->
+                <a href="#" v-show="filteredUsers.length === 0 &amp;&amp;
+                           filteredCategories.length === 0 &amp;&amp;
+                            search.length !== 0 ">No results found.</a>
+                <!--Found users section-->
                 <a v-show="filteredUsers.length !== 0" style="text-align: center" href="/authors">
                     <i class="fas fa-angle-double-down"></i> FOUND AUTHORS
                     <i class="fas fa-angle-double-down"></i></a>
-
-                <!--Found users section-->
                 <a v-bind:href="'/profile/' + user.username" v-for="user in filteredUsers">@{{user.username}}
                     <span style=""><span style="color: #EEB902"> | </span>{{user.firstName}}</span></a>
                 <!--Found categories section-->

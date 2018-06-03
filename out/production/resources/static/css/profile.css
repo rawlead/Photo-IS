@@ -12,6 +12,7 @@
     font-size: 0.8em;
     font-weight: bold;
     z-index: 10;
+    border-bottom: 2px solid #26262d;
 }
 
 /* Style the buttons inside the tab */
@@ -39,7 +40,7 @@
 
 /* Create an active/current tablink class */
 .profile-tab .profileTabBtn.active {
-    border-bottom: 4px solid #EEB902;
+    border-bottom: 2px solid #EEB902;
     height: 37px;
     outline: none;
     color: #fff;
@@ -130,15 +131,27 @@
     margin-bottom: 20px;
     background-image: none;
     -webkit-appearance: none;;
+    -moz-appearance: none;
 }
+
+#uploadPhotoCategory option{
+    background-color: #CDD3CE;
+}
+
 
 /*FAVORITES     = = = == = = = === == = = = === = == ==== = =  = = == ====*/
 #Favorites {
     position: relative;
     min-height: 100%;
     background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 102px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 104px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 302px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 304px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 502px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 504px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
 
 }
@@ -171,6 +184,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    /*background-color: #1E1E24;*/
 }
 
 .favorite-photos ul {
@@ -184,6 +198,11 @@
     overflow: hidden;
 }
 
+.favorite-photos ul li:hover {
+    border: solid 1px #EEB902;
+
+}
+
 .favorite-photos > ul > li > a > img {
     width: 100%;
     height: 150px;
@@ -193,7 +212,6 @@
 }
 
 .favorite-photos > ul > li > a > img:hover {
-
     transform: scale(1.05);
 }
 
@@ -285,8 +303,14 @@
     min-height: 100%;
     color: #CDD3CE;
     background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 102px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 104px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 302px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 304px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 502px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 504px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 68%, rgba(0, 0, 0, 0) 0%),
     url("/img/night-city.jpg") center center;
 }

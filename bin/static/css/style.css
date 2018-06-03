@@ -241,7 +241,7 @@ option {
 .modal-footer {
     justify-content: start;
     border: none;
-    background-color: #CDD3CE;
+    /*background-color: #CDD3CE;*/
     padding: 0.5rem;
 }
 
@@ -254,7 +254,7 @@ option {
     position: absolute;
     right: 0.5rem;
     bottom: 0.5rem;
-    color: #CDD3CE;
+    color: #fff;
     text-shadow: 0.07em 0 black,
     0 0.07em black,
     -0.07em 0 black,

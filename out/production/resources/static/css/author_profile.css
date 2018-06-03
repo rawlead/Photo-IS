@@ -1,10 +1,18 @@
 .author-header {
-    background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+    /*background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 102px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #26262d 104px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #26262d 302px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 304px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 502px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #26262d 504px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);*/
+    background-color: #1E1E24;
     padding: 10px 0;
     color: #CDD3CE;
+    border-top: solid 2px #1E1E24;
 }
 
 .author-profile-avatar {

@@ -103,7 +103,6 @@
 
 #show-comments-btn {
     margin-top: 2px;
-    border: none;
     position: absolute;
     bottom: 51px;
     right: 0;
@@ -176,15 +175,13 @@
 .comments-body > ul > li {
     margin: 5px 0;
     font-size: 0.775em;
-    background-color: #1E1E24;
+    background-color: #111;
     border-radius: 5px;
     padding: 5px 0 5px 5px;
-}
-
-.comments-body > ul > li:hover {
-    background-color: #111111;
     color: #fff;
 }
+
+
 
 .comments-body > ul > li > a {
     color: #EEB902;

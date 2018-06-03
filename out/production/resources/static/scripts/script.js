@@ -1,5 +1,3 @@
-
-
 $('#search-input').attr("placeholder", " search");
 
 // Lazy load
@@ -52,6 +50,7 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
+//
 function setCookie(name, value) {
     document.cookie = name + '=' + value + '; Path=/;';
 }
@@ -141,15 +140,53 @@ var vueLoggedUser = new Vue({
     },
 });
 
+function signin(username, password) {
+    var params = new URLSearchParams();
+    params.append('grant_type', 'password');
+    params.append('username', username);
+    params.append('password', password);
+    axios({
+        method: 'post',
+        url:'/oauth/token',
+        auth:{
+            username:'photois-client',password:'photois-secret'
+        },
+        headers: {"Content-type": "application/x-www-form-urlencoded; charset=utf-8"},
+        data:params
+    }).then(function (response) {
+        setCookie("access_token", response.data.access_token);
+        document.location.replace("/profile");
+    }).catch(function (error) {
+        signinVue.statusMessage = "Wrong username or password";
+        signinVue.showAndHideAlert();
+    }.bind(this))
+}
+
+
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-function toggleSearch() {
-    document.getElementById("search-dropdown").classList.toggle("showSearch");
+function toggleSearch(event) {
+    // document.getElementById("search-dropdown").classList.toggle("showSearch");
+    $("#search-dropdown").toggleClass( "showSearch" );
+    // $("#search-dropdown").css("display", "block");
+    // $("#search-dropdown").css("width", "40%");
 }
 
 $(document).mouseup(function (e) {
     var container = $("#search-dropdown");
-    if (!container.is(e.target) && container.has(e.target).length === 0) ;
+    if (!container.is(e.target) && container.has(e.target).length === 0)
     container.removeClass('showSearch')
+    //     $("#search-dropdown").css("display", "none");
+    //     container.css("width", "0");
 });
 
+function deleteUser(userId) {
+    if (vueLoggedUser.user.id === userId) {
+        alert("Cannot delete admin user");
+        return;
+    }
+    deleteUserRequest(userId)
+        .then(function () {
+            window.location.replace("/authors");
+        })
+}

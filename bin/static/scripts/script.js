@@ -51,7 +51,7 @@ function getCookie(name) {
     let parts = value.split("; " + name + "=");
     if (parts.length === 2) return parts.pop().split(";").shift();
 }
-
+// 
 function setCookie(name, value) {
     document.cookie = name + '=' + value + '; Path=/;';
 }
@@ -153,3 +153,13 @@ $(document).mouseup(function (e) {
     container.removeClass('showSearch')
 });
 
+function deleteUser(userId) {
+    if (vueLoggedUser.user.id === userId) {
+        alert("Cannot delete admin user");
+        return;
+    }
+    deleteUserRequest(userId)
+        .then(function () {
+            window.location.replace("/authors");
+        })
+}

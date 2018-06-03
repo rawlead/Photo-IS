@@ -21,7 +21,7 @@
 .form-control-placeholder {
     position: absolute;
     top: 0;
-    padding: 10px 15px 0 15px;
+    padding: 12px 15px 0 18px;
     transition: all 200ms;
     color: #CDD3CE;
     cursor: text;
@@ -42,13 +42,13 @@
     margin-bottom: 5px;
     width: 100%;
     outline: none;
-    padding: 3px 15px;
-    border-radius: 3px;
-    border: none;
-    height: 40px;
+    padding: 4px 15px;
+    border-radius: 5px;
+    height: 46px;
     background-color: #26262d;
     color: #CDD3CE;
     display: block;
+    border: 2px solid #CDD3CE;
 }
 
 
@@ -57,6 +57,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: #1E1E24;
     color: #fff;
+    border-color: #EEB902;
 }
 
 
@@ -69,6 +70,8 @@
 
 .data-input:hover {
     background-color: #1E1E24;
+    color: #ffffff;
+
 }
 
 .form-control-placeholder:hover {
@@ -87,6 +90,11 @@
 .form-group {
     position: relative;
 }
+
+.form-group:hover label {
+    color: #fff;
+}
+
 
 .form-control:focus + .form-control-placeholder,
 .form-control:valid + .form-control-placeholder {
