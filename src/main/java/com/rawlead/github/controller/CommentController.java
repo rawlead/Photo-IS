@@ -51,7 +51,7 @@ public class CommentController {
     }
 
     @PostMapping(value = "/api/photos/{photoId}/comments")
-    public Comment addComment(@PathVariable Long photoId, @RequestParam String content) {
+    public Comment addComment(@PathVariable Long photoId, @RequestBody String content) {
         Long userId = getLoggedUser().getId();
         return this.commentService.addComment(photoId, userId, content);
     }

@@ -24,10 +24,12 @@
                            class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                             {{modalPhoto.photoCategory.name}}</a>
                     </h5>
-                    <a v-bind:href="'/photo/' + modalPhoto.id">
+                    <abbr title="Click to open comments">
+                        <a v-bind:href="'/photo/' + modalPhoto.id">
 
-                        <img v-bind:src="modalPhoto.url" alt=""/>
-                    </a>
+                            <img v-bind:src="modalPhoto.url" alt=""/>
+                        </a>
+                    </abbr>
                     <div class="modal-date-label" v-if="modalPhoto.dateCreated">
                         <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
                     </div>
@@ -37,7 +39,7 @@
                     <div class="container-fluid" style="padding:0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
+                                <div v-show="modalPhoto.title"><h5><b>{{modalPhoto.title}}</b></h5></div>
                                 <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
                                 <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
                                         class="fas fa-comment"></i> Comments ({{commentCounter}})</a>
@@ -60,7 +62,7 @@
     <!--END OF MODAL-->
 
     <div class="container-fluid">
-        <div class="row author-header"  v-cloak="v-cloak">
+        <div class="row author-header" v-cloak="v-cloak">
             <div class="col-md-7 offset-md-3">
                 <div class="author-profile-avatar animated rotateIn hvr-glow">
                     <img v-bind:src="user.avatarUrl" class="hvr-grow" alt=""/>
@@ -72,21 +74,29 @@
                     <div v-show="user.id !== loggedInUser.id">
                         <button v-if="!isUserFavorite " v-on:click="isUserFavorite = !isUserFavorite"
                                 onclick="addUserToFavoritesRequest(author.loggedInUser, author.user)"
-                                class="btn submit-btn hvr-rectangle-in"><i
+                                class=" submit-btn"><i
                                 class="fas fa-star"></i> Add to favorites
                         </button>
                         <button v-else-if="isUserFavorite"
                                 v-on:click="isUserFavorite = !isUserFavorite"
                                 onclick="removeUserFromFavoritesRequest(author.loggedInUser, author.user)"
-                                class="btn submit-btn hvr-rectangle-in">
-                            <i class="far fa-star"></i> Remove from favorites
+                                class=" submit-btn">
+                            <i style="color: #EEB902" class="far fa-star"></i> Remove from favorites
                         </button>
                     </div>
                 </div>
             </div>
             <div class="col-md-2">
                 <h6><b>Photos: {{userPhotos.length}}</b></h6>
-                <p style="font-size: 0.75em">{{user.registrationDate}}</p>
+                <p style="font-size: 0.75em">{{user.registrationDate}}
+                    <button
+                            style="width: 100px; position: absolute; right: 10px; bottom: 0"
+                            v-show="loggedInUser.id === 1" v-on:click="isUserFavorite = !isUserFavorite"
+                            onclick="deleteUser(author.user.id)"
+                            class="btn submit-btn"> DELETE
+                    </button>
+                </p>
+
             </div>
         </div>
     </div>
@@ -100,7 +110,7 @@
             <div class="photo-grid-item hvr-glow" v-for="photo in userPhotos" v-on:click="openModalPhoto(photo)">
                 <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
                 <div class="middle">
-                    <h5><b>{{photo.title}}</b></h5>
+                    <h5><b>@{{photo.user.username}}</b></h5>
                 </div>
             </div>
         </masonry>

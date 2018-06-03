@@ -46,6 +46,10 @@ function getPhotoRequest(id) {
     return axios.get("/api/photos/" + id);
 }
 
+function deleteUserRequest(userId) {
+    return axios.delete("/api/users/" + userId + "?" + accessToken());
+}
+
 function postPhotoRequest(id, formData) {
     return axios({
         method: 'post',
@@ -55,11 +59,20 @@ function postPhotoRequest(id, formData) {
 }
 
 function postCommentRequest(photoId, content) {
+    // return axios({
+    //     method: 'post',
+    //     url: '/api/photos/' + photoId + '/comments?' + accessToken(),
+    //     params: {content}
+    // });
+
     return axios({
         method: 'post',
         url: '/api/photos/' + photoId + '/comments?' + accessToken(),
-        params: {content}
-    })
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: content
+    });
 }
 
 function deleteCommentRequest(userId, commentId) {

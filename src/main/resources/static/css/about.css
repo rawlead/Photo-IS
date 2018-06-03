@@ -31,7 +31,7 @@
     linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
     font-size: 1em;
-    color: #CDD3CE;
+    color: #fff;
 }
 
 #parallax-content-two {
@@ -54,6 +54,7 @@
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
+    color: #fff;
 }
 
 #parallax-content-two h5 {
@@ -67,11 +68,13 @@
 }
 
 #parallax-content-two h3 {
-    font-size: 1em;
+    font-size: 1.3em;
+    color: #fff;
 }
 
 #parallax-content-two h6 {
     font-size: 0.9em;
+    line-height: 30px;
 }
 
 #parallax-content-two .about-img {
@@ -83,6 +86,8 @@
 #parallax-content-two .about-img-content {
     object-fit: cover;
     width: 100%;
+    max-height: 150px;
+    max-width: 150px;
     border-radius: 50%;
 }
 
@@ -114,13 +119,14 @@
 .caption-content img {
     object-fit: scale-down;
     width: 100%;
-    max-height: 20vh;
+    height: 100px;
 }
 
 .caption-content h1 {
     font-weight: bold;
     padding: 10px 0;
     letter-spacing: 15px;
+    color: #fff;
 }
 
 .arrow {
@@ -183,7 +189,7 @@
     }
 
     #parallax-content-two h1 {
-        font-size: 1.4em;
+        font-size: 1.8em;
         top: 25px;
     }
 
@@ -193,11 +199,7 @@
     }
 
     #parallax-content-two h6 {
-        font-size: 0.6em;
-    }
-
-    #parallax-content-two h3 {
-        font-size: 0.7em;
+        font-size: 0.8em;
     }
 }
 

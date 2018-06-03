@@ -160,6 +160,7 @@ int awd = 3;
 
     @Override
     public boolean deleteUser(Long userId) {
+//        User user = userRepository.getOne(userId)
         userRepository.delete(userId);
         return true;
     }

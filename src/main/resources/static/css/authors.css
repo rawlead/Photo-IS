@@ -18,7 +18,6 @@
 
 .grid-item:hover {
     cursor: pointer;
-    /*background-color: #26262d;*/
     opacity: 1;
 }
 
@@ -38,12 +37,12 @@
 }
 
 .grid-item p {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin: 0;
     font-size: 0.7em;
     background-color: #1E1E24;
     width: 100%;
     padding: 3px;
+    margin-bottom: 2px;
 }
 /* sitka zajmuje 100% szerokości ekranu w razie wyświetlania na urządzeniach mobilnych */
 @media screen and (max-width: 767px) {

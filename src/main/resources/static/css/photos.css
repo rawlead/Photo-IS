@@ -1,6 +1,7 @@
 
 #photosRoot {
     padding-top: 95px;
+
 }
 
 .categories {
@@ -35,7 +36,7 @@
 }
 
 .categories > p.active {
-    border-right: 4px solid #EEB902;
+    border-right: 2px solid #EEB902;
     color: #fff;
 }
 
@@ -64,7 +65,7 @@
 #select-category-btn:hover {
     text-decoration: underline;
     color: #fff;
-    background-color: #26262d;
+    /*background-color: #26262d;*/
 }
 
 @media screen and (max-width: 767px) {
