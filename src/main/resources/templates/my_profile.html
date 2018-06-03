@@ -18,7 +18,7 @@
     <div class="modal fade user-photo-modal" tabindex="-1" role="dialog"
          aria-labelledby="user-photo-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style=" border: none">
+            <div class="modal-content " style=" border: none">
                 <div class="modal-body">
 
                     <h5 style="left: 5px;" v-if="modalPhoto.user">
@@ -32,9 +32,11 @@
                            class="badge badge-dark category-badge"><i class="fas fa-clipboard-list"></i>
                             {{modalPhoto.photoCategory.name}}</a>
                     </h5>
-                    <a v-bind:href="'/photo/' + modalPhoto.id">
+                    <abbr title="Click to open comments">
+                        <a v-bind:href="'/photo/' + modalPhoto.id">
                         <img v-bind:src="modalPhoto.url" alt=""/>
                     </a>
+                    </abbr>
                     <div class="modal-date-label" v-if="modalPhoto.dateCreated">
                         <i class="fas fa-calendar-alt"></i> {{modalPhoto.dateCreated}}
                     </div>
@@ -43,7 +45,7 @@
                     <div class="container-fluid" style="padding:0;">
                         <div class="row">
                             <div class="col-md-12">
-                                <div v-show="modalPhoto.title"><p><b>{{modalPhoto.title}}</b></p></div>
+                                <div v-show="modalPhoto.title"><h5><b>{{modalPhoto.title}}</b></h5></div>
                                 <div v-show="modalPhoto.description"><p>{{modalPhoto.description}}</p></div>
 
                                 <a v-bind:href="'/photo/' + modalPhoto.id" class="btn btn-outline-success"><i
@@ -102,7 +104,7 @@
                 <div v-if="updateData === 'photo'">
                     <div class="uploadPhotoForm">
                         <div class="form-group">
-                            <label for="uploadPhotoTitle">Title</label>
+                            <label style="color: #1E1E24" for="uploadPhotoTitle">Title</label>
                             <span class="float-right"
                                   style="font-size: 0.85em">{{titleCharactersLeft}}</span>
                             <input maxlength="75" placeholder="Not required" class="uploadPhotoFormElement"
@@ -110,7 +112,7 @@
                                    id="uploadPhotoTitle" type="text"/>
                         </div>
                         <div class="form-group">
-                            <label for="uploadPhotoDescription">Description</label>
+                            <label style="color: #1E1E24" for="uploadPhotoDescription">Description</label>
                             <span class="float-right"
                                   style="font-size: 0.85em">{{descCharactersLeft}}</span>
                             <textarea maxlength="150" placeholder="Not required" class="uploadPhotoFormElement"
@@ -147,7 +149,7 @@
                 <div class="photo-grid-item hvr-glow" v-for="photo in userPhotos" v-on:click="openModalPhoto(photo)">
                     <img class="grid-image hvr-grow" v-lazy="photo.url" alt=""/>
                     <div class="middle">
-                        <h5><b>{{photo.title}}</b></h5>
+                        <h5><b>@{{photo.user.username}}</b></h5>
                     </div>
                 </div>
             </masonry>

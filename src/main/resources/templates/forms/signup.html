@@ -93,9 +93,12 @@
                     },
                     data: params
                 }).then((resultAxios) => {
-                    this.statusMessage = 'Account created. Please ' + '<a href="/signin" style="color: #1E1E24;" class="alert-link">sign in</a>';
-                    this.hasError = false;
-                    this.showAlert();
+                    // this.statusMessage = 'Account created. Please ' + '<a href="/signin" style="color: #1E1E24;" class="alert-link">sign in</a>';
+                    // this.hasError = false;
+                    // this.showAlert();
+                    signin(this.username, this.password);
+
+
                 }).catch(function (error) {
                     this.statusMessage = error.response.data;
                     this.hasError = true;
@@ -108,9 +111,9 @@
                     $('.alert').fadeOut('slow');
                 }, 1500);
             },
-            showAlert() {
-                $(".alert").fadeIn('slow');
-            }
+            // showAlert() {
+            //     $(".alert").fadeIn('slow');
+            // }
         }
     });
 </script>

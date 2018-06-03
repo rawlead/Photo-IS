@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <button v-show="!showComments" class="btn comment-btn btn-outline-dark hvr-rectangle-in"
+            <button v-show="!showComments" class="submit-btn"
                     onclick="#comments-container"
                     id="show-comments-btn"
                     v-on:click="showComments = !showComments" v-cloak="v-cloak"><i class="fas fa-eye"></i> Show comments
@@ -56,8 +56,8 @@
                         <li v-for="comment in comments"
                             v-on:click="commentContent += '@' + comment.user.username + ' '">
                             <a v-bind:href="'/profile/' + comment.user.username"
-                               style=""><b>@{{comment.user.username}}</b></a> at
-                            <span style="font-size: 0.8em; font-style: italic">{{comment.dateCreated}}</span> wrote:
+                               style=""><b>@{{comment.user.username}}</b></a>
+                            <span style="font-size: 0.8em; color: #a2a8a3; font-style: italic">{{comment.dateCreated}}</span>
                             <br/>
                             <span style="color:red; cursor: pointer" v-on:click="deleteComment(comment.id)"
                                   v-show="comment.user.id === loggedInUser.id || loggedInUser.id === 3">X</span>
@@ -70,20 +70,20 @@
                             v-html="statusMessage"></span></div>
                     <button v-show="!writingComment" onclick="return false"
                             style=" margin-top:2px;"
-                            class="btn btn-outline-dark comment-btn hvr-rectangle-in"
+                            class="submit-btn"
                             v-on:click="writingComment = !writingComment; commentContent = ''"><i
                             class="fas fa-comment"></i> Leave a comment
                     </button>
                     <button v-show="!writingComment" onclick="return false"
                             style="margin-top:2px;"
-                            class="btn btn-outline-dark comment-btn hvr-rectangle-in"
+                            class="submit-btn"
                             v-on:click="showComments = !showComments"><i class="fas fa-eye-slash"></i> Hide comments
                     </button>
 
                     <div v-show="writingComment" class="comment-input-section">
                         <span class="length-counter">{{charactersLeft}}</span>
                         <textarea autofocus="autofocus" maxlength="150" v-model="commentContent" type="text" rows="3"
-                                  id="comment-textarea"></textarea>
+                                  id="comment-textarea" v-on:keyup.enter="postCommentToPhoto" ></textarea>
                         <button v-on:click="postCommentToPhoto" :disabled="commentIsOutOfRange"
                                 class="btn btn-success"><i
                                 class="fas fa-chevron-circle-up"></i> Send

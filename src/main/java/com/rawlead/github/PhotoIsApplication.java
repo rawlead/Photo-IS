@@ -59,9 +59,8 @@ public class PhotoIsApplication {
             roleRepository.save(new Role("PHOTOGRAPHER"));
             roleRepository.save(new Role("ADMIN"));
 
-            service.save(new User("NameUser", "LastNameUser", "user@mail.com", "user", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
-            service.save(new User("NameUserTwo", "", "usertwo@mail.co,", "usertwo", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
             service.save(new User("NameAdmin", "LastNameAdmin", "admin@mail.com", "admin", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("ADMIN")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
+            service.save(new User("NameUser", "LastNameUser", "user@mail.com", "user", passwordEncoder.encode("password"), Stream.of(roleRepository.findByName("USER"), roleRepository.findByName("PHOTOGRAPHER")).collect(Collectors.toSet()), "/img/user-icon-white.png"));
 
             categoryService.addCategory("Nature");
             categoryService.addCategory("Animals");
@@ -79,4 +78,8 @@ public class PhotoIsApplication {
     private UserDetailsService userDetailsService(final UserRepository userRepository) {
         return username -> new CustomUserDetails(userRepository.findByUsername(username));
     }
+
+
+
+
 }

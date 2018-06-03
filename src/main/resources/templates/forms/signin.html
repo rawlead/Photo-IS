@@ -46,26 +46,29 @@
         },
         methods: {
             signin() {
-                var params = new URLSearchParams();
-                params.append('grant_type', 'password');
-                params.append('username', this.username);
-                params.append('password', this.password);
-                axios({
-                    method: 'post',
-                    url:'/oauth/token',
-                    auth:{
-                        username:'photois-client',password:'photois-secret'
-                    },
-                    headers: {"Content-type": "application/x-www-form-urlencoded; charset=utf-8"},
-                    data:params
-                }).then(function (response) {
-                    setCookie("access_token", response.data.access_token);
-                    document.location.replace("/profile");
-                }).catch(function (error) {
-                    this.statusMessage = "Wrong username or password";
-                    this.showAndHideAlert();
-                }.bind(this))
+                signin(this.username,this.password)
             },
+            // signin() {
+            //     var params = new URLSearchParams();
+            //     params.append('grant_type', 'password');
+            //     params.append('username', this.username);
+            //     params.append('password', this.password);
+            //     axios({
+            //         method: 'post',
+            //         url:'/oauth/token',
+            //         auth:{
+            //             username:'photois-client',password:'photois-secret'
+            //         },
+            //         headers: {"Content-type": "application/x-www-form-urlencoded; charset=utf-8"},
+            //         data:params
+            //     }).then(function (response) {
+            //         setCookie("access_token", response.data.access_token);
+            //         document.location.replace("/profile");
+            //     }).catch(function (error) {
+            //         this.statusMessage = "Wrong username or password";
+            //         this.showAndHideAlert();
+            //     }.bind(this))
+            // },
             showAndHideAlert() {
                 $(".alert").fadeIn('slow');
                 setTimeout(function () {

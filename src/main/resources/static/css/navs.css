@@ -7,20 +7,33 @@
     margin: 0;
     z-index: 100;
     background: linear-gradient(115deg, #26262d 125px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 127px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 129px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 325px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 327px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 329px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #26262d 525px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 527px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 529px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
     padding-right: 10px;
+    border-bottom: 2px solid #26262d;
 }
 
-#top-nav, .categories, .dropdown-content {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+/*#top-nav, .categories, .dropdown-content {*/
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+/*}*/
 
 #top-nav-avatar {
     margin-right: 10px;
     padding: 12px 0 12px 0;
 }
+#top-nav-avatar:hover {
+    webkit-filter: brightness(1.2);
+    filter: brightness(1.2);
+}
+
+
 
 #top-nav-avatar img {
     border-radius: 50%;
@@ -39,13 +52,16 @@
 }
 
 
+.main-logo {
+    background-color: #1E1E24;
+
+}
 .main-logo img {
-    height: 60px;
+    height: 58px;
 }
 
 
-.main-logo:hover {
-    /*background-color: #1E1E24;*/
+.main-logo img:hover {
     webkit-filter: brightness(1.2);
     filter: brightness(1.2);
 }
@@ -86,7 +102,7 @@
 #top-nav input:hover {
     background-color: #1E1E24;
     border: 2px solid #EEB902;
-
+    padding-left: 13px;
 }
 
 
@@ -122,19 +138,26 @@
 /*SEARCH SEARCH SEARCH SEARCH SEARCH SEARCH */
 .dropdown-content {
     top: 55px;
-    left: 235px;
+    left: 227px;
     position: absolute;
     opacity: 0.96;
     padding-bottom: 5px    ;
-    background:
-    linear-gradient(115deg, #1E1E24 89px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #26262d 289px, rgba(0, 0, 0, 0) 0%),
-    linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /*background:*/
+    /*linear-gradient(115deg, #26262d 87px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #1E1E24 287px, rgba(0, 0, 0, 0) 0%),*/
+    /*linear-gradient(115deg, #26262d 100%, rgba(0, 0, 0, 0) 0%);*/
     width: 40%;
     overflow: auto;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    visibility: hidden;
+    background-color: #26262d;
+    display: none;
+    border: 2px solid #1E1E24;
+    z-index: 95;
+
 }
 
 .dropdown-content a {
@@ -144,27 +167,37 @@
     text-decoration: none;
     display: block;
     position: relative;
-    z-index: 100;
+    z-index: 95;
+}
+.dropdown-content a:hover {
+    background-color: #1E1E24;
 }
 
+.dropdown-content:hover {
+    opacity: 0.97;
+}
+
+
 .showSearch {
-    visibility: visible;
+    display: block;
 }
 
 .dropdown-content i {
     color: #EEB902;
 }
 
-.dropdown-content:hover {
-    opacity: 0.98;
-}
-
 /*LEFT SIDE VERTICAL NAVIGATION BAR*/
 #left-nav {
     list-style-type: none;
     background: linear-gradient(115deg, #26262d 100px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 102px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 104px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 300px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 302px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 304px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #26262d 500px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #1E1E24 502px, rgba(0, 0, 0, 0) 0%),
+    linear-gradient(115deg, #26262d 504px, rgba(0, 0, 0, 0) 0%),
     linear-gradient(115deg, #1E1E24 100%, rgba(0, 0, 0, 0) 0%);
     position: fixed;
     display: block;
@@ -176,6 +209,7 @@
     padding-top: 150px;
     font-size: 0.9em;
     z-index: 50;
+    border-right: 2px solid #26262d;
 }
 
 #left-nav li {
@@ -218,13 +252,13 @@
     cursor: default;
 }
 
-#left-nav, .profile-tab, .author-header {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
+/*#left-nav, .profile-tab, .author-header {*/
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+/*}*/
 
 @media screen and (min-width: 768px){
     #left-nav li a.active {
-        border-right: 4px solid #EEB902;
+        border-right: 2px solid #EEB902;
     }
 
 }
